@@ -1,884 +1,250 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, Search, Calendar, Clock, User, Tag, ChevronRight } from "lucide-react";
 
-/* ─── colour tokens ─────────────────────────────────────────── */
-const C = {
-  navy:      "#0D1321",
-  navyLight: "#151E2E",
-  navyCard:  "#1A2438",
-  teal:      "#1F8A8C",
-  rose:      "#D45B72",
-  cream:     "#F4F0E8",
-  gold:      "#D79A3B",
+const Instagram = ({ size = 14, color = "currentColor" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+  </svg>
+);
+
+const Linkedin = ({ size = 14, color = "currentColor" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+    <rect x="2" y="9" width="4" height="12"/>
+    <circle cx="4" cy="4" r="2"/>
+  </svg>
+);
+
+const navLinks = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
+const navRoutes = { "Visa": "/visa", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
+
+const categories = ["All", "Adventure", "Culture", "Budget Tips", "Hidden Gems", "Travel Guides"];
+
+const featured = {
+  id: 1,
+  tag: "Adventure",
+  tagColor: "#0ABFBC",
+  title: "The Ultimate Guide to Trekking Spiti Valley in Winter",
+  excerpt: "Spiti in winter is not for the faint-hearted — but for those who brave it, it reveals a side of the Himalayas that most travellers never see. Here's everything you need to know.",
+  author: "Kabir Thakur",
+  date: "June 12, 2025",
+  readTime: "8 min read",
+  img: "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1200&q=80",
 };
 
-const fontStyle = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');`;
-
-/* ─── scroll reveal hook ────────────────────────────────────── */
-function useReveal(threshold = 0.12) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.unobserve(el); } },
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-}
-
-/* ─── data ──────────────────────────────────────────────────── */
-const CATEGORIES = [
-  "All", "Visa Tips", "Travel Guides", "Adventure",
-  "Luxury Travel", "Budget Travel", "Digital Nomad",
-  "Study Abroad", "Family Travel", "Food & Culture",
+const posts = [
+  { id: 2, tag: "Culture", tagColor: "#A78BFA", title: "Why Ladakh's Monasteries Are More Than Just Monuments", excerpt: "The sound of prayer wheels, the scent of juniper incense, and the silence between mountains — Ladakh's monasteries offer something no itinerary can fully prepare you for.", author: "Saanvi Rao", date: "May 28, 2025", readTime: "6 min read", img: "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=600&q=80" },
+  { id: 3, tag: "Budget Tips", tagColor: "#FBBF24", title: "How to Do Manali in ₹15,000 — Including Flights", excerpt: "Yes, it's possible. We break down exactly how to stretch your budget without missing out on the best that Manali has to offer.", author: "Imran Sheikh", date: "May 10, 2025", readTime: "5 min read", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" },
+  { id: 4, tag: "Hidden Gems", tagColor: "#F87171", title: "Chopta: The Uttarakhand Village Nobody Talks About", excerpt: "Forget Rishikesh and Mussoorie — Chopta is Uttarakhand's best-kept secret, with views that rival anything in the Swiss Alps.", author: "Kabir Thakur", date: "April 22, 2025", readTime: "7 min read", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" },
+  { id: 5, tag: "Travel Guides", tagColor: "#0ABFBC", title: "Kashmir in Spring: The Complete 7-Day Itinerary", excerpt: "Tulip gardens, shikaras, and a food scene that will haunt you for years. Here's how to spend a perfect week in Kashmir.", author: "Saanvi Rao", date: "April 5, 2025", readTime: "9 min read", img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80" },
+  { id: 6, tag: "Adventure", tagColor: "#0ABFBC", title: "Paragliding in Bir Billing: Everything You Need to Know", excerpt: "It's called the paragliding capital of Asia — and for good reason. Here's our complete guide to taking the leap at Bir Billing.", author: "Imran Sheikh", date: "March 18, 2025", readTime: "6 min read", img: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" },
+  { id: 7, tag: "Culture", tagColor: "#A78BFA", title: "Eating Your Way Through Kerala: A Food Lover's Journey", excerpt: "From toddy shops in Alleppey to seafood stalls in Kochi, Kerala's food culture is as rich and layered as its backwaters.", author: "Saanvi Rao", date: "March 2, 2025", readTime: "7 min read", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80" },
 ];
 
-const ARTICLES = [
-  {
-    id: 1, seed: "blog-japan-village",
-    title: "Hidden Villages of Japan",
-    category: "Travel Guide",
-    author: "Kabir Thakur", date: "June 12, 2026",
-    readTime: "6 min read",
-    excerpt: "Beyond Tokyo's neon glow lie ancient villages where time stands still — we found them.",
-    tag: "🇯🇵 Japan",
-  },
-  {
-    id: 2, seed: "blog-swiss-alps",
-    title: "Swiss Alps: A Winter Adventure Guide",
-    category: "Luxury Travel",
-    author: "Saanvi Rao", date: "June 5, 2026",
-    readTime: "8 min read",
-    excerpt: "From Zermatt to Interlaken — the ultimate guide to skiing the Alps in style.",
-    tag: "🇨🇭 Switzerland",
-  },
-  {
-    id: 3, seed: "blog-dubai-visa",
-    title: "Dubai Visa Guide for Indian Travellers",
-    category: "Visa Tips",
-    author: "Rahul Nair", date: "May 28, 2026",
-    readTime: "5 min read",
-    excerpt: "Everything you need to know to get your Dubai visa approved in under 72 hours.",
-    tag: "🇦🇪 Dubai",
-  },
-  {
-    id: 4, seed: "blog-paris-food",
-    title: "Eating Your Way Through Paris",
-    category: "Food & Culture",
-    author: "Meera Patel", date: "May 20, 2026",
-    readTime: "7 min read",
-    excerpt: "Croissants, wine and hidden bistros — a culinary journey through the city of love.",
-    tag: "🇫🇷 France",
-  },
-  {
-    id: 5, seed: "blog-australia-nomad",
-    title: "Digital Nomad in Australia: Full Guide",
-    category: "Digital Nomad",
-    author: "Arjun Shah", date: "May 14, 2026",
-    readTime: "10 min read",
-    excerpt: "Co-working spaces, visa options and the best cities for remote workers Down Under.",
-    tag: "🇦🇺 Australia",
-  },
-  {
-    id: 6, seed: "blog-italy-amalfi",
-    title: "The Amalfi Coast: Off the Beaten Path",
-    category: "Adventure",
-    author: "Kabir Thakur", date: "May 2, 2026",
-    readTime: "6 min read",
-    excerpt: "Skip the tourist crowds and discover the real Amalfi through hidden trails and sea caves.",
-    tag: "🇮🇹 Italy",
-  },
-];
+const popularTags = ["Himalayas", "Budget Travel", "Solo Travel", "Monsoon", "Winter Trek", "Food", "Culture", "Hidden Gems"];
 
-const DEST_EXPLORE = [
-  { name: "Japan",       seed: "explore-japan",       count: 24, flag: "🇯🇵" },
-  { name: "Dubai",       seed: "explore-dubai",       count: 18, flag: "🇦🇪" },
-  { name: "Switzerland", seed: "explore-swiss",       count: 15, flag: "🇨🇭" },
-  { name: "Australia",   seed: "explore-australia",   count: 21, flag: "🇦🇺" },
-  { name: "Italy",       seed: "explore-italy",       count: 19, flag: "🇮🇹" },
-  { name: "Iceland",     seed: "explore-iceland",     count: 12, flag: "🇮🇸" },
-  { name: "Bali",        seed: "explore-bali",        count: 16, flag: "🇮🇩" },
-  { name: "Canada",      seed: "explore-canada",      count: 14, flag: "🇨🇦" },
-];
-
-const MASONRY = [
-  { seed:"masonry-temple",  title:"Temples of Kyoto", cat:"Travel Guide",  size:"tall"  },
-  { seed:"masonry-food",    title:"Street Food in Bangkok", cat:"Food & Culture", size:"short" },
-  { seed:"masonry-visa",    title:"Schengen Visa Tips", cat:"Visa Tips", size:"short" },
-  { seed:"masonry-alps",    title:"Alps Sunrise Trek", cat:"Adventure", size:"tall"  },
-  { seed:"masonry-family",  title:"Family Trip to Bali", cat:"Family Travel", size:"short" },
-  { seed:"masonry-nomad",   title:"Nomad Life in Lisbon", cat:"Digital Nomad", size:"tall"  },
-  { seed:"masonry-student", title:"Study Abroad in UK",   cat:"Study Abroad",  size:"short" },
-  { seed:"masonry-luxury",  title:"Luxury Maldives Stay", cat:"Luxury Travel", size:"short" },
-  { seed:"masonry-budget",  title:"Europe on $50/Day",    cat:"Budget Travel", size:"tall"  },
-];
-
-/* ─── helpers ───────────────────────────────────────────────── */
-const CATEGORY_COLORS = {
-  "Travel Guide": C.teal,
-  "Luxury Travel": C.gold,
-  "Visa Tips": C.rose,
-  "Food & Culture": "#A78BFA",
-  "Digital Nomad": "#34D399",
-  "Adventure": "#F97316",
-  "Family Travel": "#60A5FA",
-  "Study Abroad": "#E879F9",
-  "Budget Travel": "#FBBF24",
-};
-function catColor(cat) { return CATEGORY_COLORS[cat] ?? C.teal; }
-function hexRgb(hex) {
-  const r = parseInt(hex.slice(1,3),16);
-  const g = parseInt(hex.slice(3,5),16);
-  const b = parseInt(hex.slice(5,7),16);
-  return `${r},${g},${b}`;
-}
-
-/* ══════════════════════════════════════════════════════════════
-   HERO
-══════════════════════════════════════════════════════════════ */
-function BlogHero() {
-  return (
-    <section style={{
-      position:"relative", height:"85vh", minHeight:580,
-      display:"flex", alignItems:"center", justifyContent:"center",
-      textAlign:"center", overflow:"hidden",
-      backgroundImage:"url(https://picsum.photos/seed/blog-hero-travel/1920/1080)",
-      backgroundSize:"cover", backgroundPosition:"center",
-      backgroundAttachment:"fixed",
-    }}>
-      <div style={{
-        position:"absolute", inset:0,
-        background:"linear-gradient(to bottom,rgba(13,19,33,0.5) 0%,rgba(13,19,33,0.8) 60%,rgba(13,19,33,1) 100%)",
-      }} />
-      <div style={{
-        position:"absolute", inset:0,
-        backgroundImage:`radial-gradient(ellipse 70% 60% at 50% 40%, rgba(31,138,140,0.15) 0%, transparent 70%)`,
-      }} />
-
-      <div style={{
-        position:"relative", zIndex:1, maxWidth:820, padding:"0 24px",
-        animation:"heroIn 1s ease both",
-      }}>
-        <span style={{
-          display:"inline-block",
-          background:`linear-gradient(135deg,${C.rose},#A855F7)`,
-          color:"#fff", borderRadius:50, padding:"6px 20px",
-          fontFamily:"Inter", fontSize:11, fontWeight:700,
-          letterSpacing:3, textTransform:"uppercase", marginBottom:24,
-        }}>✦ Featured Story</span>
-
-        <h1 style={{
-          fontFamily:"'Playfair Display',serif",
-          fontSize:"clamp(2.6rem,6vw,5rem)",
-          fontWeight:700, color:C.cream, lineHeight:1.1,
-          margin:"0 0 20px",
-          textShadow:"0 4px 30px rgba(0,0,0,0.4)",
-        }}>
-          Discover Extraordinary<br />
-          <em style={{ color:C.teal }}>Journeys</em> Around the World
-        </h1>
-
-        <p style={{
-          fontFamily:"Inter", fontSize:"clamp(1rem,1.4vw,1.15rem)",
-          color:"rgba(244,240,232,0.75)", lineHeight:1.8,
-          margin:"0 0 40px", fontWeight:300,
-        }}>
-          Travel guides, visa insights, hidden gems and unforgettable adventures — curated by experts who've been there.
-        </p>
-
-        <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
-          <button style={heroBtnPrimary}>Explore Articles →</button>
-          <button style={heroBtnOutline}>Visa Guides</button>
-        </div>
-      </div>
-
-      {/* scroll indicator */}
-      <div style={{
-        position:"absolute", bottom:32, left:"50%", transform:"translateX(-50%)",
-        display:"flex", flexDirection:"column", alignItems:"center", gap:8,
-        color:"rgba(244,240,232,0.35)", fontFamily:"Inter", fontSize:11,
-        letterSpacing:2, textTransform:"uppercase",
-        animation:"scrollPulse 2s ease infinite",
-      }}>
-        <span>Scroll</span>
-        <div style={{ width:1, height:32, background:"rgba(244,240,232,0.25)" }} />
-      </div>
-    </section>
-  );
-}
-const heroBtnPrimary = {
-  background:`linear-gradient(135deg,${C.teal},#0E5C5E)`,
-  color:"#fff", border:"none", borderRadius:50,
-  padding:"14px 36px", fontFamily:"Inter",
-  fontSize:15, fontWeight:600, cursor:"pointer",
-  boxShadow:`0 8px 30px rgba(31,138,140,0.4)`,
-};
-const heroBtnOutline = {
-  background:"rgba(255,255,255,0.07)", backdropFilter:"blur(10px)",
-  color:C.cream, border:"1px solid rgba(255,255,255,0.2)",
-  borderRadius:50, padding:"14px 36px", fontFamily:"Inter",
-  fontSize:15, fontWeight:500, cursor:"pointer",
-};
-
-/* ══════════════════════════════════════════════════════════════
-   CATEGORY FILTER
-══════════════════════════════════════════════════════════════ */
-function CategoryFilter({ active, onChange }) {
-  return (
-    <section style={{
-      background: C.navyLight,
-      borderBottom:"1px solid rgba(255,255,255,0.06)",
-      padding:"20px 0",
-      position:"sticky", top:53, zIndex:50,
-    }}>
-      <div style={{
-        maxWidth:1280, margin:"0 auto", padding:"0 8vw",
-        display:"flex", gap:10, overflowX:"auto",
-        scrollbarWidth:"none",
-      }}>
-        {CATEGORIES.map(cat => (
-          <button key={cat} onClick={() => onChange(cat)} style={{
-            flexShrink:0, borderRadius:50,
-            padding:"9px 20px", fontFamily:"Inter", fontSize:13, fontWeight:600,
-            cursor:"pointer", border:"1px solid transparent",
-            whiteSpace:"nowrap", transition:"all 0.3s ease",
-            background: active === cat
-              ? `linear-gradient(135deg,${C.teal},#0E5C5E)`
-              : "rgba(255,255,255,0.05)",
-            color: active === cat ? "#fff" : "rgba(244,240,232,0.55)",
-            borderColor: active === cat ? "transparent" : "rgba(255,255,255,0.08)",
-            boxShadow: active === cat ? `0 4px 20px rgba(31,138,140,0.4)` : "none",
-          }}>
-            {cat}
-          </button>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════
-   TRENDING ARTICLES GRID
-══════════════════════════════════════════════════════════════ */
-function TrendingArticles({ activeCategory }) {
-  const [ref, visible] = useReveal();
-
-  const filtered = activeCategory === "All"
-    ? ARTICLES
-    : ARTICLES.filter(a => a.category === activeCategory);
-
-  return (
-    <section ref={ref} style={{
-      background: C.navy, padding:"100px 8vw",
-    }}>
-      <div style={{ marginBottom:56 }}>
-        <span style={sectionLabel}>Trending Now</span>
-        <h2 style={sectionTitle}>Most Loved Stories This Month</h2>
-      </div>
-
-      {filtered.length === 0 ? (
-        <div style={{ textAlign:"center", padding:"60px 0", color:"rgba(244,240,232,0.35)",
-          fontFamily:"Inter", fontSize:16 }}>
-          No articles in this category yet. Check back soon!
-        </div>
-      ) : (
-        <div style={{
-          display:"grid",
-          gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))",
-          gap:28,
-          opacity: visible ? 1 : 0,
-          transform: visible ? "none" : "translateY(40px)",
-          transition:"all 0.8s ease",
-        }}>
-          {filtered.map((article, i) => (
-            <ArticleCard key={article.id} article={article} delay={i * 80} visible={visible} />
-          ))}
-        </div>
-      )}
-    </section>
-  );
-}
-
-function ArticleCard({ article, delay, visible }) {
-  const [hovered, setHovered] = useState(false);
-  const color = catColor(article.category);
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        borderRadius:20, overflow:"hidden",
-        background: C.navyCard, cursor:"pointer",
-        border:`1px solid ${hovered ? `rgba(${hexRgb(color)},0.3)` : "rgba(255,255,255,0.07)"}`,
-        boxShadow: hovered ? `0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(${hexRgb(color)},0.12)` : "none",
-        transform: hovered ? "translateY(-8px)" : "none",
-        transition:"all 0.4s cubic-bezier(0.34,1.56,0.64,1)",
-        opacity: visible ? 1 : 0,
-        transitionDelay:`${delay}ms`,
-      }}
-    >
-      {/* image */}
-      <div style={{ height:220, overflow:"hidden", position:"relative" }}>
-        <div style={{
-          position:"absolute", inset:0,
-          backgroundImage:`url(https://picsum.photos/seed/${article.seed}/600/400)`,
-          backgroundSize:"cover", backgroundPosition:"center",
-          transform: hovered ? "scale(1.07)" : "scale(1)",
-          transition:"transform 0.6s ease",
-        }} />
-        <div style={{
-          position:"absolute", inset:0,
-          background:"linear-gradient(to top,rgba(26,36,56,0.8) 0%,transparent 60%)",
-        }} />
-        <span style={{
-          position:"absolute", top:14, left:14,
-          background:"rgba(13,19,33,0.7)", backdropFilter:"blur(8px)",
-          borderRadius:50, padding:"5px 14px",
-          fontFamily:"Inter", fontSize:12, color:C.cream,
-        }}>{article.tag}</span>
-      </div>
-
-      {/* body */}
-      <div style={{ padding:"22px 24px" }}>
-        <span style={{
-          fontFamily:"Inter", fontSize:11, fontWeight:700,
-          letterSpacing:1, textTransform:"uppercase",
-          color, background:`rgba(${hexRgb(color)},0.12)`,
-          border:`1px solid rgba(${hexRgb(color)},0.25)`,
-          borderRadius:50, padding:"4px 12px",
-        }}>{article.category}</span>
-
-        <h3 style={{
-          fontFamily:"'Playfair Display',serif", fontSize:22,
-          fontWeight:700, color:C.cream, margin:"14px 0 10px", lineHeight:1.3,
-        }}>{article.title}</h3>
-
-        <p style={{
-          fontFamily:"Inter", fontSize:14,
-          color:"rgba(244,240,232,0.55)", lineHeight:1.8, margin:"0 0 18px",
-        }}>{article.excerpt}</p>
-
-        <div style={{
-          display:"flex", justifyContent:"space-between", alignItems:"center",
-          paddingTop:16, borderTop:"1px solid rgba(255,255,255,0.06)",
-        }}>
-          <div style={{ fontFamily:"Inter", fontSize:12, color:"rgba(244,240,232,0.4)" }}>
-            {article.author} · {article.date}
-          </div>
-          <span style={{ fontFamily:"Inter", fontSize:12, color, fontWeight:600 }}>
-            {article.readTime} →
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════
-   EXPLORE BY DESTINATION
-══════════════════════════════════════════════════════════════ */
-function ExploreDestinations() {
-  const [ref, visible] = useReveal();
-  const scrollRef = useRef(null);
-  const scroll = (dir) => scrollRef.current?.scrollBy({ left: dir * 340, behavior:"smooth" });
-
-  return (
-    <section ref={ref} style={{
-      background: C.navyLight, padding:"100px 0",
-    }}>
-      <div style={{ padding:"0 8vw", marginBottom:56 }}>
-        <span style={sectionLabel}>Explore by Destination</span>
-        <h2 style={sectionTitle}>Where Do You Want to Read About?</h2>
-      </div>
-
-      <div style={{ position:"relative", padding:"0 8vw" }}>
-        <button onClick={() => scroll(-1)} style={carBtn("left")}>&#8592;</button>
-        <button onClick={() => scroll(1)}  style={carBtn("right")}>&#8594;</button>
-
-        <div ref={scrollRef} style={{
-          display:"flex", gap:20, overflowX:"auto",
-          scrollbarWidth:"none", paddingBottom:4,
-          opacity: visible ? 1 : 0,
-          transform: visible ? "none" : "translateY(24px)",
-          transition:"all 0.8s ease",
-        }}>
-          {DEST_EXPLORE.map((d) => (
-            <DestCard key={d.name} dest={d} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function DestCard({ dest }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        flexShrink:0, width:260, height:380,
-        borderRadius:20, overflow:"hidden",
-        position:"relative", cursor:"pointer",
-        transform: hovered ? "scale(1.04)" : "scale(1)",
-        transition:"transform 0.4s ease",
-      }}
-    >
-      <div style={{
-        position:"absolute", inset:0,
-        backgroundImage:`url(https://picsum.photos/seed/${dest.seed}/600/900)`,
-        backgroundSize:"cover", backgroundPosition:"center",
-        transform: hovered ? "scale(1.08)" : "scale(1)",
-        transition:"transform 0.6s ease",
-      }} />
-      <div style={{
-        position:"absolute", inset:0,
-        background:`linear-gradient(to top, rgba(13,19,33,0.92) 0%, rgba(13,19,33,0.2) 55%, transparent 100%)`,
-      }} />
-      {hovered && <div style={{
-        position:"absolute", inset:0, borderRadius:20,
-        boxShadow:`inset 0 0 60px rgba(31,138,140,0.3)`,
-      }} />}
-
-      <div style={{ position:"absolute", bottom:24, left:20 }}>
-        <div style={{ fontSize:32, marginBottom:8 }}>{dest.flag}</div>
-        <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:24,
-          fontWeight:700, color:C.cream, margin:"0 0 6px" }}>{dest.name}</h3>
-        <p style={{ fontFamily:"Inter", fontSize:12,
-          color:"rgba(244,240,232,0.55)", margin:0 }}>{dest.count} Articles</p>
-      </div>
-    </div>
-  );
-}
-
-function carBtn(side) {
-  return {
-    position:"absolute", top:"45%", transform:"translateY(-50%)",
-    [side]: "calc(8vw - 22px)", zIndex:2,
-    width:44, height:44, borderRadius:"50%",
-    background:"rgba(255,255,255,0.1)", backdropFilter:"blur(10px)",
-    border:"1px solid rgba(255,255,255,0.18)",
-    color:C.cream, fontSize:18, cursor:"pointer",
-    display:"flex", alignItems:"center", justifyContent:"center",
-  };
-}
-
-/* ══════════════════════════════════════════════════════════════
-   EDITOR'S PICK
-══════════════════════════════════════════════════════════════ */
-function EditorsPick() {
-  const [ref, visible] = useReveal();
-  return (
-    <section ref={ref} style={{
-      background: C.navy, padding:"100px 8vw",
-    }}>
-      <div style={{
-        display:"grid", gridTemplateColumns:"1fr 1fr", gap:72,
-        alignItems:"center",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "none" : "translateY(40px)",
-        transition:"all 0.9s ease",
-      }}>
-        <div style={{ borderRadius:24, overflow:"hidden", position:"relative", height:500 }}>
-          <div style={{
-            position:"absolute", inset:0,
-            backgroundImage:"url(https://picsum.photos/seed/editors-pick-visa/1200/900)",
-            backgroundSize:"cover", backgroundPosition:"center",
-          }} />
-          <div style={{
-            position:"absolute", inset:0,
-            background:"linear-gradient(135deg,rgba(13,19,33,0.3) 0%,transparent 60%)",
-          }} />
-          <div style={{
-            position:"absolute", top:20, left:20,
-            background:"rgba(13,19,33,0.75)", backdropFilter:"blur(8px)",
-            borderRadius:50, padding:"6px 16px",
-            fontFamily:"Inter", fontSize:11, color:C.gold,
-            letterSpacing:2, textTransform:"uppercase", fontWeight:600,
-          }}>★ Editor's Pick</div>
-        </div>
-
-        <div>
-          <span style={{
-            ...sectionLabel, fontSize:10,
-            background:`rgba(${hexRgb(C.rose)},0.12)`,
-            border:`1px solid rgba(${hexRgb(C.rose)},0.3)`,
-            color:C.rose,
-          }}>Editor's Pick</span>
-
-          <h2 style={{
-            fontFamily:"'Playfair Display',serif",
-            fontSize:"clamp(1.8rem,2.8vw,2.6rem)",
-            fontWeight:700, color:C.cream,
-            margin:"20px 0 20px", lineHeight:1.2,
-          }}>
-            Visa-Free Countries Every Indian Traveller Should Visit in 2026
-          </h2>
-
-          <p style={{
-            fontFamily:"Inter", fontSize:15,
-            color:"rgba(244,240,232,0.6)", lineHeight:1.9, margin:"0 0 12px",
-          }}>
-            From Maldives to Indonesia, these stunning destinations welcome you with open arms — no visa, no stress, just unforgettable memories.
-          </p>
-
-          <div style={{ display:"flex", gap:16, margin:"20px 0 32px", flexWrap:"wrap" }}>
-            {["Kabir Thakur", "June 1, 2026", "12 min read"].map((s, i) => (
-              <span key={i} style={{
-                fontFamily:"Inter", fontSize:12, fontWeight:500,
-                color:"rgba(244,240,232,0.4)", display:"flex", alignItems:"center", gap:5,
-              }}>
-                {i > 0 && <span style={{ color:"rgba(244,240,232,0.15)" }}>·</span>}
-                {s}
-              </span>
-            ))}
-          </div>
-
-          <button style={{
-            background:`linear-gradient(135deg,${C.teal},#0E5C5E)`,
-            color:"#fff", border:"none", borderRadius:50,
-            padding:"14px 36px", fontFamily:"Inter",
-            fontSize:15, fontWeight:600, cursor:"pointer",
-            boxShadow:`0 8px 30px rgba(31,138,140,0.4)`,
-          }}>Read Full Story →</button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════
-   MASONRY LATEST STORIES
-══════════════════════════════════════════════════════════════ */
-function LatestStories() {
-  const [ref, visible] = useReveal(0.05);
-  const cols = [
-    MASONRY.filter((_,i) => i % 3 === 0),
-    MASONRY.filter((_,i) => i % 3 === 1),
-    MASONRY.filter((_,i) => i % 3 === 2),
-  ];
-
-  return (
-    <section ref={ref} style={{
-      background: C.navyLight, padding:"100px 8vw",
-    }}>
-      <div style={{ marginBottom:56 }}>
-        <span style={sectionLabel}>Latest Stories</span>
-        <h2 style={sectionTitle}>Fresh Off the Press</h2>
-      </div>
-
-      <div style={{
-        display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:20,
-        opacity: visible ? 1 : 0,
-        transform: visible ? "none" : "translateY(30px)",
-        transition:"all 0.9s ease",
-      }}>
-        {cols.map((col, ci) => (
-          <div key={ci} style={{ display:"flex", flexDirection:"column", gap:20 }}>
-            {col.map((item) => (
-              <MasonryCard key={item.seed} item={item} />
-            ))}
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function MasonryCard({ item }) {
-  const [hovered, setHovered] = useState(false);
-  const h = item.size === "tall" ? 340 : 220;
-  const color = catColor(item.cat);
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        borderRadius:16, overflow:"hidden",
-        background: C.navyCard, cursor:"pointer",
-        border:`1px solid ${hovered ? `rgba(${hexRgb(color)},0.25)` : "rgba(255,255,255,0.06)"}`,
-        transform: hovered ? "translateY(-6px)" : "none",
-        transition:"all 0.4s ease",
-        boxShadow: hovered ? `0 16px 50px rgba(0,0,0,0.35)` : "none",
-      }}
-    >
-      <div style={{ height:h, overflow:"hidden", position:"relative" }}>
-        <div style={{
-          position:"absolute", inset:0,
-          backgroundImage:`url(https://picsum.photos/seed/${item.seed}/700/500)`,
-          backgroundSize:"cover", backgroundPosition:"center",
-          transform: hovered ? "scale(1.07)" : "scale(1)",
-          transition:"transform 0.6s ease",
-        }} />
-        <div style={{
-          position:"absolute", inset:0,
-          background:"linear-gradient(to top,rgba(26,36,56,0.6) 0%,transparent 50%)",
-        }} />
-      </div>
-      <div style={{ padding:"16px 18px" }}>
-        <span style={{
-          fontFamily:"Inter", fontSize:10, fontWeight:700,
-          letterSpacing:1, textTransform:"uppercase",
-          color, background:`rgba(${hexRgb(color)},0.12)`,
-          borderRadius:50, padding:"3px 10px",
-        }}>{item.cat}</span>
-        <h4 style={{
-          fontFamily:"'Playfair Display',serif", fontSize:17,
-          fontWeight:700, color:C.cream, margin:"10px 0 0", lineHeight:1.4,
-        }}>{item.title}</h4>
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════
-   TRAVEL TIP OF THE WEEK
-══════════════════════════════════════════════════════════════ */
-function TravelTip() {
-  const [ref, visible] = useReveal();
-  return (
-    <section ref={ref} style={{
-      background: C.navy, padding:"80px 8vw",
-    }}>
-      <div style={{
-        maxWidth:900, margin:"0 auto",
-        background:`linear-gradient(135deg,rgba(${hexRgb(C.gold)},0.08),rgba(${hexRgb(C.teal)},0.08))`,
-        border:`1px solid rgba(${hexRgb(C.gold)},0.25)`,
-        borderRadius:24, padding:"52px 60px",
-        display:"flex", gap:40, alignItems:"center",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "none" : "translateY(30px)",
-        transition:"all 0.8s ease",
-      }}>
-        <div style={{
-          fontSize:72, flexShrink:0,
-          animation: visible ? "tipFloat 3s ease infinite" : "none",
-        }}>✈️</div>
-        <div>
-          <span style={{
-            fontFamily:"Inter", fontSize:11, fontWeight:700,
-            letterSpacing:3, textTransform:"uppercase", color:C.gold,
-            display:"block", marginBottom:12,
-          }}>Tip of the Week</span>
-          <h3 style={{
-            fontFamily:"'Playfair Display',serif", fontSize:26,
-            fontWeight:700, color:C.cream, margin:"0 0 14px",
-          }}>Boost Your Visa Approval Chances</h3>
-          <p style={{
-            fontFamily:"Inter", fontSize:15, lineHeight:1.8,
-            color:"rgba(244,240,232,0.65)", margin:"0 0 24px",
-          }}>
-            Always submit bank statements showing at least 6 months of consistent transaction history. Embassies look for financial stability, not just a large balance.
-          </p>
-          <button style={{
-            background:`rgba(${hexRgb(C.gold)},0.12)`,
-            border:`1px solid rgba(${hexRgb(C.gold)},0.35)`,
-            color:C.gold, borderRadius:50, padding:"10px 24px",
-            fontFamily:"Inter", fontSize:13, fontWeight:600, cursor:"pointer",
-          }}>More Travel Tips →</button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════
-   NEWSLETTER
-══════════════════════════════════════════════════════════════ */
-function Newsletter() {
-  const [ref, visible] = useReveal();
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  const submit = (e) => { e.preventDefault(); if (email) setDone(true); };
-
-  return (
-    <section ref={ref} style={{
-      background: C.navyLight, padding:"100px 8vw", textAlign:"center",
-      backgroundImage:`radial-gradient(ellipse 60% 60% at 50% 50%, rgba(31,138,140,0.08) 0%, transparent 70%)`,
-    }}>
-      <div style={{
-        maxWidth:600, margin:"0 auto",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "none" : "translateY(30px)",
-        transition:"all 0.8s ease",
-      }}>
-        <span style={sectionLabel}>Newsletter</span>
-        <h2 style={{ ...sectionTitle, marginBottom:12 }}>Stay Inspired</h2>
-        <p style={{
-          fontFamily:"Inter", fontSize:15,
-          color:"rgba(244,240,232,0.55)", lineHeight:1.8, marginBottom:36,
-        }}>
-          Receive travel inspiration, visa updates and destination guides every week — no spam, ever.
-        </p>
-
-        {done ? (
-          <div style={{
-            padding:"28px 32px", borderRadius:16,
-            background:`rgba(${hexRgb(C.teal)},0.1)`,
-            border:`1px solid rgba(${hexRgb(C.teal)},0.3)`,
-          }}>
-            <div style={{ fontSize:40, marginBottom:12 }}>🎉</div>
-            <p style={{ fontFamily:"'Playfair Display',serif", fontSize:20,
-              color:C.cream, margin:0, fontWeight:600 }}>
-              You're in! Welcome to the K2 Journeys community.
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={submit} style={{
-            display:"flex", gap:12, flexWrap:"wrap", justifyContent:"center",
-          }}>
-            <input
-              type="email" value={email} required
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-              style={{
-                flex:"1 1 260px", padding:"15px 22px",
-                background:"rgba(255,255,255,0.05)",
-                border:"1px solid rgba(255,255,255,0.12)",
-                borderRadius:50, fontFamily:"Inter", fontSize:15,
-                color:C.cream, outline:"none",
-              }}
-              onFocus={e => e.target.style.borderColor = C.teal}
-              onBlur={e  => e.target.style.borderColor = "rgba(255,255,255,0.12)"}
-            />
-            <button type="submit" style={{
-              background:`linear-gradient(135deg,${C.rose},#A855F7)`,
-              color:"#fff", border:"none", borderRadius:50,
-              padding:"15px 32px", fontFamily:"Inter",
-              fontSize:15, fontWeight:600, cursor:"pointer", flexShrink:0,
-              boxShadow:`0 8px 30px rgba(212,91,114,0.4)`,
-            }}>Subscribe →</button>
-          </form>
-        )}
-      </div>
-    </section>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════
-   FINAL CTA
-══════════════════════════════════════════════════════════════ */
-function BlogCTA() {
-  const [ref, visible] = useReveal();
-  return (
-    <section ref={ref} style={{
-      position:"relative", overflow:"hidden",
-      padding:"130px 8vw", textAlign:"center",
-      backgroundImage:"url(https://picsum.photos/seed/blog-cta-adventure/1920/1080)",
-      backgroundSize:"cover", backgroundPosition:"center",
-      backgroundAttachment:"fixed",
-    }}>
-      <div style={{
-        position:"absolute", inset:0,
-        background:"linear-gradient(135deg,rgba(13,19,33,0.88) 0%,rgba(13,19,33,0.75) 100%)",
-      }} />
-      <div style={{
-        position:"relative", zIndex:1,
-        opacity: visible ? 1 : 0,
-        transform: visible ? "none" : "translateY(40px)",
-        transition:"all 1s ease",
-      }}>
-        <h2 style={{
-          fontFamily:"'Playfair Display',serif",
-          fontSize:"clamp(2.2rem,4.5vw,4rem)",
-          fontWeight:700, color:C.cream, margin:"0 0 20px", lineHeight:1.15,
-        }}>
-          Ready for Your<br /><em style={{ color:C.teal }}>Next Journey?</em>
-        </h2>
-        <p style={{
-          fontFamily:"Inter", fontSize:"clamp(0.95rem,1.3vw,1.1rem)",
-          color:"rgba(244,240,232,0.65)", maxWidth:520,
-          margin:"0 auto 44px", lineHeight:1.8, fontWeight:300,
-        }}>
-          From visa assistance to unforgettable travel experiences, K2 Journeys helps you explore the world with confidence.
-        </p>
-        <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
-          <button style={{
-            background:`linear-gradient(135deg,${C.teal},#0E5C5E)`,
-            color:"#fff", border:"none", borderRadius:50,
-            padding:"16px 42px", fontFamily:"Inter",
-            fontSize:16, fontWeight:600, cursor:"pointer",
-            boxShadow:`0 8px 40px rgba(31,138,140,0.5)`,
-          }}>Start Planning Today →</button>
-          <button style={{
-            background:"rgba(255,255,255,0.07)", backdropFilter:"blur(10px)",
-            color:C.cream, border:"1px solid rgba(255,255,255,0.2)",
-            borderRadius:50, padding:"16px 42px", fontFamily:"Inter",
-            fontSize:16, fontWeight:500, cursor:"pointer",
-          }}>Apply For Visa</button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════
-   SHARED STYLES
-══════════════════════════════════════════════════════════════ */
-const sectionLabel = {
-  display:"inline-block",
-  fontFamily:"Inter", fontSize:11, fontWeight:600,
-  letterSpacing:4, textTransform:"uppercase", color:C.teal,
-  background:`rgba(${hexRgb(C.teal)},0.12)`,
-  border:`1px solid rgba(${hexRgb(C.teal)},0.3)`,
-  borderRadius:50, padding:"6px 18px", marginBottom:16,
-};
-const sectionTitle = {
-  fontFamily:"'Playfair Display',serif",
-  fontSize:"clamp(2rem,3.5vw,3rem)",
-  fontWeight:700, color:C.cream, margin:"0 0 16px", lineHeight:1.15,
-};
-
-/* ══════════════════════════════════════════════════════════════
-   PAGE ROOT
-══════════════════════════════════════════════════════════════ */
 export default function BlogPage() {
+  const [, setDark] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [search, setSearch] = useState("");
+
+  const filtered = posts.filter(p =>
+    (activeCategory === "All" || p.tag === activeCategory) &&
+    (search === "" || p.title.toLowerCase().includes(search.toLowerCase()))
+  );
 
   return (
-    <>
-      <style>{fontStyle}</style>
+    <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", color: "#1A1A2E" }}>
       <style>{`
-        * { box-sizing: border-box; }
-        body { margin: 0; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0D1321; }
-        ::-webkit-scrollbar-thumb { background: #1F8A8C; border-radius: 3px; }
-        @keyframes heroIn {
-          from { opacity: 0; transform: translateY(50px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scrollPulse {
-          0%,100% { opacity:0.35; transform: translateX(-50%) translateY(0); }
-          50%      { opacity:0.7;  transform: translateX(-50%) translateY(8px); }
-        }
-        @keyframes tipFloat {
-          0%,100% { transform: translateY(0) rotate(0deg); }
-          50%      { transform: translateY(-8px) rotate(5deg); }
-        }
-        input::placeholder { color: rgba(244,240,232,0.25); }
-        div[style*="overflow-x: auto"]::-webkit-scrollbar,
-        div[style*="overflowX"]::-webkit-scrollbar { display: none; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; cursor: pointer; border: none; }
+        input { font-family: inherit; }
+        input::placeholder { color: #9CA3AF; }
+        input:focus { outline: 2px solid #0ABFBC; }
       `}</style>
 
-      <div style={{ background:C.navy, minHeight:"100vh" }}>
-        <BlogHero />
-        <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
-        <TrendingArticles activeCategory={activeCategory} />
-        <ExploreDestinations />
-        <EditorsPick />
-        <LatestStories />
-        <TravelTip />
-        <Newsletter />
-        <BlogCTA />
+      {/* NAVBAR */}
+      <header style={{ position: "sticky", top: 0, zIndex: 100, background: "#fff", boxShadow: "0 2px 16px rgba(0,0,0,0.07)", padding: "0 48px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <div style={{ background: "#0D1321", color: "#fff", fontWeight: 800, fontSize: 20, padding: "5px 10px", borderRadius: 6 }}>K2</div>
+          <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#0D1321" }}>JOURNEYS</span>
+        </div>
+        <nav style={{ display: "flex", gap: 32 }}>
+          {navLinks.map((l) => {
+            const to = navRoutes[l];
+            const isActive = l === "Blogs";
+            const style = { fontSize: 14, fontWeight: 500, color: isActive ? "#0ABFBC" : "#374151", borderBottom: isActive ? "2px solid #0ABFBC" : "2px solid transparent", paddingBottom: 4 };
+            return to ? <Link key={l} to={to} style={style}>{l}</Link> : <span key={l} style={style}>{l}</span>;
+          })}
+        </nav>
+        <button onClick={() => setDark(d => !d)} style={{ background: "#0ABFBC", color: "#fff", fontWeight: 700, fontSize: 14, padding: "10px 22px", borderRadius: 24, display: "flex", alignItems: "center", gap: 8 }}>
+          Book Now <ArrowRight size={14} />
+        </button>
+      </header>
+
+      {/* PAGE HEADER */}
+      <section style={{ background: "#F0FAFA", padding: "64px 64px 48px", textAlign: "center" }}>
+        <p style={{ color: "#0ABFBC", fontSize: 12.5, fontWeight: 700, letterSpacing: 3, marginBottom: 14 }}>TRAVEL STORIES & TIPS</p>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 48, fontWeight: 700, color: "#0D1321", marginBottom: 16 }}>The K2 Journal</h1>
+        <p style={{ fontSize: 16, color: "#6B7280", lineHeight: 1.7, maxWidth: 520, margin: "0 auto 32px" }}>
+          Real stories from the road. Honest guides from people who've actually been there. No sponsored fluff.
+        </p>
+        <div style={{ position: "relative", display: "inline-flex", width: 440 }}>
+          <Search size={17} color="#9CA3AF" style={{ position: "absolute", left: 18, top: "50%", transform: "translateY(-50%)" }} />
+          <input
+            type="text"
+            placeholder="Search articles..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{ width: "100%", padding: "14px 18px 14px 48px", borderRadius: 28, border: "1.5px solid #E5E7EB", fontSize: 14, color: "#0D1321", background: "#fff", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}
+          />
+        </div>
+      </section>
+
+      {/* FEATURED */}
+      <section style={{ padding: "56px 64px 0" }}>
+        <p style={{ color: "#0ABFBC", fontSize: 12.5, fontWeight: 700, letterSpacing: 3, marginBottom: 20 }}>FEATURED STORY</p>
+        <div style={{ display: "flex", gap: 48, alignItems: "center", background: "#F9FAFB", borderRadius: 24, overflow: "hidden", border: "1px solid #E5E7EB" }}>
+          <img src={featured.img} alt={featured.title} style={{ width: 480, height: 340, objectFit: "cover", flexShrink: 0 }} />
+          <div style={{ padding: "36px 40px 36px 0" }}>
+            <span style={{ background: `${featured.tagColor}18`, color: featured.tagColor, fontSize: 12, fontWeight: 700, padding: "4px 12px", borderRadius: 12, display: "inline-block", marginBottom: 18 }}>{featured.tag}</span>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 700, color: "#0D1321", lineHeight: 1.3, marginBottom: 16 }}>{featured.title}</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "#6B7280", marginBottom: 24 }}>{featured.excerpt}</p>
+            <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 24, color: "#9CA3AF", fontSize: 13 }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 6 }}><User size={13} />{featured.author}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 6 }}><Calendar size={13} />{featured.date}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 6 }}><Clock size={13} />{featured.readTime}</span>
+            </div>
+            <button style={{ background: "#0ABFBC", color: "#fff", fontWeight: 700, fontSize: 14, padding: "12px 24px", borderRadius: 20, display: "inline-flex", alignItems: "center", gap: 8 }}>
+              Read Story <ArrowRight size={14} />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* CATEGORY FILTER */}
+      <section style={{ padding: "48px 64px 0" }}>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          {categories.map(cat => (
+            <button key={cat} onClick={() => setActiveCategory(cat)} style={{ padding: "9px 20px", borderRadius: 20, fontSize: 13.5, fontWeight: 600, border: cat === activeCategory ? "none" : "1.5px solid #E5E7EB", background: cat === activeCategory ? "#0ABFBC" : "#fff", color: cat === activeCategory ? "#fff" : "#374151", cursor: "pointer" }}>
+              {cat}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* POSTS GRID */}
+      <section style={{ padding: "36px 64px 72px", display: "flex", gap: 40, alignItems: "flex-start" }}>
+        <div style={{ flex: 1 }}>
+          {filtered.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "60px 0", color: "#9CA3AF" }}>
+              <p style={{ fontSize: 18, fontWeight: 600 }}>No articles found</p>
+              <p style={{ fontSize: 14, marginTop: 8 }}>Try a different search or category</p>
+            </div>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
+              {filtered.map(post => (
+                <article key={post.id} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: 18, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.04)", cursor: "pointer" }}>
+                  <img src={post.img} alt={post.title} style={{ width: "100%", height: 200, objectFit: "cover" }} />
+                  <div style={{ padding: "22px 22px 24px" }}>
+                    <span style={{ background: `${post.tagColor}18`, color: post.tagColor, fontSize: 11.5, fontWeight: 700, padding: "3px 11px", borderRadius: 10, display: "inline-block", marginBottom: 12 }}>{post.tag}</span>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 19, fontWeight: 700, color: "#0D1321", lineHeight: 1.35, marginBottom: 10 }}>{post.title}</h3>
+                    <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "#6B7280", marginBottom: 16 }}>{post.excerpt}</p>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 14, color: "#9CA3AF", fontSize: 12 }}>
+                        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><User size={12} />{post.author}</span>
+                        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Clock size={12} />{post.readTime}</span>
+                      </div>
+                      <button style={{ background: "transparent", color: "#0ABFBC", fontWeight: 700, fontSize: 13, display: "flex", alignItems: "center", gap: 4, padding: 0 }}>
+                        Read <ArrowRight size={13} />
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Sidebar */}
+        <div style={{ width: 280, flexShrink: 0 }}>
+          <div style={{ background: "#F9FAFB", borderRadius: 16, padding: "24px 22px", border: "1px solid #E5E7EB", marginBottom: 24 }}>
+            <h4 style={{ fontSize: 16, fontWeight: 700, color: "#0D1321", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}><Tag size={15} color="#0ABFBC" /> Popular Tags</h4>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {popularTags.map(tag => (
+                <span key={tag} style={{ background: "#fff", border: "1.5px solid #E5E7EB", color: "#374151", fontSize: 12.5, fontWeight: 500, padding: "5px 13px", borderRadius: 14, cursor: "pointer" }}>{tag}</span>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: "#0ABFBC", borderRadius: 16, padding: "28px 24px", color: "#fff" }}>
+            <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, marginBottom: 12 }}>Plan your next journey</h4>
+            <p style={{ fontSize: 13.5, lineHeight: 1.65, marginBottom: 20, opacity: 0.9 }}>Inspired by what you read? Let us turn it into a real trip.</p>
+            <button style={{ background: "#fff", color: "#0ABFBC", fontWeight: 700, fontSize: 13.5, padding: "11px 20px", borderRadius: 20, display: "flex", alignItems: "center", gap: 8, width: "100%" }}>
+              Talk to Our Team <ArrowRight size={13} />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
+
+function Footer() {
+  const quickLinks = { "Itinerary": null, "Visa": "/visa", "Hotel & Air": null, "MICE": null, "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
+  const destinations = ["Ladakh", "Manali", "Spiti Valley", "Uttarakhand", "Kashmir", "Kerala"];
+  return (
+    <footer style={{ background: "#0D1321", padding: "56px 64px 24px" }}>
+      <div style={{ display: "flex", gap: 48, marginBottom: 40 }}>
+        <div style={{ width: 260, flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
+            <div style={{ background: "#0ABFBC", color: "#fff", fontWeight: 800, fontSize: 18, padding: "4px 9px", borderRadius: 5 }}>K2</div>
+            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 3, color: "#fff" }}>JOURNEYS</span>
+          </div>
+          <p style={{ color: "#9CA3AF", fontSize: 13.5, lineHeight: 1.7, marginBottom: 20 }}>We curate authentic, responsible, and unforgettable travel experiences across the world.</p>
+          <div style={{ display: "flex", gap: 10 }}>
+            {[Instagram, Linkedin].map((Icon, i) => <div key={i} style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid #374151", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF" }}><Icon size={14} /></div>)}
+          </div>
+        </div>
+        <div style={{ width: 180 }}>
+          <h5 style={{ color: "#fff", fontSize: 15, fontWeight: 700, marginBottom: 18 }}>Quick Links</h5>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {Object.entries(quickLinks).map(([l, to]) =>
+              to
+                ? <Link key={l} to={to} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#0ABFBC" />{l}</Link>
+                : <span key={l} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#0ABFBC" />{l}</span>
+            )}
+          </div>
+        </div>
+        <div style={{ width: 200 }}>
+          <h5 style={{ color: "#fff", fontSize: 15, fontWeight: 700, marginBottom: 18 }}>Popular Destinations</h5>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {destinations.map(d => <span key={d} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#0ABFBC" />{d}</span>)}
+          </div>
+        </div>
+        <div style={{ flex: 1 }}>
+          <h5 style={{ color: "#fff", fontSize: 15, fontWeight: 700, marginBottom: 14 }}>Newsletter</h5>
+          <p style={{ color: "#9CA3AF", fontSize: 13.5, lineHeight: 1.7, marginBottom: 16 }}>Subscribe to get travel tips, updates & exclusive offers.</p>
+          <div style={{ display: "flex", gap: 8 }}>
+            <input type="email" placeholder="Your email address" style={{ flex: 1, background: "#161B27", border: "1px solid #374151", borderRadius: 8, padding: "11px 14px", color: "#fff", fontSize: 13 }} />
+            <button style={{ background: "#0ABFBC", color: "#fff", borderRadius: 8, padding: "0 16px", fontWeight: 600, fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>Send <ArrowRight size={13} /></button>
+          </div>
+        </div>
       </div>
-    </>
+      <div style={{ borderTop: "1px solid #1F2937", paddingTop: 20, display: "flex", justifyContent: "space-between", color: "#6B7280", fontSize: 12.5 }}>
+        <span>© 2025 K2 Journeys. All rights reserved.</span>
+        <div style={{ display: "flex", gap: 20 }}>
+          <span style={{ color: "#6B7280" }}>Privacy Policy</span>
+          <span style={{ color: "#6B7280" }}>Terms & Conditions</span>
+        </div>
+      </div>
+    </footer>
   );
 }

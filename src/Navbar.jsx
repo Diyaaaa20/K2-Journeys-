@@ -3,11 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 function Navbar() {
   const { pathname } = useLocation();
   const links = [
-    { to: "/about",           label: "About Us" },
-    { to: "/visa",            label: "Visa Assistance" },
-    { to: "/blog",            label: "Blog" },
-    { to: "/travel-stories",  label: "Travel Stories" },
-    { to: "/contact",         label: "Contact Us" },
+    { to: "/about",   label: "About Us" },
+    { to: "/visa",    label: "Visa Assistance" },
+    { to: "/blog",    label: "Blog" },
+    { to: "/contact", label: "Contact Us" },
   ];
   return (
     <nav style={{
