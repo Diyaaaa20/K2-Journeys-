@@ -1,0 +1,199 @@
+/* ── K2 Journeys – Mobile Responsive Styles ──
+   Uses !important to override per-component inline styles.
+   Breakpoints: ≤768px mobile, 769–1024px tablet.
+*/
+
+/* Hamburger button — hidden on desktop, shown via media query */
+.k2-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* Mobile slide-down menu */
+.k2-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 68px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  flex-direction: column;
+  padding: 12px 24px 20px;
+  gap: 2px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+  z-index: 99;
+  border-top: 1px solid #f3f4f6;
+}
+.k2-mobile-menu.open { display: flex; }
+
+/* ─────────────────────────── MOBILE (≤768px) ─────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Navbar */
+  .k2-header  { padding: 0 20px !important; }
+  .k2-nav-links { display: none !important; }
+  .k2-book-btn  { display: none !important; }
+  .k2-hamburger { display: flex !important; }
+
+  /* ── About: hero ── */
+  .k2-about-hero { padding: 40px 24px 36px !important; }
+
+  /* ── Stats row → 2-column grid ── */
+  .k2-stats-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px !important;
+    padding: 36px 24px !important;
+  }
+
+  /* ── About: story section (side-by-side → stacked) ── */
+  .k2-story-section {
+    flex-direction: column !important;
+    padding: 48px 24px !important;
+    gap: 32px !important;
+  }
+  .k2-story-img { height: 260px !important; }
+
+  /* ── About: values ── */
+  .k2-values-section { padding: 56px 24px !important; }
+  .k2-values-grid { grid-template-columns: 1fr !important; }
+
+  /* ── About: team ── */
+  .k2-team-section { padding: 60px 24px !important; }
+  .k2-team-grid   { grid-template-columns: 1fr 1fr !important; }
+
+  /* ── About: awards ── */
+  .k2-awards-section { padding: 60px 24px !important; }
+  .k2-awards-detail {
+    flex-direction: column !important;
+    padding: 24px 20px !important;
+    gap: 18px !important;
+    align-items: flex-start !important;
+  }
+
+  /* ── About: CTA ── */
+  .k2-about-cta { padding: 60px 24px !important; }
+
+  /* ── Contact: hero ── */
+  .k2-contact-hero-inner {
+    flex-direction: column !important;
+    padding: 40px 24px 36px !important;
+    gap: 24px !important;
+  }
+  .k2-contact-hero-inner > * { max-width: 100% !important; width: 100% !important; }
+
+  /* ── Contact: split layout ── */
+  .k2-contact-split { flex-direction: column !important; min-height: unset !important; }
+  .k2-contact-info-panel { width: 100% !important; padding: 40px 24px !important; }
+  .k2-contact-form-panel { padding: 40px 24px !important; }
+  .k2-contact-form-grid  { grid-template-columns: 1fr !important; }
+
+  /* ── Contact: CTA banner ── */
+  .k2-contact-cta { padding: 40px 24px !important; }
+  .k2-cta-inner {
+    flex-direction: column !important;
+    padding: 32px 24px !important;
+    gap: 20px !important;
+    align-items: flex-start !important;
+  }
+  .k2-cta-inner > img { display: none !important; }
+  .k2-cta-buttons {
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+    flex-shrink: unset !important;
+  }
+  .k2-cta-buttons > button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* ── Visa: hero ── */
+  .k2-visa-hero {
+    flex-direction: column !important;
+    padding: 40px 24px 36px !important;
+    gap: 24px !important;
+    min-height: unset !important;
+  }
+  .k2-visa-hero-text { max-width: 100% !important; }
+  .k2-visa-hero-badges { flex-direction: column !important; }
+  .k2-visa-hero-badges > * { width: 100% !important; }
+
+  /* ── Visa: power section ── */
+  .k2-visa-power { padding: 40px 24px !important; }
+  .k2-visa-power-inner { flex-direction: column !important; gap: 28px !important; }
+  .k2-visa-power-grid  { grid-template-columns: 1fr 1fr !important; }
+
+  /* ── Visa: listing ── */
+  .k2-visa-listing { padding: 60px 24px !important; }
+  .k2-visa-grid    { grid-template-columns: 1fr !important; }
+
+  /* ── Visa: process ── */
+  .k2-visa-process { padding: 60px 24px !important; }
+
+  /* ── Visa: FAQ + form ── */
+  .k2-faq-form { padding: 60px 24px !important; }
+  .k2-faq-form-inner {
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+  .k2-faq-form-sidebar { width: 100% !important; flex-shrink: unset !important; }
+
+  /* ── Visa: disclaimer ── */
+  .k2-disclaimer { padding: 0 24px 48px !important; }
+
+  /* ── Blog: hero ── */
+  .k2-blog-hero { padding: 48px 24px 40px !important; }
+  .k2-search-bar { width: 100% !important; }
+
+  /* ── Blog: featured card ── */
+  .k2-featured-inner { flex-direction: column !important; }
+  .k2-featured-img-wrap {
+    width: 100% !important;
+    height: 220px !important;
+    min-height: 220px !important;
+    flex-shrink: unset !important;
+  }
+
+  /* ── Blog: filter bar ── */
+  .k2-filter-section { padding: 36px 24px 0 !important; }
+  .k2-category-filter {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    border-radius: 14px !important;
+  }
+
+  /* ── Blog: posts + sidebar ── */
+  .k2-blog-main {
+    flex-direction: column !important;
+    padding: 32px 24px 60px !important;
+    gap: 28px !important;
+  }
+  .k2-posts-grid   { grid-template-columns: 1fr !important; }
+  .k2-blog-sidebar { width: 100% !important; flex-shrink: unset !important; }
+
+  /* ── Footer ── */
+  .k2-footer { padding: 40px 24px 20px !important; }
+  .k2-footer-inner { flex-direction: column !important; gap: 28px !important; }
+  .k2-footer-inner > * { width: 100% !important; }
+  .k2-footer-bottom {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* ─────────────────────────── TABLET (769–1024px) ─────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .k2-header   { padding: 0 32px !important; }
+  .k2-values-grid { grid-template-columns: 1fr 1fr !important; }
+  .k2-team-grid   { grid-template-columns: 1fr 1fr !important; }
+  .k2-visa-grid   { grid-template-columns: 1fr 1fr !important; }
+  .k2-footer   { padding: 44px 32px 20px !important; }
+}
