@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight, Users, Zap, Globe, Award, ChevronRight,
-  MapPin, Calendar, Phone, Mail, CheckCircle, Star,
+  MapPin, Phone, Mail, CheckCircle, Star,
   Briefcase, Coffee, Mic, Package, Link as LinkIcon,
-  TrendingUp, Shield, Clock, HeartHandshake, ChevronDown, ChevronUp, Send
+  TrendingUp, Shield, Clock, HeartHandshake, ChevronDown, Send
 } from "lucide-react";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
@@ -27,52 +27,6 @@ function useInView(threshold = 0.15) {
 
 
 // ── Data ──────────────────────────────────────────────
-const MICE_PILLARS = [
-  {
-    letter: "M",
-    icon: Briefcase,
-    color: "#0ABFBC",
-    bg: "#E6F9F9",
-    title: "Meetings",
-    subtitle: "Strategic Corporate Gatherings",
-    desc: "From boardroom sessions to large offsite leadership summits, we coordinate every detail — venue, AV, catering, transfers — so your team can focus entirely on the agenda.",
-    features: ["Boardroom & Conference Rooms", "Leadership Summits", "Sales Kickoffs", "Board Retreats", "AGMs & Shareholder Meets"],
-    img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80",
-  },
-  {
-    letter: "I",
-    icon: Star,
-    color: "#FBBF24",
-    bg: "#FFFBEB",
-    title: "Incentives",
-    subtitle: "Reward. Motivate. Inspire.",
-    desc: "Reward your top performers with once-in-a-lifetime travel experiences. We design luxury incentive trips that boost morale, loyalty, and productivity long after the trip ends.",
-    features: ["Luxury Destination Retreats", "Team Building Programs", "Recognition Ceremonies", "Adventure & Experiential", "Employee Reward Trips"],
-    img: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&q=80",
-  },
-  {
-    letter: "C",
-    icon: Mic,
-    color: "#A78BFA",
-    bg: "#F5F3FF",
-    title: "Conferences",
-    subtitle: "Knowledge. Networking. Growth.",
-    desc: "Multi-day conferences demand flawless logistics. We handle venue sourcing, speaker coordination, registration, breakout sessions, and social programs for 50 to 5,000 delegates.",
-    features: ["Keynote & Speaker Logistics", "Convention Centre Booking", "Delegate Registration", "Panel & Workshop Setup", "Hybrid / Virtual Options"],
-    img: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80",
-  },
-  {
-    letter: "E",
-    icon: Package,
-    color: "#F87171",
-    bg: "#FEF2F2",
-    title: "Exhibitions",
-    subtitle: "Showcase. Connect. Expand.",
-    desc: "Trade shows and product launches require impact. We provide end-to-end exhibition management — from booth design to networking events — helping your brand stand out.",
-    features: ["Trade Show Management", "Product Launch Events", "Booth & Stall Design", "Gala Dinners", "Brand Activation"],
-    img: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80",
-  },
-];
 
 
 const DESTINATIONS = [
@@ -106,6 +60,73 @@ const TESTIMONIALS = [
   { name: "Priya Nair", role: "Events Manager, Pharma Global", quote: "We've been working with K2 for our annual conference for 3 years. Their 48-hour proposals and single-contact model saves us weeks of back-and-forth.", rating: 5, img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80" },
 ];
 
+const MICE_PILLARS = [
+  {
+    letter: "M",
+    title: "Meetings",
+    subtitle: "Strategic & Executive",
+    color: "#5f9bb3",
+    bg: "#E6F9F9",
+    icon: Briefcase,
+    img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80",
+    desc: "From executive board meetings to cross-functional leadership sessions, we create the perfect environment for decision-making and alignment. Every detail — venue, AV, catering, and agenda flow — is managed to perfection.",
+    features: [
+      "Executive boardrooms & hybrid setups",
+      "Technical AV & video conferencing",
+      "Customised agenda & facilitation support",
+      "Breakout rooms & networking zones",
+    ],
+  },
+  {
+    letter: "I",
+    title: "Incentives",
+    subtitle: "Reward & Motivate",
+    color: "#5f9bb3",
+    bg: "#F5F3FF",
+    icon: Award,
+    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+    desc: "Incentive travel is proven to boost employee performance by up to 44%. We design reward journeys your team will never forget — from beach retreats in Goa to luxury escapes in Dubai and Bali.",
+    features: [
+      "Luxury hotel & resort packages",
+      "Exclusive team activities & experiences",
+      "Custom gifts, awards & recognition moments",
+      "Group flight & transfer coordination",
+    ],
+  },
+  {
+    letter: "C",
+    title: "Conferences",
+    subtitle: "Large-Scale Gatherings",
+    color: "#5f9bb3",
+    bg: "#FFFBEB",
+    icon: Mic,
+    img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
+    desc: "Whether it's a 100-person product launch or a 5,000-delegate annual convention, we handle end-to-end conference logistics with precision — venues, speakers, AV, registration, and delegate management.",
+    features: [
+      "Venue scouting & contract negotiation",
+      "Stage design, AV & live production",
+      "Speaker management & agenda curation",
+      "Delegate registration & badge management",
+    ],
+  },
+  {
+    letter: "E",
+    title: "Exhibitions",
+    subtitle: "Brand & Product Showcases",
+    color: "#5f9bb3",
+    bg: "#FEF2F2",
+    icon: Package,
+    img: "https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?w=800&q=80",
+    desc: "Exhibitions and trade shows are powerful tools for brand visibility and lead generation. We manage stall design, logistics, visitor engagement, and on-site operations so your brand stands out.",
+    features: [
+      "Stall & booth design and setup",
+      "Product display & demo coordination",
+      "Visitor engagement planning",
+      "Logistics & on-ground team support",
+    ],
+  },
+];
+
 const FAQS = [
   { q: "What is the minimum group size for MICE bookings?", a: "We work with groups as small as 20 and as large as 5,000+. Our packages are fully customised to your group size, budget, and objectives — there is no fixed minimum." },
   { q: "Do you handle international MICE destinations?", a: "Yes. We manage MICE events across 40+ destinations including Dubai, Singapore, Bali, Thailand, Sri Lanka, and European cities. Our team has on-ground contacts at every key destination." },
@@ -116,10 +137,10 @@ const FAQS = [
 
 // ── Component ──────────────────────────────────────────
 export default function MICEPage() {
-  const [activePillar, setActivePillar] = useState(0);
   const [hoveredDest, setHoveredDest] = useState(null);
   const [hoveredWhy, setHoveredWhy] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
+  const [activePillar, setActivePillar] = useState(0);
   const [openFaq, setOpenFaq] = useState(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", type: "", size: "", destination: "", message: "" });
@@ -145,6 +166,11 @@ export default function MICEPage() {
     }, 2000);
     return () => clearInterval(t);
   }, [processInView]);
+
+  useEffect(() => {
+    const t = setInterval(() => setActivePillar(a => (a + 1) % MICE_PILLARS.length), 2000);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => {
     const t = setInterval(() => setActiveTestimonial(a => (a + 1) % TESTIMONIALS.length), 4000);
@@ -358,35 +384,47 @@ export default function MICEPage() {
       </section>
 
       {/* ── WHY US ── */}
-      <section ref={whyRef} style={{ padding:"80px 64px" }}>
-        <div style={{ textAlign:"center", marginBottom:52 }}>
-          <p style={{ color:"#0ABFBC", fontSize:12.5, fontWeight:700, letterSpacing:3, marginBottom:14 }}>WHY K2 JOURNEYS</p>
-          <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:40, fontWeight:700, color:"#0D1321" }}>What sets us apart</h2>
-        </div>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:22 }}>
-          {WHY_US.map((w, i) => (
-            <div
-              key={w.title}
-              onMouseEnter={() => setHoveredWhy(i)}
-              onMouseLeave={() => setHoveredWhy(null)}
-              style={{
-                background: hoveredWhy===i ? w.bg : "#fff",
-                border:`1.5px solid ${hoveredWhy===i ? w.color+"44" : "#F3F4F6"}`,
-                borderRadius:18, padding:"28px 24px",
-                boxShadow: hoveredWhy===i ? `0 12px 40px ${w.color}22` : "0 2px 12px rgba(0,0,0,0.04)",
-                transform: visibleWhy.includes(i) ? (hoveredWhy===i ? "translateY(-6px) scale(1.02)" : "translateY(0)") : "translateY(32px)",
-                opacity: visibleWhy.includes(i) ? 1 : 0,
-                transition:"all 0.4s cubic-bezier(0.34,1.2,0.64,1)",
-                cursor:"default",
-              }}
-            >
-              <div style={{ background:w.bg, borderRadius:"50%", width:52, height:52, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:18, transform: hoveredWhy===i ? "rotate(-8deg) scale(1.1)" : "none", transition:"transform 0.3s" }}>
-                <w.icon size={24} color={w.color} />
+      <section ref={whyRef} style={{ position:"relative", padding:"80px 64px", overflow:"hidden" }}>
+        {/* Background image */}
+        <img
+          src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1600&q=80"
+          alt=""
+          style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center" }}
+        />
+        {/* Dark teal overlay so cards stay readable */}
+        <div style={{ position:"absolute", inset:0, background:"rgba(13,19,33,0.72)" }} />
+
+        <div style={{ position:"relative" }}>
+          <div style={{ textAlign:"center", marginBottom:52 }}>
+            <p style={{ color:"#0ABFBC", fontSize:12.5, fontWeight:700, letterSpacing:3, marginBottom:14 }}>WHY K2 JOURNEYS</p>
+            <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:40, fontWeight:700, color:"#fff" }}>What sets us apart</h2>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:22 }}>
+            {WHY_US.map((w, i) => (
+              <div
+                key={w.title}
+                onMouseEnter={() => setHoveredWhy(i)}
+                onMouseLeave={() => setHoveredWhy(null)}
+                style={{
+                  background: hoveredWhy===i ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.08)",
+                  backdropFilter:"blur(14px)",
+                  border:`1.5px solid ${hoveredWhy===i ? w.color+"99" : "rgba(255,255,255,0.15)"}`,
+                  borderRadius:18, padding:"28px 24px",
+                  boxShadow: hoveredWhy===i ? `0 12px 40px ${w.color}44` : "0 2px 12px rgba(0,0,0,0.2)",
+                  transform: visibleWhy.includes(i) ? (hoveredWhy===i ? "translateY(-6px) scale(1.02)" : "translateY(0)") : "translateY(32px)",
+                  opacity: visibleWhy.includes(i) ? 1 : 0,
+                  transition:"all 0.4s cubic-bezier(0.34,1.2,0.64,1)",
+                  cursor:"default",
+                }}
+              >
+                <div style={{ background:w.bg, borderRadius:"50%", width:52, height:52, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:18, transform: hoveredWhy===i ? "rotate(-8deg) scale(1.1)" : "none", transition:"transform 0.3s" }}>
+                  <w.icon size={24} color={w.color} />
+                </div>
+                <h4 style={{ fontSize:16, fontWeight:700, color:"#fff", marginBottom:10 }}>{w.title}</h4>
+                <p style={{ fontSize:13.5, lineHeight:1.7, color:"rgba(255,255,255,0.7)" }}>{w.desc}</p>
               </div>
-              <h4 style={{ fontSize:16, fontWeight:700, color:"#0D1321", marginBottom:10 }}>{w.title}</h4>
-              <p style={{ fontSize:13.5, lineHeight:1.7, color:"#6B7280" }}>{w.desc}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
