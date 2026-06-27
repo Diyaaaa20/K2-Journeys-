@@ -232,10 +232,15 @@ export default function VisaPageV2() {
               onClick={() => setSelectedVisa(v)}
               style={{
                 background: "#fff",
-                border: `1.5px solid ${hoveredCard === i ? v.glow + "55" : "#E5E7EB"}`,
+                border: hoveredCard === i
+               ? "2.5px solid #A78BFA"
+               : "1.5px solid #E5E7EB",
                 borderRadius: 20,
                 overflow: "hidden",
-                boxShadow: hoveredCard === i ? `0 20px 56px ${v.glow}28` : "0 3px 16px rgba(0,0,0,0.06)",
+                boxShadow:
+  hoveredCard === i
+    ? "0 0 25px rgba(167, 139, 250, 0.45), 0 12px 35px rgba(167, 139, 250, 0.18)"
+    : "0 8px 22px rgba(15,23,42,0.08)",
                 transform: hoveredCard === i ? "translateY(-10px) scale(1.02)" : "translateY(0) scale(1)",
                 transition: "all 0.38s cubic-bezier(0.34,1.2,0.64,1)",
                 cursor: "pointer",
