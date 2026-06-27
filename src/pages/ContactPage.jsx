@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Mail, Phone, Clock, User, Tag, Edit3, Send, Shield, Heart, CheckCircle, Share2, Link2, ChevronRight, Zap, MessageCircle, Globe } from "lucide-react";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
-const navRoutes = { "Visa": "/visa", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
+const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
 
 function useInView(threshold = 0.15) {
   const ref = useRef(null);

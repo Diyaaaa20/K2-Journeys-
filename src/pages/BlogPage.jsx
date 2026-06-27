@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Search, Calendar, Clock, User, Tag, ChevronRight, Share2, Link2, Bookmark, TrendingUp, Eye } from "lucide-react";
 
 const navLinks = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
-const navRoutes = { "Visa": "/visa", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
+const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
 const categories = ["All", "Adventure", "Culture", "Budget Tips", "Hidden Gems", "Travel Guides"];
 
 const featured = {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, FileText, CheckCircle, Clock, AlertCircle, Globe, Shield, Phone, ChevronDown, ChevronUp, User, Mail, MapPin, Calendar, ChevronRight, ChevronLeft, Share2, Link2, X, ExternalLink, TrendingUp, Zap, Plane } from "lucide-react";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
-const navRoutes = { "Visa": "/visa", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
+const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
 
 function useInView(threshold = 0.2) {
   const ref = useRef(null);
@@ -271,9 +271,28 @@ export default function VisaPageV2() {
                     </div>
                   ))}
                 </div>
-                <button style={{ width: "100%", background: hoveredCard === i ? v.glow : "#F9FAFB", color: hoveredCard === i ? "#fff" : "#374151", fontWeight: 600, fontSize: 13.5, padding: "11px", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, transition: "all 0.3s", border: `1px solid ${hoveredCard === i ? v.glow : "#E5E7EB"}`, boxShadow: hoveredCard === i ? `0 4px 16px ${v.glow}44` : "none" }}>
-                  View Full Details <ExternalLink size={13} />
-                </button>
+                <button
+  style={{
+    width: "100%",
+    background: "#A78BFA", // Always lavender
+    color: "#fff",
+    fontWeight: 600,
+    fontSize: 13.5,
+    padding: "11px",
+    borderRadius: 10,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    transition: "all 0.3s ease",
+    border: "1px solid #A78BFA",
+    boxShadow: hoveredCard === i
+      ? "0 0 20px rgba(167, 139, 250, 0.8)"
+      : "0 4px 12px rgba(167, 139, 250, 0.35)",
+  }}
+>
+  View Full Details <ExternalLink size={13} />
+</button>
               </div>
             </div>
           ))}

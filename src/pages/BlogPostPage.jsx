@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Clock, User, Calendar, Eye, Bookmark, Share2, ArrowRight, ChevronRight, Play, Quote } from "lucide-react";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
-const navRoutes = { "Visa": "/visa", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
+const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
 
 function useInView(threshold = 0.15) {
   const ref = useRef(null);

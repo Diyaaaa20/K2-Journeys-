@@ -4,6 +4,7 @@ import ContactPage from "./pages/ContactPage";
 import VisaPage from "./pages/VisaPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import MICEPage from "./pages/MICEPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/visa" element={<VisaPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="/mice" element={<MICEPage />} />
       </Routes>
     </BrowserRouter>
   );

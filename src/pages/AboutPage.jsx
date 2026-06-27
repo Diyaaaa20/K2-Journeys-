@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Compass, HeartHandshake, Leaf, HeartPulse, Rocket, Wand2, Globe, Star, Award, ChevronRight, Link2, Share2, X, ExternalLink, Clock } from "lucide-react";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
-const navRoutes = { "Visa": "/visa", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
+const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
 
 // ── Animated counter hook ──
 function useCountUp(target, duration = 2000, start = false) {
