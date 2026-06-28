@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Compass, HeartHandshake, Leaf, HeartPulse, Rocket, Wand2, Globe, Star, Award, ChevronRight, Link2, Share2, X, ExternalLink, Clock } from "lucide-react";
+import { ArrowRight, Compass, HeartHandshake, Leaf, HeartPulse, Rocket, Wand2, Globe, Globe2, Users, ShieldCheck, Sparkles, PlaneTakeoff, Map, Star, Award, ChevronRight, Link2, Share2, Clock } from "lucide-react";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -63,19 +63,69 @@ const STORY_SLIDES = [
 ];
 
 const VALUES = [
-  { icon: Compass, color: "#00bcd4", bg: "#E6F9F9", title: "Authentic Experiences", desc: "We never sell a checklist. Every route is walked, scouted, and felt by our team before it reaches you." },
-  { icon: HeartHandshake, color: "#F87171", bg: "#FEF2F2", title: "Small Groups", desc: "Intimate groups mean deeper connections — with the place, the culture, and the people around you." },
-  { icon: Leaf, color: "#34D399", bg: "#ECFDF5", title: "Responsible Travel", desc: "We leave footprints only in our memories. Local communities, ethical choices, real impact." },
-  { icon: HeartPulse, color: "#A78BFA", bg: "#F5F3FF", title: "Always With You", desc: "24/7 support from real humans, not bots. Before, during, and after every journey." },
-  { icon: Rocket, color: "#FBBF24", bg: "#FFFBEB", title: "Lightning Planning", desc: "From enquiry to confirmed itinerary in 48 hours. We move fast so you can move sooner." },
-  { icon: Wand2, color: "#F97316", bg: "#FFF7ED", title: "Tailor-Made Trips", desc: "No two travellers are alike. Every itinerary is built from scratch, around you." },
+  {
+    icon: Globe2,
+    color: "#06B6D4",
+    bg: "#ECFEFF",
+    title: "Authentic Experiences",
+    desc: "Every itinerary is personally explored before reaching you.",
+  },
+  {
+    icon: Users,
+    color: "#FB7185",
+    bg: "#FFF1F2",
+    title: "Small Groups",
+    desc: "Meaningful journeys with people who share your passion.",
+  },
+  {
+    icon: ShieldCheck,
+    color: "#22C55E",
+    bg: "#F0FDF4",
+    title: "Responsible Travel",
+    desc: "Supporting local communities while protecting nature.",
+  },
+  {
+    icon: Sparkles,
+    color: "#A855F7",
+    bg: "#FAF5FF",
+    title: "Always With You",
+    desc: "Real travel experts available whenever you need them.",
+  },
+  {
+    icon: PlaneTakeoff,
+    color: "#F59E0B",
+    bg: "#FFFBEB",
+    title: "Fast Planning",
+    desc: "Custom itineraries delivered in as little as 48 hours.",
+  },
+  {
+    icon: Map,
+    color: "#F97316",
+    bg: "#FFF7ED",
+    title: "Tailor-Made Trips",
+    desc: "Designed entirely around your travel style.",
+  },
 ];
 
 const TEAM = [
-  { name: "Kabir Thakur", role: "Founder & Lead Guide", roleColor: "#00bcd4", bio: "Over a decade in the mountains, curating journeys that stay with you forever.", img: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop&crop=faces", linkedin: "#", instagram: "#", twitter: "#" },
-  { name: "Saanvi Rao", role: "Route Planning", roleColor: "#F87171", bio: "Saanvi maps experiences that blend culture, adventure, and authentic local connections.", img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=400&fit=crop&crop=faces", linkedin: "#", instagram: "#", twitter: "#" },
-  { name: "Imran Sheikh", role: "Operations", roleColor: "#FBBF24", bio: "Imran ensures every journey runs smoothly so you can focus on what matters — experiencing.", img: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=400&h=400&fit=crop&crop=faces", linkedin: "#", instagram: "#", twitter: "#" },
-  { name: "Priya Mehta", role: "Visa & Documentation", roleColor: "#A78BFA", bio: "Priya navigates every visa requirement so you're never held back by paperwork.", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=faces", linkedin: "#", instagram: "#", twitter: "#" },
+  {
+    name: "Kabir Thakur",
+    role: "Founder & Lead Guide",
+    roleColor: "#00bcd4",
+    bio: "Over a decade in the mountains, curating journeys that stay with you forever.",
+    thoughts: "I started K2 Journeys because I was tired of travel that felt like a checklist. Every mountain I've stood on, every valley I've walked through — it changed something in me. I want every traveller to feel that same shift. Not just to see a place, but to feel it in their bones and carry a piece of it home. That conviction is behind every route we build.",
+    img: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=800&h=900&fit=crop&crop=faces",
+    linkedin: "https://www.linkedin.com/in/gajanan-joshi-0a963796/",
+  },
+  {
+    name: "Saanvi Rao",
+    role: "Head of Route Planning",
+    roleColor: "#F87171",
+    bio: "Saanvi maps experiences that blend culture, adventure, and authentic local connections.",
+    thoughts: "A great route isn't just about the destination — it's every moment in between. The village you stop in for chai, the trail that isn't on any map, the local guide who knows the mountain by name. Those are the details I obsess over. Most itineraries skip right past them, but they're the things people talk about for years after they get home.",
+    img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=900&fit=crop&crop=faces",
+    linkedin: "https://www.linkedin.com/in/kedar-sathe-546150212/",
+  },
 ];
 
 const AWARDS = [
@@ -92,12 +142,19 @@ export default function AboutPageV2() {
   const [statsRef, statsInView] = useInView(0.3);
   const [valuesRef, valuesInView] = useInView(0.1);
   const [awardRef, awardInView] = useInView(0.1);
-  const [hoveredTeam, setHoveredTeam] = useState(null);
-  const [hoveredValue, setHoveredValue] = useState(null);
+const [hoveredValue, setHoveredValue] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeAward, setActiveAward] = useState(0);
   const [heroMouse, setHeroMouse] = useState({ x: 0.5, y: 0.5 });
   const [teamTilt, setTeamTilt] = useState({ i: null, rx: 0, ry: 0 });
+  const marqueeRef = useRef(null);
+  const [teamRef, teamInView] = useInView(0.15);
+  const [hoveredPhoto, setHoveredPhoto] = useState(null);
+
+  function scrollCards(dir) {
+    if (!marqueeRef.current) return;
+    marqueeRef.current.scrollLeft += dir * (268 + 28);
+  }
 
   // Auto-slide story carousel
   useEffect(() => {
@@ -112,6 +169,20 @@ export default function AboutPageV2() {
     const t = setInterval(() => setActiveAward(a => (a + 1) % AWARDS.length), 3000);
     return () => clearInterval(t);
   }, [awardInView]);
+
+  // Constant-speed auto-scroll for values carousel (mirrors original CSS marquee)
+  useEffect(() => {
+    const el = marqueeRef.current;
+    if (!el) return;
+    let raf;
+    function tick() {
+      el.scrollLeft += 1;
+      if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0;
+      raf = requestAnimationFrame(tick);
+    }
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   function goSlide(dir) {
     if (sliding) return;
@@ -137,15 +208,19 @@ export default function AboutPageV2() {
         @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .k2-marquee { overflow: hidden; }
-        .k2-marquee-track { display: flex; width: max-content; animation: marquee 28s linear infinite; }
-        .k2-marquee:hover .k2-marquee-track { animation-play-state: paused; }
+        .k2-marquee { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+        .k2-marquee::-webkit-scrollbar { display: none; }
+        .k2-marquee-track { display: flex; width: max-content; }
         @keyframes glowPulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.12); opacity: 0.85; } }
         @keyframes orbFloat { 0%,100% { box-shadow: 0 0 12px 4px var(--orb-c), 0 0 28px 10px var(--orb-c2); } 50% { box-shadow: 0 0 20px 8px var(--orb-c), 0 0 44px 18px var(--orb-c2); } }
         @keyframes lineGlow { 0%,100% { filter: blur(0px) brightness(1); } 50% { filter: blur(1px) brightness(1.4); } }
         @keyframes heroRingSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes particleFade { 0%,100% { opacity: 0.15; transform: translateY(0); } 50% { opacity: 0.7; transform: translateY(-18px); } }
         @keyframes heroGradientShift { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+        @keyframes teamSlideLeft { from { opacity: 0; transform: translateX(-55px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes teamSlideRight { from { opacity: 0; transform: translateX(55px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes teamFadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes accentReveal { from { transform: scaleX(0); transform-origin: left; opacity: 0; } to { transform: scaleX(1); transform-origin: left; opacity: 1; } }
       `}</style>
 
       {/* NAVBAR */}
@@ -325,157 +400,167 @@ export default function AboutPageV2() {
         </div>
       </section>
 
-      {/* ── VALUES (horizontal marquee with zig-zag layout) ── */}
+      {/* ── VALUES (scrollable carousel with arrow buttons) ── */}
       <section ref={valuesRef} className="k2-values-section" style={{
-        padding: "72px 0",
+        padding: "40px 0",
         backgroundImage: "linear-gradient(135deg, rgba(13,19,33,0.72) 0%, rgba(10,40,50,0.68) 50%, rgba(13,19,33,0.72) 100%), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=80')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
       }}>
-        <div style={{ textAlign: "center", marginBottom: 52, padding: "0 64px" }}>
+        <div style={{ textAlign: "center", marginBottom: 28, padding: "0 64px" }}>
           <p style={{ color: "#00bcd4", fontSize: 12.5, fontWeight: 700, letterSpacing: 3, marginBottom: 12 }}>WHAT WE STAND FOR</p>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 700, color: "#fff" }}>Our values in action</h2>
         </div>
-        <div className="k2-marquee" style={{ padding: "52px 0 88px" }}>
-          <div className="k2-marquee-track">
-            {[...VALUES, ...VALUES].map((v, i) => (
-              <div
-                key={i}
-                onMouseEnter={() => setHoveredValue(i)}
-                onMouseLeave={() => setHoveredValue(null)}
-                style={{
-                  width: 268,
-                  flexShrink: 0,
-                  marginRight: 28,
-                  background: hoveredValue === i ? v.bg : "rgba(255,255,255,0.10)",
-                  backdropFilter: "blur(14px)",
-                  WebkitBackdropFilter: "blur(14px)",
-                  borderRadius: 22,
-                  padding: "30px 26px",
-                  border: `1.5px solid ${hoveredValue === i ? v.color + "88" : "rgba(255,255,255,0.18)"}`,
-                  boxShadow: hoveredValue === i ? `0 20px 52px ${v.color}40` : "0 8px 32px rgba(0,0,0,0.25)",
-                  transform: `translateY(${i % 2 === 0 ? "-40px" : "40px"}) scale(${hoveredValue === i ? 1.04 : 1})`,
-                  transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.34,1.4,0.64,1)",
-                  cursor: "default",
-                }}
-              >
-                <div style={{
-                  background: `linear-gradient(135deg, ${v.bg}, ${v.color}20)`,
-                  borderRadius: 16,
-                  width: 60, height: 60,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  marginBottom: 20,
-                  border: `1.5px solid ${v.color}30`,
-                  boxShadow: `0 6px 18px ${v.color}25`,
-                  transition: "transform 0.35s",
-                  transform: hoveredValue === i ? "rotate(-10deg) scale(1.12)" : "rotate(0) scale(1)",
-                }}>
-                  <v.icon size={28} color={v.color} strokeWidth={1.7} />
+        <div style={{ position: "relative" }}>
+          <button
+            onClick={() => scrollCards(-1)}
+            style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(10px)", border: "1.5px solid rgba(255,255,255,0.22)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", cursor: "pointer", transition: "background 0.2s, border-color 0.2s" }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#00bcd4"; e.currentTarget.style.borderColor = "#00bcd4"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; }}
+          >
+            <ArrowRight size={18} style={{ transform: "rotate(180deg)" }} />
+          </button>
+          <button
+            onClick={() => scrollCards(1)}
+            style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(10px)", border: "1.5px solid rgba(255,255,255,0.22)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", cursor: "pointer", transition: "background 0.2s, border-color 0.2s" }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#00bcd4"; e.currentTarget.style.borderColor = "#00bcd4"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; }}
+          >
+            <ArrowRight size={18} />
+          </button>
+          <div ref={marqueeRef} className="k2-marquee" style={{ padding: "24px 64px 40px" }}>
+            <div className="k2-marquee-track">
+              {[...VALUES, ...VALUES].map((v, i) => (
+                <div
+                  key={i}
+                  onMouseEnter={() => setHoveredValue(i)}
+                  onMouseLeave={() => setHoveredValue(null)}
+                  style={{
+                    width: 268,
+                    flexShrink: 0,
+                    marginRight: 28,
+                    background: hoveredValue === i ? v.bg : "rgba(255,255,255,0.10)",
+                    backdropFilter: "blur(14px)",
+                    WebkitBackdropFilter: "blur(14px)",
+                    borderRadius: 22,
+                    padding: "30px 26px",
+                    border: `1.5px solid ${hoveredValue === i ? v.color + "44" : "rgba(255,255,255,0.18)"}`,
+                    boxShadow: hoveredValue === i ? `0 10px 28px ${v.color}22` : "0 8px 32px rgba(0,0,0,0.25)",
+                    transform: `scale(${hoveredValue === i ? 1.03 : 1})`,
+                    transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.34,1.4,0.64,1)",
+                    cursor: "default",
+                  }}
+                >
+                  <div style={{
+                    background: `linear-gradient(135deg, ${v.bg}, ${v.color}20)`,
+                    borderRadius: 16,
+                    width: 60, height: 60,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    marginBottom: 20,
+                    border: `1.5px solid ${v.color}30`,
+                    boxShadow: `0 4px 12px ${v.color}15`,
+                    transition: "transform 0.35s",
+                    transform: hoveredValue === i ? "rotate(-10deg) scale(1.12)" : "rotate(0) scale(1)",
+                  }}>
+                    <v.icon size={28} color={v.color} strokeWidth={1.7} />
+                  </div>
+                  <h4 style={{ fontSize: 16, fontWeight: 700, color: hoveredValue === i ? "#0D1321" : "#fff", marginBottom: 10, transition: "color 0.3s" }}>{v.title}</h4>
+                  <p style={{ fontSize: 13.5, lineHeight: 1.75, color: hoveredValue === i ? "#374151" : "rgba(255,255,255,0.72)", transition: "color 0.3s" }}>{v.desc}</p>
                 </div>
-                <h4 style={{ fontSize: 16, fontWeight: 700, color: hoveredValue === i ? "#0D1321" : "#fff", marginBottom: 10, transition: "color 0.3s" }}>{v.title}</h4>
-                <p style={{ fontSize: 13.5, lineHeight: 1.75, color: hoveredValue === i ? "#374151" : "rgba(255,255,255,0.72)", transition: "color 0.3s" }}>{v.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── TEAM ── */}
-      <section className="k2-team-section" style={{ padding: "80px 64px", background: "#0D1321" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
+      <section ref={teamRef} className="k2-team-section" style={{ padding: "80px 64px", background: "#0D1321" }}>
+        <div style={{ textAlign: "center", marginBottom: 72, animation: teamInView ? "fadeUp 0.7s ease both" : "none" }}>
           <p style={{ color: "#00bcd4", fontSize: 12.5, fontWeight: 700, letterSpacing: 3, marginBottom: 12 }}>MEET OUR TEAM</p>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 700, color: "#fff" }}>The people behind the routes.</h2>
           <p style={{ fontSize: 15, color: "#9CA3AF", marginTop: 12 }}>Small team, big heart — every journey carries a piece of each of us.</p>
         </div>
 
-        <div className="k2-team-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
-          {TEAM.map((m, i) => (
-            <div
-              key={m.name}
-              onMouseEnter={() => setHoveredTeam(i)}
-              onMouseLeave={() => setHoveredTeam(null)}
-              style={{
-                position: "relative",
-                height: 460,
-                borderRadius: 22,
-                overflow: "hidden",
-                cursor: "pointer",
-                boxShadow: hoveredTeam === i
-                  ? `0 28px 64px ${m.roleColor}40, 0 8px 24px rgba(0,0,0,0.3)`
-                  : "0 6px 28px rgba(0,0,0,0.35)",
-                transform: hoveredTeam === i ? "translateY(-10px)" : "translateY(0)",
-                transition: "transform 0.45s cubic-bezier(0.34,1.1,0.64,1), box-shadow 0.45s",
-              }}
-            >
-              {/* Full-bleed photo */}
-              <img
-                src={m.img}
-                alt={m.name}
-                style={{
-                  position: "absolute", inset: 0,
-                  width: "100%", height: "100%",
-                  objectFit: "cover", objectPosition: "top center",
-                  transform: hoveredTeam === i ? "scale(1.08)" : "scale(1)",
-                  transition: "transform 0.65s ease",
-                }}
-              />
+        <div style={{ display: "flex", flexDirection: "column", gap: 88 }}>
+          {TEAM.map((m, i) => {
+            const base = 0.15 + i * 0.2;
+            return (
+              <div key={m.name} style={{ display: "flex", flexDirection: i % 2 === 0 ? "row" : "row-reverse", gap: 64, alignItems: "center" }}>
 
-              {/* Thin coloured top accent bar */}
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: m.roleColor, zIndex: 3 }} />
+                {/* ── Photo card ── */}
+                <div
+                  onMouseEnter={() => setHoveredPhoto(i)}
+                  onMouseLeave={() => setHoveredPhoto(null)}
+                  style={{
+                    flex: "0 0 400px", height: 500, borderRadius: 24, overflow: "hidden", position: "relative",
+                    boxShadow: hoveredPhoto === i
+                      ? `0 40px 80px ${m.roleColor}44, 0 8px 28px rgba(0,0,0,0.5)`
+                      : `0 28px 64px ${m.roleColor}28, 0 8px 24px rgba(0,0,0,0.4)`,
+                    transform: hoveredPhoto === i ? "scale(1.025)" : "scale(1)",
+                    transition: "box-shadow 0.5s ease, transform 0.5s cubic-bezier(0.34,1.1,0.64,1)",
+                    animation: teamInView ? `${i % 2 === 0 ? "teamSlideLeft" : "teamSlideRight"} 0.9s cubic-bezier(0.2,0,0.2,1) ${base}s both` : "none",
+                  }}
+                >
+                  {/* Accent top bar — reveals with scaleX */}
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: m.roleColor, zIndex: 3, animation: teamInView ? `accentReveal 0.55s ease ${base + 0.35}s both` : "none" }} />
 
-              {/* Default: bottom name strip */}
-              <div style={{
-                position: "absolute", bottom: 0, left: 0, right: 0,
-                padding: "80px 22px 24px",
-                background: "linear-gradient(transparent, rgba(8,12,26,0.94))",
-                zIndex: 2,
-                opacity: hoveredTeam === i ? 0 : 1,
-                transition: "opacity 0.3s ease",
-              }}>
-                <h4 style={{ color: "#fff", fontSize: 19, fontWeight: 700, marginBottom: 5 }}>{m.name}</h4>
-                <span style={{ display: "inline-block", background: `${m.roleColor}35`, color: m.roleColor, fontSize: 11.5, fontWeight: 700, padding: "4px 12px", borderRadius: 12, letterSpacing: 0.5 }}>{m.role}</span>
-              </div>
+                  <img src={m.img} alt={m.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", transform: hoveredPhoto === i ? "scale(1.07)" : "scale(1)", transition: "transform 0.65s ease" }} />
 
-              {/* Hover: full slide-up info panel */}
-              <div style={{
-                position: "absolute", inset: 0,
-                background: `linear-gradient(to top, rgba(8,12,26,0.98) 0%, rgba(8,12,26,0.90) 55%, rgba(8,12,26,0.15) 100%)`,
-                display: "flex", flexDirection: "column", justifyContent: "flex-end",
-                padding: "30px 24px",
-                zIndex: 4,
-                transform: hoveredTeam === i ? "translateY(0)" : "translateY(100%)",
-                transition: "transform 0.48s cubic-bezier(0.34,1.1,0.64,1)",
-              }}>
-                {/* Coloured accent line */}
-                <div style={{ width: 38, height: 3, background: m.roleColor, borderRadius: 2, marginBottom: 16 }} />
-                <h4 style={{ color: "#fff", fontSize: 21, fontWeight: 700, marginBottom: 5 }}>{m.name}</h4>
-                <span style={{ display: "inline-block", background: `${m.roleColor}30`, color: m.roleColor, fontSize: 11.5, fontWeight: 700, padding: "4px 12px", borderRadius: 12, letterSpacing: 0.5, marginBottom: 16 }}>{m.role}</span>
-                <p style={{ color: "rgba(255,255,255,0.74)", fontSize: 13.5, lineHeight: 1.75, marginBottom: 22 }}>{m.bio}</p>
-                {/* Social icons */}
-                <div style={{ display: "flex", gap: 10 }}>
-                  {[Link2, Share2, X, ExternalLink].map((Icon, j) => (
-                    <a
-                      key={j}
-                      href={[m.linkedin, m.instagram, m.twitter, "#"][j]}
-                      style={{
-                        width: 38, height: 38, borderRadius: "50%",
-                        background: "rgba(255,255,255,0.10)",
-                        border: "1px solid rgba(255,255,255,0.22)",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        color: "rgba(255,255,255,0.75)",
-                        transition: "all 0.22s",
-                      }}
-                      onMouseEnter={e => { e.currentTarget.style.background = m.roleColor; e.currentTarget.style.borderColor = m.roleColor; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.10)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; e.currentTarget.style.color = "rgba(255,255,255,0.75)"; e.currentTarget.style.transform = "translateY(0)"; }}
-                    >
-                      <Icon size={14} />
-                    </a>
-                  ))}
+                  {/* Dark gradient — dims on hover to let colour wash show */}
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,26,0.65) 0%, transparent 55%)", opacity: hoveredPhoto === i ? 0.4 : 1, transition: "opacity 0.4s ease" }} />
+
+                  {/* Colour wash on hover */}
+                  <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, ${m.roleColor}55 0%, transparent 60%)`, opacity: hoveredPhoto === i ? 1 : 0, transition: "opacity 0.4s ease" }} />
+
+                  {/* Decorative index number */}
+                  <div style={{ position: "absolute", top: 18, right: 20, fontFamily: "'Playfair Display', serif", fontSize: 80, fontWeight: 700, color: "rgba(255,255,255,0.07)", lineHeight: 1, userSelect: "none", zIndex: 2, transform: hoveredPhoto === i ? "translateY(-5px)" : "translateY(0)", transition: "transform 0.4s ease" }}>
+                    0{i + 1}
+                  </div>
+                </div>
+
+                {/* ── Details ── */}
+                <div style={{ flex: 1, animation: teamInView ? `${i % 2 === 0 ? "teamSlideRight" : "teamSlideLeft"} 0.9s cubic-bezier(0.2,0,0.2,1) ${base + 0.1}s both` : "none" }}>
+
+                  <span style={{ display: "inline-block", background: `${m.roleColor}20`, color: m.roleColor, fontSize: 11.5, fontWeight: 700, padding: "5px 16px", borderRadius: 20, letterSpacing: 1, marginBottom: 18, animation: teamInView ? `teamFadeUp 0.5s ease ${base + 0.25}s both` : "none" }}>
+                    {m.role}
+                  </span>
+
+                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 34, fontWeight: 700, color: "#fff", marginBottom: 16, animation: teamInView ? `teamFadeUp 0.5s ease ${base + 0.35}s both` : "none" }}>
+                    {m.name}
+                  </h3>
+
+                  <div style={{ width: 44, height: 3, background: m.roleColor, borderRadius: 2, marginBottom: 22, animation: teamInView ? `accentReveal 0.5s ease ${base + 0.45}s both` : "none" }} />
+
+                  <p style={{ fontSize: 15, lineHeight: 1.85, color: "#9CA3AF", marginBottom: 24, animation: teamInView ? `teamFadeUp 0.5s ease ${base + 0.5}s both` : "none" }}>
+                    {m.bio}
+                  </p>
+
+                  {/* Quote with decorative opening mark */}
+                  <div style={{ position: "relative", animation: teamInView ? `teamFadeUp 0.5s ease ${base + 0.6}s both` : "none" }}>
+                    <div style={{ position: "absolute", top: -18, left: -6, fontFamily: "'Playfair Display', serif", fontSize: 96, lineHeight: 1, color: `${m.roleColor}18`, fontStyle: "italic", userSelect: "none", zIndex: 0 }}>"</div>
+                    <blockquote style={{ margin: "0 0 32px", paddingLeft: 22, borderLeft: `3px solid ${m.roleColor}`, position: "relative", zIndex: 1 }}>
+                      <p style={{ fontSize: 14.5, lineHeight: 1.9, color: "rgba(255,255,255,0.62)", fontStyle: "italic" }}>{m.thoughts}</p>
+                    </blockquote>
+                  </div>
+
+                  <a
+                    href={m.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.75)", fontSize: 13.5, fontWeight: 600, padding: "10px 20px", borderRadius: 24, textDecoration: "none", transition: "all 0.22s", animation: teamInView ? `teamFadeUp 0.5s ease ${base + 0.7}s both` : "none" }}
+                    onMouseEnter={e => { e.currentTarget.style.background = m.roleColor; e.currentTarget.style.borderColor = m.roleColor; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)"; e.currentTarget.style.color = "rgba(255,255,255,0.75)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    Let's Connect
+                  </a>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
