@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { FaArrowRight, FaUsers, FaBolt, FaGlobeAsia, FaTrophy, FaChevronRight, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaCheckCircle, FaStar, FaBriefcase, FaCoffee, FaMicrophone, FaBoxOpen, FaLink as FaLinkIcon, FaChartLine, FaShieldAlt, FaClock, FaHandshake, FaChevronDown, FaPaperPlane, FaSearch, FaTimes } from "react-icons/fa";
+import { FaArrowRight, FaUsers, FaBolt, FaGlobeAsia, FaChevronRight, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaCheckCircle, FaStar, FaBriefcase, FaLink as FaLinkIcon, FaChartLine, FaShieldAlt, FaClock, FaHandshake, FaChevronDown, FaPaperPlane, FaSearch, FaTimes } from "react-icons/fa";
 import { Users, Gift, Presentation, Building2, ArrowRight, Globe } from "lucide-react";
 
 import AnimatedFlightPath from "../components/AnimatedFlightPath";
+import Particles from "../components/Particles";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -293,13 +294,6 @@ export default function MICEPage() {
               Explore Destinations <FaGlobeAsia size={15} />
             </button>
           </div>
-
-          {/* Pill tags */}
-          <div style={{ display:"flex", gap:10, marginTop:20, flexWrap:"wrap", animation:"fadeUp 0.7s ease 0.4s both" }}>
-            {["Meetings", "Incentives", "Conferences", "Exhibitions", "Gala Dinners"].map(tag => (
-              <span key={tag} style={{ background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.2)", color:"rgba(255,255,255,0.85)", fontSize:12.5, fontWeight:600, padding:"6px 14px", borderRadius:14 }}>{tag}</span>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -334,16 +328,16 @@ export default function MICEPage() {
       </div>
 
       {/* ── MICE PILLARS ── */}
-      <section style={{ background:"linear-gradient(150deg, #050d1a 0%, #06080f 55%, #0c0802 100%)", padding:"22px 32px 18px", overflowX:"hidden" }}>
+      <section style={{ background:"#ffffff", padding:"60px 32px 40px", overflowX:"hidden" }}>
         {/* Header */}
-        <div style={{ textAlign:"center", marginBottom:16 }}>
-          <p style={{ fontFamily:"'Inter', sans-serif", color:"#c9a84c", fontSize:10, letterSpacing:"0.28em", textTransform:"uppercase", margin:"0 0 6px", opacity:0.85 }}>
+        <div style={{ textAlign:"center", marginBottom:48 }}>
+          <p style={{ fontFamily:"'Inter', sans-serif", color:"#0ABFBC", fontSize:10, letterSpacing:"0.28em", textTransform:"uppercase", margin:"0 0 6px", opacity:0.85 }}>
             ──&nbsp; The Four Pillars of MICE &nbsp;──
           </p>
-          <h2 style={{ fontFamily:"'Playfair Display', serif", color:"#f0ede6", fontSize:"clamp(1.4rem, 3vw, 2rem)", fontWeight:400, margin:"0 0 5px", lineHeight:1.1, letterSpacing:"-0.015em" }}>
-            Four Pillars.{" "}<em style={{ fontStyle:"italic", color:"#d9cb9e" }}>Endless Possibilities.</em>
+          <h2 style={{ fontFamily:"'Playfair Display', serif", color:"#0D1321", fontSize:"clamp(1.4rem, 3vw, 2rem)", fontWeight:400, margin:"0 0 5px", lineHeight:1.1, letterSpacing:"-0.015em" }}>
+            Four Pillars.{" "}<em style={{ fontStyle:"italic", color:"#0ABFBC" }}>Endless Possibilities.</em>
           </h2>
-          <p style={{ fontFamily:"'Inter', sans-serif", color:"rgba(220,210,190,0.5)", fontSize:"0.82rem", fontWeight:300, maxWidth:420, margin:"0 auto", lineHeight:1.5 }}>
+          <p style={{ fontFamily:"'Inter', sans-serif", color:"#4B5563", fontSize:"0.82rem", fontWeight:300, maxWidth:420, margin:"0 auto", lineHeight:1.5 }}>
             From strategic meetings to global events, we design experiences that inspire, connect and deliver results.
           </p>
         </div>
@@ -479,47 +473,106 @@ export default function MICEPage() {
       </section>
 
       {/* ── WHY US ── */}
-      <section ref={whyRef} style={{ position:"relative", padding:"80px 64px", overflow:"hidden" }}>
-        {/* Background image */}
-        <img
-          src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1600&q=80"
-          alt=""
-          style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center" }}
-        />
-        {/* Dark teal overlay so cards stay readable */}
-        <div style={{ position:"absolute", inset:0, background:"rgba(13,19,33,0.72)" }} />
+      <section ref={whyRef} style={{ position:"relative", background:"#0D1321", padding:"50px 64px", overflow:"hidden" }}>
+        <div style={{ position:"absolute", inset:0, zIndex:0 }}>
+          <Particles
+            particleCount={250}
+            particleSpread={15}
+            speed={0.08}
+            particleColors={["#0ABFBC", "#D79A3B"]}
+            moveParticlesOnHover={false}
+            alphaParticles={true}
+            particleBaseSize={80}
+            sizeRandomness={0.8}
+            cameraDistance={25}
+            disableRotation={false}
+          />
+        </div>
 
-        <div style={{ position:"relative" }}>
-          <div style={{ textAlign:"center", marginBottom:52 }}>
-            <p style={{ color:"#0ABFBC", fontSize:12.5, fontWeight:700, letterSpacing:3, marginBottom:14 }}>WHY K2 JOURNEYS</p>
-            <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:40, fontWeight:700, color:"#fff" }}>What sets us apart</h2>
+        <style>{`
+          @keyframes wsaSparkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.9) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.15) rotate(20deg); }
+          }
+          .wsa-card { transition: box-shadow 0.35s ease, border-color 0.35s ease; }
+          .wsa-card {
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 0 0 0 0px rgba(10,191,188,0);
+          }
+          .wsa-card:hover {
+            box-shadow: 0 0 20px rgba(10,191,188,0.6), 0 0 40px rgba(10,191,188,0.3);
+            border-color: #0ABFBC;
+          }
+          .wsa-icon-wrap { transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+          .wsa-card:hover .wsa-icon-wrap { transform: scale(1.08); }
+          .wsa-card:hover .wsa-underline { width: 64px; }
+          .wsa-arrow { transition: transform 0.3s ease; }
+          .wsa-card:hover .wsa-arrow { transform: translateX(4px); }
+          .wsa-dots {
+            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 14px 14px;
+            opacity: 0.08;
+          }
+        `}</style>
+
+        <div className="wsa-dots" style={{ position:"absolute", top:24, left:24, width:70, height:70, pointerEvents:"none", zIndex:1 }} />
+        <div className="wsa-dots" style={{ position:"absolute", bottom:24, left:24, width:70, height:70, pointerEvents:"none", zIndex:1 }} />
+        <div className="wsa-dots" style={{ position:"absolute", top:60, right:40, width:60, height:90, pointerEvents:"none", zIndex:1 }} />
+
+        <div style={{ textAlign:"center", marginBottom:48, position:"relative", zIndex:1 }}>
+          <p style={{ color:"#0ABFBC", fontSize:13, fontWeight:700, letterSpacing:4, marginBottom:12 }}>WHY K2 JOURNEYS</p>
+          <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:40, fontWeight:700, color:"#fff", margin:0 }}>
+            What sets us <em style={{ color:"#0ABFBC", fontStyle:"italic" }}>apart</em>
+          </h2>
+          <p style={{ color:"rgba(255,255,255,0.7)", fontSize:15, marginTop:14 }}>Thoughtful planning. Flawless execution. Unforgettable experiences.</p>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:12, marginTop:20 }}>
+            <span style={{ width:40, height:1, background:"#D79A3B" }} />
+            <div style={{ color:"#D79A3B", animation:"wsaSparkle 2.6s ease-in-out infinite", fontSize:16 }}>✨</div>
+            <span style={{ width:40, height:1, background:"#D79A3B" }} />
           </div>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:22 }}>
-            {WHY_US.map((w, i) => (
-              <div
-                key={w.title}
-                onMouseEnter={() => setHoveredWhy(i)}
-                onMouseLeave={() => setHoveredWhy(null)}
-                style={{
-                  background: hoveredWhy===i ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.08)",
-                  backdropFilter:"blur(14px)",
-                  border:`1.5px solid ${hoveredWhy===i ? w.color+"99" : "rgba(255,255,255,0.15)"}`,
-                  borderRadius:18, padding:"28px 24px",
-                  boxShadow: hoveredWhy===i ? `0 12px 40px ${w.color}44` : "0 2px 12px rgba(0,0,0,0.2)",
-                  transform: visibleWhy.includes(i) ? (hoveredWhy===i ? "translateY(-6px) scale(1.02)" : "translateY(0)") : "translateY(32px)",
-                  opacity: visibleWhy.includes(i) ? 1 : 0,
-                  transition:"all 0.4s cubic-bezier(0.34,1.2,0.64,1)",
-                  cursor:"default",
-                }}
-              >
-                <div style={{ background:w.bg, borderRadius:"50%", width:52, height:52, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:18, transform: hoveredWhy===i ? "rotate(-8deg) scale(1.1)" : "none", transition:"transform 0.3s" }}>
-                  <w.icon size={24} color={w.color} />
-                </div>
-                <h4 style={{ fontSize:16, fontWeight:700, color:"#fff", marginBottom:10 }}>{w.title}</h4>
-                <p style={{ fontSize:13.5, lineHeight:1.7, color:"rgba(255,255,255,0.7)" }}>{w.desc}</p>
+        </div>
+
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20, maxWidth:1200, margin:"0 auto", position:"relative", zIndex:1 }}>
+          {WHY_US.map((w, i) => (
+            <div
+              key={w.title}
+              className="wsa-card"
+              style={{
+                background:"rgba(255,255,255,0.05)",
+                border:"1px solid rgba(255,255,255,0.15)",
+                borderRadius:16,
+                padding:"28px 20px 20px",
+                position:"relative",
+                overflow:"hidden",
+                opacity: visibleWhy.includes(i) ? 1 : 0,
+                transform: visibleWhy.includes(i) ? "translateY(0)" : "translateY(28px)",
+                transition:`opacity 0.6s ease ${i * 0.1}s, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${i * 0.1}s`,
+              }}
+              onMouseEnter={() => setHoveredWhy(i)}
+              onMouseLeave={() => setHoveredWhy(null)}
+            >
+              <w.icon size={70} strokeWidth={0.5} style={{ position:"absolute", bottom:-10, right:-8, color:"rgba(255,255,255,0.05)", opacity:0.15 }} aria-hidden="true" />
+
+              <div className="wsa-icon-wrap" style={{ width:60, height:60, borderRadius:"50%", background:w.bg, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:16 }}>
+                <w.icon size={24} color={w.color} strokeWidth={1.8} />
               </div>
-            ))}
-          </div>
+
+              <div style={{ display:"flex", alignItems:"flex-start", gap:10, marginBottom:8 }}>
+                <span style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", minWidth:28, height:20, padding:"0 6px", borderRadius:999, border:`1px solid ${w.color}`, color:w.color, fontSize:10, fontWeight:700, letterSpacing:0.3, flexShrink:0, marginTop:2 }}>
+                  {w.title.split(" ")[0].slice(0, 2).toUpperCase()}
+                </span>
+                <h3 style={{ fontFamily:"'Playfair Display', serif", fontSize:17, fontWeight:700, color:"#fff", margin:0, lineHeight:1.3 }}>{w.title}</h3>
+              </div>
+
+              <span className="wsa-underline" style={{ display:"block", width:32, height:1.5, background:w.color, marginBottom:12, transition:"width 0.4s ease" }} />
+
+              <p style={{ fontFamily:"'Inter', sans-serif", fontSize:13, lineHeight:1.6, color:"rgba(255,255,255,0.65)", margin:"0 0 18px" }}>{w.desc}</p>
+
+              <button className="wsa-arrow" aria-label={`Learn more about ${w.title}`} style={{ width:28, height:28, borderRadius:"50%", border:`1.2px solid ${w.color}`, background:"transparent", color:w.color, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", padding:0 }}>
+                <FaChevronRight size={14} />
+              </button>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -668,7 +721,7 @@ export default function MICEPage() {
               </div>
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:14 }}>
                 <div style={{ position:"relative" }}>
-                  <FaBoxOpen size={15} color="#6B7280" style={{ position:"absolute", left:14, top:"50%", transform:"translateY(-50%)", pointerEvents:"none", zIndex:1 }} />
+                  <FaBriefcase size={15} color="#6B7280" style={{ position:"absolute", left:14, top:"50%", transform:"translateY(-50%)", pointerEvents:"none", zIndex:1 }} />
                   <select value={form.type} onChange={e=>setForm(p=>({...p,type:e.target.value}))} style={{ width:"100%", padding:"13px 14px 13px 40px", borderRadius:10, border:"1.5px solid rgba(255,255,255,0.12)", fontSize:14, color: form.type?"#fff":"#6B7280", background:"rgba(255,255,255,0.06)", appearance:"none", transition:"border-color 0.2s" }} onFocus={e=>e.target.style.borderColor="#0ABFBC"} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,0.12)"}>
                     <option value="" style={{background:"#1a2744",color:"#fff"}}>Event Type</option>
                     {["Meeting","Incentive Trip","Conference","Exhibition","Team Building","Gala Dinner"].map(o=><option key={o} value={o} style={{background:"#1a2744",color:"#fff"}}>{o}</option>)}
@@ -687,7 +740,7 @@ export default function MICEPage() {
                 <input type="text" placeholder="Preferred Destination (optional)" value={form.destination} onChange={e=>setForm(p=>({...p,destination:e.target.value}))} style={{ width:"100%", padding:"13px 14px 13px 40px", borderRadius:10, border:"1.5px solid rgba(255,255,255,0.12)", fontSize:14, color:"#fff", background:"rgba(255,255,255,0.06)", transition:"border-color 0.2s" }} onFocus={e=>e.target.style.borderColor="#0ABFBC"} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,0.12)"} />
               </div>
               <div style={{ position:"relative", marginBottom:20 }}>
-                <FaCoffee size={15} color="#6B7280" style={{ position:"absolute", left:14, top:15, pointerEvents:"none" }} />
+                <FaChevronDown size={15} color="#6B7280" style={{ position:"absolute", left:14, top:15, pointerEvents:"none" }} />
                 <textarea rows={3} placeholder="Tell us more about your event goals, dates, special requirements..." value={form.message} onChange={e=>setForm(p=>({...p,message:e.target.value}))} style={{ width:"100%", padding:"13px 14px 13px 40px", borderRadius:10, border:"1.5px solid rgba(255,255,255,0.12)", fontSize:14, color:"#fff", background:"rgba(255,255,255,0.06)", resize:"none", transition:"border-color 0.2s" }} onFocus={e=>e.target.style.borderColor="#0ABFBC"} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,0.12)"} />
               </div>
               <button type="submit" style={{ width:"100%", background:"#0ABFBC", color:"#fff", fontWeight:700, fontSize:15, padding:"16px", borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", gap:10, boxShadow:"0 6px 24px rgba(10,191,188,0.4)", transition:"transform 0.2s" }} onMouseEnter={e=>e.currentTarget.style.transform="translateY(-2px)"} onMouseLeave={e=>e.currentTarget.style.transform=""}>
@@ -709,7 +762,7 @@ export default function MICEPage() {
         >
           <div
             onClick={e => e.stopPropagation()}
-            style={{ background:"#fff", borderRadius:20, width:"100%", maxWidth:580, maxHeight:"90vh", overflowY:"auto", boxShadow:"0 24px 80px rgba(0,0,0,0.3)", animation:"popIn 0.3s ease" }}
+            style={{ background:"#fff", borderRadius:20, width:"100%", maxWidth:540, maxHeight:"95vh", overflow:"hidden", boxShadow:"0 24px 80px rgba(0,0,0,0.3)", animation:"popIn 0.3s ease", display:"flex", flexDirection:"column" }}
           >
             {proposalSent ? (
               <div style={{ padding:"56px 40px", textAlign:"center" }}>
@@ -736,41 +789,37 @@ export default function MICEPage() {
               </div>
             ) : (
               <>
-                <div style={{ padding:"28px 32px 20px", borderBottom:"1px solid #F3F4F6", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+                <div style={{ padding:"18px 24px 14px", borderBottom:"1px solid #F3F4F6", display:"flex", alignItems:"center", justifyContent:"space-between", flexShrink:0 }}>
                   <div>
-                    <div style={{ display:"inline-flex", alignItems:"center", gap:6, background:"rgba(10,191,188,0.1)", borderRadius:12, padding:"4px 12px", marginBottom:8 }}>
-                      <div style={{ width:6, height:6, borderRadius:"50%", background:"#0ABFBC" }} />
-                      <span style={{ fontSize:11.5, fontWeight:700, color:"#0ABFBC", letterSpacing:1.5 }}>FREE CONSULTATION</span>
-                    </div>
-                    <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:22, fontWeight:700, color:"#0D1321" }}>Request a Proposal</h2>
-                    <p style={{ fontSize:13.5, color:"#6B7280", marginTop:4 }}>Fill in your details and we'll get back within 24 hours.</p>
+                    <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:20, fontWeight:700, color:"#0D1321", margin:"0 0 4px" }}>Request a Proposal</h2>
+                    <p style={{ fontSize:12.5, color:"#6B7280", margin:0 }}>We'll respond within 24 hours.</p>
                   </div>
-                  <button onClick={() => setShowProposalModal(false)} style={{ background:"#F3F4F6", border:"none", borderRadius:"50%", width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", flexShrink:0 }}>
+                  <button onClick={() => setShowProposalModal(false)} style={{ background:"#F3F4F6", border:"none", borderRadius:"50%", width:32, height:32, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", flexShrink:0 }}>
                     <FaTimes size={14} color="#6B7280" />
                   </button>
                 </div>
-                <form onSubmit={e => { e.preventDefault(); setProposalSent(true); }} style={{ padding:"24px 32px 28px" }}>
-                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"16px 20px" }}>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Full Name <span style={{ color:"#F87171" }}>*</span></label>
-                      <input required placeholder="e.g. Rahul Sharma" value={proposalForm.name} onChange={e => setProposalForm(f => ({ ...f, name: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color:"#0D1321" }} />
+                <form onSubmit={e => { e.preventDefault(); setProposalSent(true); }} style={{ padding:"16px 24px 18px", flex:1, overflow:"auto" }}>
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"10px 14px" }}>
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Full Name <span style={{ color:"#F87171" }}>*</span></label>
+                      <input required placeholder="Your name" value={proposalForm.name} onChange={e => setProposalForm(f => ({ ...f, name: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color:"#0D1321" }} />
                     </div>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Organisation Name <span style={{ color:"#F87171" }}>*</span></label>
-                      <input required placeholder="e.g. TechStart India" value={proposalForm.org} onChange={e => setProposalForm(f => ({ ...f, org: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color:"#0D1321" }} />
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Organisation <span style={{ color:"#F87171" }}>*</span></label>
+                      <input required placeholder="Company name" value={proposalForm.org} onChange={e => setProposalForm(f => ({ ...f, org: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color:"#0D1321" }} />
                     </div>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Email Address <span style={{ color:"#F87171" }}>*</span></label>
-                      <input required type="email" placeholder="you@company.com" value={proposalForm.email} onChange={e => setProposalForm(f => ({ ...f, email: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color:"#0D1321" }} />
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Email <span style={{ color:"#F87171" }}>*</span></label>
+                      <input required type="email" placeholder="your@email.com" value={proposalForm.email} onChange={e => setProposalForm(f => ({ ...f, email: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color:"#0D1321" }} />
                     </div>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Phone Number</label>
-                      <input type="tel" placeholder="+91 98765 43210" value={proposalForm.phone} onChange={e => setProposalForm(f => ({ ...f, phone: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color:"#0D1321" }} />
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Phone</label>
+                      <input type="tel" placeholder="+91..." value={proposalForm.phone} onChange={e => setProposalForm(f => ({ ...f, phone: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color:"#0D1321" }} />
                     </div>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Event Type <span style={{ color:"#F87171" }}>*</span></label>
-                      <select required value={proposalForm.eventType} onChange={e => setProposalForm(f => ({ ...f, eventType: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color: proposalForm.eventType ? "#0D1321" : "#9CA3AF", background:"#fff" }}>
-                        <option value="" disabled>Select event type</option>
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Event Type <span style={{ color:"#F87171" }}>*</span></label>
+                      <select required value={proposalForm.eventType} onChange={e => setProposalForm(f => ({ ...f, eventType: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color: proposalForm.eventType ? "#0D1321" : "#9CA3AF", background:"#fff" }}>
+                        <option value="" disabled>Select type</option>
                         <option>Meeting</option>
                         <option>Incentive Trip</option>
                         <option>Conference</option>
@@ -779,31 +828,31 @@ export default function MICEPage() {
                         <option>Other</option>
                       </select>
                     </div>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Group Size <span style={{ color:"#F87171" }}>*</span></label>
-                      <select required value={proposalForm.groupSize} onChange={e => setProposalForm(f => ({ ...f, groupSize: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color: proposalForm.groupSize ? "#0D1321" : "#9CA3AF", background:"#fff" }}>
-                        <option value="" disabled>Select group size</option>
-                        <option>1 – 50 people</option>
-                        <option>51 – 200 people</option>
-                        <option>201 – 500 people</option>
-                        <option>501 – 1,000 people</option>
-                        <option>1,000+ people</option>
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Group Size <span style={{ color:"#F87171" }}>*</span></label>
+                      <select required value={proposalForm.groupSize} onChange={e => setProposalForm(f => ({ ...f, groupSize: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color: proposalForm.groupSize ? "#0D1321" : "#9CA3AF", background:"#fff" }}>
+                        <option value="" disabled>Select size</option>
+                        <option>1 – 50</option>
+                        <option>51 – 200</option>
+                        <option>201 – 500</option>
+                        <option>501 – 1,000</option>
+                        <option>1,000+</option>
                       </select>
                     </div>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Preferred Destination</label>
-                      <input placeholder="e.g. Goa, Dubai, Jaipur…" value={proposalForm.destination} onChange={e => setProposalForm(f => ({ ...f, destination: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color:"#0D1321" }} />
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Destination</label>
+                      <input placeholder="e.g. Goa, Dubai..." value={proposalForm.destination} onChange={e => setProposalForm(f => ({ ...f, destination: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color:"#0D1321" }} />
                     </div>
-                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Preferred Event Date</label>
-                      <input type="month" value={proposalForm.eventDate} onChange={e => setProposalForm(f => ({ ...f, eventDate: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color:"#0D1321" }} />
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Event Date</label>
+                      <input type="month" value={proposalForm.eventDate} onChange={e => setProposalForm(f => ({ ...f, eventDate: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color:"#0D1321" }} />
                     </div>
-                    <div style={{ gridColumn:"1 / -1", display:"flex", flexDirection:"column", gap:6 }}>
-                      <label style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Special Requirements / Message</label>
-                      <textarea rows={3} placeholder="Tell us about your event goals, theme, budget range, or any special requirements…" value={proposalForm.message} onChange={e => setProposalForm(f => ({ ...f, message: e.target.value }))} style={{ border:"1.5px solid #E5E7EB", borderRadius:10, padding:"10px 14px", fontSize:14, color:"#0D1321" }} />
+                    <div style={{ gridColumn:"1 / -1", display:"flex", flexDirection:"column", gap:4 }}>
+                      <label style={{ fontSize:12, fontWeight:600, color:"#374151" }}>Message</label>
+                      <textarea rows={2} placeholder="Your requirements..." value={proposalForm.message} onChange={e => setProposalForm(f => ({ ...f, message: e.target.value }))} style={{ border:"1px solid #E5E7EB", borderRadius:8, padding:"8px 12px", fontSize:13, color:"#0D1321", resize:"none" }} />
                     </div>
                   </div>
-                  <button type="submit" style={{ marginTop:22, width:"100%", background:"#0ABFBC", color:"#fff", fontWeight:700, fontSize:15.5, padding:"14px", borderRadius:28, display:"flex", alignItems:"center", justifyContent:"center", gap:10, boxShadow:"0 6px 24px rgba(10,191,188,0.35)", border:"none" }}>
+                  <button type="submit" style={{ marginTop:14, width:"100%", background:"#0ABFBC", color:"#fff", fontWeight:700, fontSize:14, padding:"11px", borderRadius:24, display:"flex", alignItems:"center", justifyContent:"center", gap:8, boxShadow:"0 4px 16px rgba(10,191,188,0.3)", border:"none" }}>
                     Submit Request <FaPaperPlane size={15} />
                   </button>
                   <p style={{ textAlign:"center", fontSize:12.5, color:"#9CA3AF", marginTop:12 }}>
