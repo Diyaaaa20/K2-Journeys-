@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, MapPin, Mail, Phone, Clock, User, Tag, Edit3, Send, Shield, Heart, CheckCircle, Share2, Link2, ChevronRight, Zap, MessageCircle, Globe } from "lucide-react";
+import { FaArrowRight, FaMapMarkerAlt, FaEnvelope, FaPhoneAlt, FaClock, FaUserCircle, FaTag, FaEdit, FaPaperPlane, FaShieldAlt, FaHeart, FaCheckCircle, FaShareAlt, FaLink, FaChevronRight, FaBolt, FaCommentDots, FaGlobeAsia } from "react-icons/fa";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -17,23 +17,23 @@ function useInView(threshold = 0.15) {
 }
 
 const CONTACT_CARDS = [
-  { icon: MapPin, color: "#00bcd4", bg: "#E6F9F9", title: "Our Office", lines: ["K2 Journeys, 123 Mountain View Street,", "Manali, Himachal Pradesh, India"] },
-  { icon: Mail, color: "#F87171", bg: "#FEF2F2", title: "Email Us", lines: ["hello@k2journeys.com", "info@k2journeys.com"] },
-  { icon: Phone, color: "#FBBF24", bg: "#FFFBEB", title: "Call Us", lines: ["+91 98765 43210", "+91 87654 32109"] },
-  { icon: Clock, color: "#A78BFA", bg: "#F5F3FF", title: "Business Hours", lines: ["Mon – Sat: 9:00 AM – 7:00 PM", "Sunday: 10:00 AM – 4:00 PM"] },
+  { icon: FaMapMarkerAlt, color: "#00bcd4", bg: "#E6F9F9", title: "Our Office", lines: ["K2 Journeys, 123 Mountain View Street,", "Manali, Himachal Pradesh, India"] },
+  { icon: FaEnvelope, color: "#F87171", bg: "#FEF2F2", title: "Email Us", lines: ["hello@k2journeys.com", "info@k2journeys.com"] },
+  { icon: FaPhoneAlt, color: "#FBBF24", bg: "#FFFBEB", title: "Call Us", lines: ["+91 98765 43210", "+91 87654 32109"] },
+  { icon: FaClock, color: "#A78BFA", bg: "#F5F3FF", title: "Business Hours", lines: ["Mon – Sat: 9:00 AM – 7:00 PM", "Sunday: 10:00 AM – 4:00 PM"] },
 ];
 
 const TRUST = [
-  { icon: Clock, color: "#00bcd4", bg: "#E6F9F9", title: "Quick Response", desc: "We usually reply within 24 hours." },
-  { icon: Heart, color: "#F87171", bg: "#FEF2F2", title: "Personalized Support", desc: "Real people. Real conversations. No bots." },
-  { icon: Shield, color: "#FBBF24", bg: "#FFFBEB", title: "Safe & Secure", desc: "Your information is always protected with care." },
+  { icon: FaClock, color: "#00bcd4", bg: "#E6F9F9", title: "Quick Response", desc: "We usually reply within 24 hours." },
+  { icon: FaHeart, color: "#F87171", bg: "#FEF2F2", title: "Personalized Support", desc: "Real people. Real conversations. No bots." },
+  { icon: FaShieldAlt, color: "#FBBF24", bg: "#FFFBEB", title: "Safe & Secure", desc: "Your information is always protected with care." },
 ];
 
 const FIELD_CONFIGS = [
-  { name: "name", label: "Your Name", icon: User, type: "text", placeholder: "Kabir Thakur", half: true },
-  { name: "email", label: "Your Email", icon: Mail, type: "email", placeholder: "you@example.com", half: true },
-  { name: "subject", label: "Subject", icon: Tag, type: "text", placeholder: "I'd like to plan a trip to Ladakh", half: false },
-  { name: "message", label: "Your Message", icon: Edit3, type: "textarea", placeholder: "Tell us about your dream destination, dates, group size…", half: false },
+  { name: "name", label: "Your Name", icon: FaUserCircle, type: "text", placeholder: "Kabir Thakur", half: true },
+  { name: "email", label: "Your Email", icon: FaEnvelope, type: "email", placeholder: "you@example.com", half: true },
+  { name: "subject", label: "Subject", icon: FaTag, type: "text", placeholder: "I'd like to plan a trip to Ladakh", half: false },
+  { name: "message", label: "Your Message", icon: FaEdit, type: "textarea", placeholder: "Tell us about your dream destination, dates, group size…", half: false },
 ];
 
 export default function ContactPage() {
@@ -71,6 +71,13 @@ export default function ContactPage() {
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(10,191,188,0.4); } 50% { box-shadow: 0 0 0 10px rgba(10,191,188,0); } }
         @keyframes checkPop { 0% { transform: scale(0) rotate(-20deg); } 80% { transform: scale(1.15) rotate(3deg); } 100% { transform: scale(1) rotate(0); } }
+        @keyframes cinematicZoom {
+          0%   { transform: scale(1)    translate(0%,    0%); }
+          25%  { transform: scale(1.06) translate(-0.8%, -0.6%); }
+          50%  { transform: scale(1.12) translate(0.4%,  -1.2%); }
+          75%  { transform: scale(1.07) translate(-0.3%, -0.4%); }
+          100% { transform: scale(1)    translate(0%,    0%); }
+        }
         .field-group { position: relative; }
         .floating-label { position: absolute; left: 44px; color: #9CA3AF; pointer-events: none; transition: all 0.22s ease; font-size: 14px; top: 50%; transform: translateY(-50%); }
         .floating-label.textarea-label { top: 16px; transform: none; }
@@ -93,7 +100,7 @@ export default function ContactPage() {
           })}
         </nav>
         <button className="k2-book-btn" style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14, padding: "10px 22px", borderRadius: 24, display: "flex", alignItems: "center", gap: 8 }}>
-          Book Now <ArrowRight size={14} />
+          Book Now <FaArrowRight size={14} />
         </button>
         <button className="k2-hamburger" onClick={() => setMenuOpen(m => !m)} aria-label="Menu" style={{ display: "none", flexDirection: "column", gap: 5, background: "transparent", border: "none", padding: 8, cursor: "pointer" }}>
           <span style={{ display: "block", width: 22, height: 2, background: "#0D1321", borderRadius: 2, transition: "transform 0.3s", transform: menuOpen ? "rotate(45deg) translate(0, 7px)" : "none" }} />
@@ -109,14 +116,14 @@ export default function ContactPage() {
               <span key={l} style={{ fontSize: 15, fontWeight: 600, color: "#374151", padding: "10px 0", borderBottom: "1px solid #F3F4F6" }}>{l}</span>;
           })}
           <Link to="/contact" onClick={() => setMenuOpen(false)} style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14, padding: "12px 22px", borderRadius: 24, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 8 }}>
-            Book Now <ArrowRight size={14} />
+            Book Now <FaArrowRight size={14} />
           </Link>
         </div>
       </header>
 
       {/* HERO */}
       <section style={{ position: "relative", minHeight: 480, overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80')", backgroundSize: "cover", backgroundPosition: "center" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80')", backgroundSize: "cover", backgroundPosition: "center", animation: "cinematicZoom 22s ease-in-out infinite", willChange: "transform" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(105deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.75) 45%, rgba(255,255,255,0.05) 100%)" }} />
         <div style={{ position: "absolute", top: -80, left: -80, width: 320, height: 320, borderRadius: "50%", background: "rgba(10,191,188,0.06)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: -60, left: 200, width: 220, height: 220, borderRadius: "50%", background: "rgba(10,191,188,0.04)", pointerEvents: "none" }} />
@@ -134,7 +141,7 @@ export default function ContactPage() {
               Let's plan something unforgettable.
             </p>
             <div style={{ display: "flex", gap: 14 }}>
-              {[{ label: "Chat With Us", icon: MessageCircle, primary: true }, { label: "View Destinations", icon: Globe, primary: false }].map(({ label, icon: Icon, primary }) => (
+              {[{ label: "Chat With Us", icon: FaCommentDots, primary: true }, { label: "View Destinations", icon: FaGlobeAsia, primary: false }].map(({ label, icon: Icon, primary }) => (
                 <button key={label} style={{ background: primary ? "#00bcd4" : "transparent", color: primary ? "#fff" : "#0D1321", fontWeight: 700, fontSize: 14, padding: "12px 22px", borderRadius: 24, border: primary ? "none" : "1.5px solid #D1D5DB", display: "flex", alignItems: "center", gap: 8, boxShadow: primary ? "0 4px 16px rgba(10,191,188,0.3)" : "none", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"} onMouseLeave={e => e.currentTarget.style.transform = ""}>
                   <Icon size={14} /> {label}
                 </button>
@@ -197,7 +204,7 @@ export default function ContactPage() {
           <div style={{ marginTop: 32, paddingTop: 28, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
             <p style={{ color: "#6B7280", fontSize: 12.5, fontWeight: 600, letterSpacing: 1.5, marginBottom: 16 }}>FOLLOW US</p>
             <div style={{ display: "flex", gap: 10 }}>
-              {[Share2, Link2].map((Icon, i) => (
+              {[FaShareAlt, FaLink].map((Icon, i) => (
                 <div key={i} style={{ width: 38, height: 38, borderRadius: "50%", border: "1px solid #374151", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF", cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={e => { e.currentTarget.style.background = "#00bcd4"; e.currentTarget.style.borderColor = "#00bcd4"; e.currentTarget.style.color = "#fff"; }} onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "#374151"; e.currentTarget.style.color = "#9CA3AF"; }}>
                   <Icon size={16} />
                 </div>
@@ -213,7 +220,7 @@ export default function ContactPage() {
 
             {sent && (
               <div style={{ background: "#E6F9F9", border: "1px solid #00bcd4", borderRadius: 14, padding: "18px 20px", marginBottom: 24, display: "flex", alignItems: "center", gap: 12, animation: "fadeUp 0.4s ease" }}>
-                <CheckCircle size={22} color="#00bcd4" style={{ animation: "checkPop 0.4s ease", flexShrink: 0 }} />
+                <FaCheckCircle size={22} color="#00bcd4" style={{ animation: "checkPop 0.4s ease", flexShrink: 0 }} />
                 <div>
                   <p style={{ fontSize: 15, color: "#0D1321", fontWeight: 700 }}>Message sent successfully!</p>
                   <p style={{ fontSize: 13, color: "#6B7280", marginTop: 2 }}>We'll get back to you within 24 hours.</p>
@@ -278,7 +285,7 @@ export default function ContactPage() {
                 onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
                 onMouseLeave={e => e.currentTarget.style.transform = ""}
               >
-                <Send size={16} /> Send Message
+                <FaPaperPlane size={16} /> Send Message
               </button>
               <p style={{ textAlign: "center", color: "#9CA3AF", fontSize: 12.5, marginTop: 14 }}>
                 We'll get back to you as soon as possible!
@@ -289,7 +296,7 @@ export default function ContactPage() {
           {/* Google Maps embed */}
           <div style={{ marginTop: 40, animation: formInView ? "fadeRight 0.7s ease 0.4s both" : "none" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 14 }}>
-              <MapPin size={18} color="#00bcd4" />
+              <FaMapMarkerAlt size={18} color="#00bcd4" />
               <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: "#0D1321" }}>Find Us in Pune</h4>
             </div>
             <div style={{ borderRadius: 18, overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.10)", border: "1.5px solid #E5E7EB" }}>
@@ -320,10 +327,10 @@ export default function ContactPage() {
           </div>
           <div className="k2-cta-buttons" style={{ display: "flex", gap: 12, flexShrink: 0, position: "relative" }}>
             <button style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14.5, padding: "14px 26px", borderRadius: 24, display: "flex", alignItems: "center", gap: 8, boxShadow: "0 4px 20px rgba(10,191,188,0.4)", transition: "transform 0.2s", animation: "pulse 2.5s infinite" }} onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"} onMouseLeave={e => e.currentTarget.style.transform = ""}>
-              Plan Your Journey <ArrowRight size={15} />
+              Plan Your Journey <FaArrowRight size={15} />
             </button>
             <button style={{ background: "rgba(255,255,255,0.08)", color: "#fff", fontWeight: 600, fontSize: 14, padding: "14px 22px", borderRadius: 24, border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", gap: 8, transition: "background 0.2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.15)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.08)"}>
-              <Zap size={14} /> Quick Enquiry
+              <FaBolt size={14} /> Quick Enquiry
             </button>
           </div>
         </div>
@@ -347,7 +354,7 @@ function Footer() {
           </div>
           <p style={{ color: "#9CA3AF", fontSize: 13.5, lineHeight: 1.7, marginBottom: 20 }}>We curate authentic, responsible, and unforgettable travel experiences across the world.</p>
           <div style={{ display: "flex", gap: 10 }}>
-            {[Share2, Link2].map((Icon, i) => <div key={i} style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid #374151", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF" }}><Icon size={14} /></div>)}
+            {[FaShareAlt, FaLink].map((Icon, i) => <div key={i} style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid #374151", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF" }}><Icon size={14} /></div>)}
           </div>
         </div>
         <div style={{ width: 180 }}>
@@ -355,15 +362,15 @@ function Footer() {
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {Object.entries(quickLinks).map(([l, to]) =>
               to
-                ? <Link key={l} to={to} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{l}</Link>
-                : <span key={l} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{l}</span>
+                ? <Link key={l} to={to} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{l}</Link>
+                : <span key={l} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{l}</span>
             )}
           </div>
         </div>
         <div style={{ width: 200 }}>
           <h5 style={{ color: "#fff", fontSize: 15, fontWeight: 700, marginBottom: 18 }}>Popular Destinations</h5>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {destinations.map(d => <span key={d} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{d}</span>)}
+            {destinations.map(d => <span key={d} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{d}</span>)}
           </div>
         </div>
         <div style={{ flex: 1 }}>
@@ -371,7 +378,7 @@ function Footer() {
           <p style={{ color: "#9CA3AF", fontSize: 13.5, lineHeight: 1.7, marginBottom: 16 }}>Subscribe to get travel tips, updates & exclusive offers.</p>
           <div style={{ display: "flex", gap: 8 }}>
             <input type="email" placeholder="Your email address" style={{ flex: 1, background: "#161B27", border: "1px solid #374151", borderRadius: 8, padding: "11px 14px", color: "#fff", fontSize: 13 }} />
-            <button style={{ background: "#00bcd4", color: "#fff", borderRadius: 8, padding: "0 16px", fontWeight: 600, fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>Send <ArrowRight size={13} /></button>
+            <button style={{ background: "#00bcd4", color: "#fff", borderRadius: 8, padding: "0 16px", fontWeight: 600, fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>Send <FaArrowRight size={13} /></button>
           </div>
         </div>
       </div>

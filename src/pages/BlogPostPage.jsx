@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Clock, User, Calendar, Eye, Bookmark, Share2, ArrowRight, ChevronRight, Play, Quote } from "lucide-react";
+import { FaArrowLeft, FaClock, FaUserCircle, FaCalendarAlt, FaEye, FaBookmark, FaShareAlt, FaArrowRight, FaChevronRight, FaPlayCircle, FaQuoteLeft } from "react-icons/fa";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -259,7 +259,7 @@ export default function BlogPostPage() {
           })}
         </nav>
         <Link to="/contact" style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14, padding: "10px 22px", borderRadius: 24, display: "flex", alignItems: "center", gap: 8 }}>
-          Book Now <ArrowRight size={14} />
+          Book Now <FaArrowRight size={14} />
         </Link>
       </header>
 
@@ -269,15 +269,15 @@ export default function BlogPostPage() {
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(13,19,33,0.25) 0%, rgba(13,19,33,0.75) 100%)" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "48px 80px" }}>
           <Link to="/blog" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "rgba(255,255,255,0.8)", fontSize: 14, fontWeight: 600, marginBottom: 20, width: "fit-content", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#00bcd4"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}>
-            <ArrowLeft size={16} /> Back to Blog
+            <FaArrowLeft size={16} /> Back to Blog
           </Link>
           <span style={{ background: post.tagColor, color: "#fff", fontSize: 12, fontWeight: 700, padding: "5px 14px", borderRadius: 12, display: "inline-block", marginBottom: 16, width: "fit-content", animation: heroInView ? "fadeUp 0.5s ease both" : "none" }}>{post.tag}</span>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 48, fontWeight: 700, color: "#fff", lineHeight: 1.15, maxWidth: 780, textShadow: "0 2px 20px rgba(0,0,0,0.4)", animation: heroInView ? "fadeUp 0.6s ease 0.1s both" : "none" }}>{post.title}</h1>
           <div style={{ display: "flex", alignItems: "center", gap: 24, marginTop: 20, color: "rgba(255,255,255,0.75)", fontSize: 13.5, animation: heroInView ? "fadeUp 0.6s ease 0.2s both" : "none" }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><User size={14} />{post.author}</span>
-            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><Calendar size={14} />{post.date}</span>
-            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><Clock size={14} />{post.readTime}</span>
-            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><Eye size={14} />{post.views} views</span>
+            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><FaUserCircle size={14} />{post.author}</span>
+            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><FaCalendarAlt size={14} />{post.date}</span>
+            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><FaClock size={14} />{post.readTime}</span>
+            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><FaEye size={14} />{post.views} views</span>
           </div>
         </div>
       </section>
@@ -289,10 +289,10 @@ export default function BlogPostPage() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 40, paddingBottom: 24, borderBottom: "1px solid #F3F4F6", animation: bodyInView ? "fadeUp 0.5s ease both" : "none" }}>
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setSaved(s => !s)} style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 18px", borderRadius: 20, border: `1.5px solid ${saved ? "#00bcd4" : "#E5E7EB"}`, background: saved ? "#E6F9F9" : "#fff", color: saved ? "#00bcd4" : "#6B7280", fontWeight: 600, fontSize: 13.5, transition: "all 0.2s" }}>
-              <Bookmark size={15} fill={saved ? "#00bcd4" : "none"} /> {saved ? "Saved" : "Save"}
+              <FaBookmark size={15} color={saved ? "#00bcd4" : "#9CA3AF"} /> {saved ? "Saved" : "Save"}
             </button>
             <button style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 18px", borderRadius: 20, border: "1.5px solid #E5E7EB", background: "#fff", color: "#6B7280", fontWeight: 600, fontSize: 13.5 }}>
-              <Share2 size={15} /> Share
+              <FaShareAlt size={15} /> Share
             </button>
           </div>
           <span style={{ fontSize: 13, color: "#9CA3AF" }}>{post.readTime}</span>
@@ -313,7 +313,7 @@ export default function BlogPostPage() {
 
         {/* Pull quote */}
         <div style={{ margin: "48px 0", padding: "32px 36px", background: "linear-gradient(135deg, #E6F9F9, #F0FAFA)", borderRadius: 18, borderLeft: `4px solid #00bcd4`, position: "relative", animation: bodyInView ? "scaleIn 0.6s ease both" : "none" }}>
-          <Quote size={28} color="#00bcd4" style={{ marginBottom: 14, opacity: 0.7 }} />
+          <FaQuoteLeft size={28} color="#00bcd4" style={{ marginBottom: 14, opacity: 0.7 }} />
           <p style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontStyle: "italic", color: "#0D1321", lineHeight: 1.7, margin: 0 }}>{post.pullQuote}</p>
           <p style={{ marginTop: 16, fontSize: 13.5, fontWeight: 700, color: "#00bcd4" }}>— {post.author}</p>
         </div>
@@ -349,7 +349,7 @@ export default function BlogPostPage() {
               <img src={post.videoPoster} alt="video thumbnail" style={{ width: "100%", height: 460, objectFit: "cover", display: "block" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(13,19,33,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div style={{ width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,0.95)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(0,0,0,0.3)", transition: "transform 0.2s, box-shadow 0.2s", animation: "pulse 2.5s infinite" }}>
-                  <Play size={32} color="#00bcd4" fill="#00bcd4" style={{ marginLeft: 4 }} />
+                  <FaPlayCircle size={32} color="#00bcd4" color="#00bcd4" style={{ marginLeft: 4 }} />
                 </div>
               </div>
               <div style={{ position: "absolute", bottom: 24, left: 24, background: "rgba(13,19,33,0.75)", borderRadius: 10, padding: "10px 18px", backdropFilter: "blur(8px)" }}>
@@ -406,7 +406,7 @@ export default function BlogPostPage() {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 36 }}>
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, fontWeight: 700, color: "#0D1321" }}>More to Read</h3>
             <Link to="/blog" style={{ display: "flex", alignItems: "center", gap: 6, color: "#00bcd4", fontWeight: 700, fontSize: 14 }}>
-              All Articles <ArrowRight size={14} />
+              All Articles <FaArrowRight size={14} />
             </Link>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: `repeat(${relatedPosts.length}, 1fr)`, gap: 24 }}>
@@ -419,7 +419,7 @@ export default function BlogPostPage() {
                   <span style={{ background: rp.tagColor + "22", color: rp.tagColor, fontSize: 11.5, fontWeight: 700, padding: "4px 11px", borderRadius: 10, display: "inline-block", marginBottom: 10 }}>{rp.tag}</span>
                   <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 700, color: "#0D1321", lineHeight: 1.35, marginBottom: 14 }}>{rp.title}</h4>
                   <div style={{ display: "flex", alignItems: "center", gap: 5, color: "#00bcd4", fontWeight: 700, fontSize: 13.5 }}>
-                    Read <ArrowRight size={13} />
+                    Read <FaArrowRight size={13} />
                   </div>
                 </div>
               </Link>
@@ -437,7 +437,7 @@ export default function BlogPostPage() {
           </div>
           <div style={{ display: "flex", gap: 24 }}>
             {Object.entries(navRoutes).map(([l, to]) => (
-              <Link key={l} to={to} style={{ fontSize: 13.5, color: "#9CA3AF", display: "flex", alignItems: "center", gap: 5 }}><ChevronRight size={12} color="#00bcd4" />{l}</Link>
+              <Link key={l} to={to} style={{ fontSize: 13.5, color: "#9CA3AF", display: "flex", alignItems: "center", gap: 5 }}><FaChevronRight size={12} color="#00bcd4" />{l}</Link>
             ))}
           </div>
         </div>

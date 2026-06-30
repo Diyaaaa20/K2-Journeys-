@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Compass, HeartHandshake, Leaf, HeartPulse, Rocket, Wand2, Globe, Globe2, Users, ShieldCheck, Sparkles, PlaneTakeoff, Map, Star, Award, ChevronRight, Link2, Share2, Clock } from "lucide-react";
+import { FaArrowRight, FaGlobe, FaUsers, FaShieldAlt, FaPlaneDeparture, FaMapMarkedAlt, FaStar, FaTrophy, FaChevronRight, FaLink, FaShareAlt, FaClock, FaGem } from "react-icons/fa";
+import { MdPublic } from "react-icons/md";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -64,42 +65,42 @@ const STORY_SLIDES = [
 
 const VALUES = [
   {
-    icon: Globe2,
+    icon: MdPublic,
     color: "#06B6D4",
     bg: "#ECFEFF",
     title: "Authentic Experiences",
     desc: "Every itinerary is personally explored before reaching you.",
   },
   {
-    icon: Users,
+    icon: FaUsers,
     color: "#FB7185",
     bg: "#FFF1F2",
     title: "Small Groups",
     desc: "Meaningful journeys with people who share your passion.",
   },
   {
-    icon: ShieldCheck,
+    icon: FaShieldAlt,
     color: "#22C55E",
     bg: "#F0FDF4",
     title: "Responsible Travel",
     desc: "Supporting local communities while protecting nature.",
   },
   {
-    icon: Sparkles,
+    icon: FaGem,
     color: "#A855F7",
     bg: "#FAF5FF",
     title: "Always With You",
     desc: "Real travel experts available whenever you need them.",
   },
   {
-    icon: PlaneTakeoff,
+    icon: FaPlaneDeparture,
     color: "#F59E0B",
     bg: "#FFFBEB",
     title: "Fast Planning",
     desc: "Custom itineraries delivered in as little as 48 hours.",
   },
   {
-    icon: Map,
+    icon: FaMapMarkedAlt,
     color: "#F97316",
     bg: "#FFF7ED",
     title: "Tailor-Made Trips",
@@ -129,10 +130,10 @@ const TEAM = [
 ];
 
 const AWARDS = [
-  { icon: Award, color: "#00bcd4", bg: "#E6F9F9", year: "2023", title: "Best Adventure Tour Operator", body: "Travel India Awards", detail: "Selected from 400+ nominees across India for exceptional route curation." },
-  { icon: Star, color: "#FBBF24", bg: "#FFFBEB", year: "2022–23", title: "Travellers' Choice", body: "TripAdvisor", detail: "Consecutive recognition based on verified traveller reviews." },
-  { icon: Globe, color: "#A78BFA", bg: "#F5F3FF", year: "2021", title: "Responsible Tourism Badge", body: "Ministry of Tourism, India", detail: "Awarded for ethical community engagement and low-impact travel practices." },
-  { icon: Clock, color: "#F87171", bg: "#FEF2F2", year: "2020", title: "Excellence in Customer Experience", body: "Holiday IQ Awards", detail: "Recognised for post-trip support and personalised service standards." },
+  { icon: FaTrophy, color: "#00bcd4", bg: "#E6F9F9", year: "2023", title: "Best Adventure Tour Operator", body: "Travel India Awards", detail: "Selected from 400+ nominees across India for exceptional route curation." },
+  { icon: FaStar, color: "#FBBF24", bg: "#FFFBEB", year: "2022–23", title: "Travellers' Choice", body: "TripAdvisor", detail: "Consecutive recognition based on verified traveller reviews." },
+  { icon: FaGlobe, color: "#A78BFA", bg: "#F5F3FF", year: "2021", title: "Responsible Tourism Badge", body: "Ministry of Tourism, India", detail: "Awarded for ethical community engagement and low-impact travel practices." },
+  { icon: FaClock, color: "#F87171", bg: "#FEF2F2", year: "2020", title: "Excellence in Customer Experience", body: "Holiday IQ Awards", detail: "Recognised for post-trip support and personalised service standards." },
 ];
 
 export default function AboutPageV2() {
@@ -238,7 +239,7 @@ const [hoveredValue, setHoveredValue] = useState(null);
           })}
         </nav>
         <button className="k2-book-btn" style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14, padding: "10px 22px", borderRadius: 24, display: "flex", alignItems: "center", gap: 8 }}>
-          Book Now <ArrowRight size={14} />
+          Book Now <FaArrowRight size={14} />
         </button>
         <button className="k2-hamburger" onClick={() => setMenuOpen(m => !m)} aria-label="Menu" style={{ display: "none", flexDirection: "column", gap: 5, background: "transparent", border: "none", padding: 8, cursor: "pointer" }}>
           <span style={{ display: "block", width: 22, height: 2, background: "#0D1321", borderRadius: 2, transition: "transform 0.3s", transform: menuOpen ? "rotate(45deg) translate(0, 7px)" : "none" }} />
@@ -254,7 +255,7 @@ const [hoveredValue, setHoveredValue] = useState(null);
               <span key={l} style={{ fontSize: 15, fontWeight: 600, color: "#374151", padding: "10px 0", borderBottom: "1px solid #F3F4F6" }}>{l}</span>;
           })}
           <Link to="/contact" onClick={() => setMenuOpen(false)} style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14, padding: "12px 22px", borderRadius: 24, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 8 }}>
-            Book Now <ArrowRight size={14} />
+            Book Now <FaArrowRight size={14} />
           </Link>
         </div>
       </header>
@@ -324,14 +325,14 @@ const [hoveredValue, setHoveredValue] = useState(null);
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(10,191,188,0.55)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 6px 24px rgba(10,191,188,0.5)"; }}
             >
-              Our Story <ArrowRight size={15} />
+              Our Story <FaArrowRight size={15} />
             </button>
             <button
               style={{ background: "rgba(255,255,255,0.08)", color: "#fff", fontWeight: 600, fontSize: 14, padding: "14px 30px", borderRadius: 28, border: "1.5px solid rgba(255,255,255,0.28)", display: "flex", alignItems: "center", gap: 8, backdropFilter: "blur(10px)", transition: "all 0.2s" }}
               onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.16)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; }}
             >
-              Meet the Team <ChevronRight size={15} />
+              Meet the Team <FaChevronRight size={15} />
             </button>
           </div>
         </div>
@@ -372,10 +373,10 @@ const [hoveredValue, setHoveredValue] = useState(null);
               <button key={i} onClick={() => { setSlideDir(i > slide ? 1 : -1); setSlide(i); }} style={{ width: i === slide ? 28 : 10, height: 10, borderRadius: 5, background: i === slide ? "#00bcd4" : "#D1D5DB", border: "none", cursor: "pointer", transition: "width 0.3s, background 0.3s" }} />
             ))}
             <button onClick={() => goSlide(-1)} style={{ marginLeft: 12, width: 34, height: 34, borderRadius: "50%", background: "#0D1321", color: "#fff", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
-              <ArrowRight size={14} color="#fff" style={{ transform: "rotate(180deg)" }} />
+              <FaArrowRight size={14} color="#fff" style={{ transform: "rotate(180deg)" }} />
             </button>
             <button onClick={() => goSlide(1)} style={{ width: 34, height: 34, borderRadius: "50%", background: "#0D1321", color: "#fff", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
-              <ArrowRight size={14} color="#fff" />
+              <FaArrowRight size={14} color="#fff" />
             </button>
           </div>
         </div>
@@ -419,7 +420,7 @@ const [hoveredValue, setHoveredValue] = useState(null);
             onMouseEnter={e => { e.currentTarget.style.background = "#00bcd4"; e.currentTarget.style.borderColor = "#00bcd4"; }}
             onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; }}
           >
-            <ArrowRight size={18} style={{ transform: "rotate(180deg)" }} />
+            <FaArrowRight size={18} style={{ transform: "rotate(180deg)" }} />
           </button>
           <button
             onClick={() => scrollCards(1)}
@@ -427,7 +428,7 @@ const [hoveredValue, setHoveredValue] = useState(null);
             onMouseEnter={e => { e.currentTarget.style.background = "#00bcd4"; e.currentTarget.style.borderColor = "#00bcd4"; }}
             onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; }}
           >
-            <ArrowRight size={18} />
+            <FaArrowRight size={18} />
           </button>
           <div ref={marqueeRef} className="k2-marquee" style={{ padding: "24px 64px 40px" }}>
             <div className="k2-marquee-track">
@@ -463,7 +464,7 @@ const [hoveredValue, setHoveredValue] = useState(null);
                     transition: "transform 0.35s",
                     transform: hoveredValue === i ? "rotate(-10deg) scale(1.12)" : "rotate(0) scale(1)",
                   }}>
-                    <v.icon size={28} color={v.color} strokeWidth={1.7} />
+                    <v.icon size={28} color={v.color} />
                   </div>
                   <h4 style={{ fontSize: 16, fontWeight: 700, color: hoveredValue === i ? "#0D1321" : "#fff", marginBottom: 10, transition: "color 0.3s" }}>{v.title}</h4>
                   <p style={{ fontSize: 13.5, lineHeight: 1.75, color: hoveredValue === i ? "#374151" : "rgba(255,255,255,0.72)", transition: "color 0.3s" }}>{v.desc}</p>
@@ -662,7 +663,7 @@ const [hoveredValue, setHoveredValue] = useState(null);
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 40, fontWeight: 700, color: "#0D1321", marginBottom: 16 }}>Adventure is better together.</h2>
         <p style={{ fontSize: 16, color: "#6B7280", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>Let us plan your next chapter. Real routes, real people, real memories.</p>
         <button style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 15, padding: "15px 36px", borderRadius: 28, display: "inline-flex", alignItems: "center", gap: 10, boxShadow: "0 6px 24px rgba(10,191,188,0.4)", transition: "transform 0.2s,box-shadow 0.2s", animation: "pulse 2.5s infinite" }} onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"} onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
-          Plan Your Journey <ArrowRight size={16} />
+          Plan Your Journey <FaArrowRight size={16} />
         </button>
       </section>
 
@@ -684,7 +685,7 @@ function Footer() {
           </div>
           <p style={{ color: "#9CA3AF", fontSize: 13.5, lineHeight: 1.7, marginBottom: 20 }}>We curate authentic, responsible, and unforgettable travel experiences across the world.</p>
           <div style={{ display: "flex", gap: 10 }}>
-            {[Share2, Link2].map((Icon, i) => <div key={i} style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid #374151", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF" }}><Icon size={14} /></div>)}
+            {[FaShareAlt, FaLink].map((Icon, i) => <div key={i} style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid #374151", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF" }}><Icon size={14} /></div>)}
           </div>
         </div>
         <div style={{ width: 180 }}>
@@ -692,15 +693,15 @@ function Footer() {
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {Object.entries(quickLinks).map(([l, to]) =>
               to
-                ? <Link key={l} to={to} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{l}</Link>
-                : <span key={l} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{l}</span>
+                ? <Link key={l} to={to} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{l}</Link>
+                : <span key={l} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{l}</span>
             )}
           </div>
         </div>
         <div style={{ width: 200 }}>
           <h5 style={{ color: "#fff", fontSize: 15, fontWeight: 700, marginBottom: 18 }}>Popular Destinations</h5>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {destinations.map(d => <a key={d} href="#" style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{d}</a>)}
+            {destinations.map(d => <a key={d} href="#" style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{d}</a>)}
           </div>
         </div>
         <div style={{ flex: 1 }}>
@@ -708,7 +709,7 @@ function Footer() {
           <p style={{ color: "#9CA3AF", fontSize: 13.5, lineHeight: 1.7, marginBottom: 16 }}>Subscribe to get travel tips, updates & exclusive offers.</p>
           <div style={{ display: "flex", gap: 8 }}>
             <input type="email" placeholder="Your email address" style={{ flex: 1, background: "#161B27", border: "1px solid #374151", borderRadius: 8, padding: "11px 14px", color: "#fff", fontSize: 13 }} />
-            <button style={{ background: "#00bcd4", color: "#fff", borderRadius: 8, padding: "0 16px", fontWeight: 600, fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>Send <ArrowRight size={13} /></button>
+            <button style={{ background: "#00bcd4", color: "#fff", borderRadius: 8, padding: "0 16px", fontWeight: 600, fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>Send <FaArrowRight size={13} /></button>
           </div>
         </div>
       </div>

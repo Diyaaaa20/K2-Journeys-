@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Search, Calendar, Clock, User, Tag, ChevronRight, Share2, Link2, Bookmark, TrendingUp, Eye } from "lucide-react";
+import { FaArrowRight, FaSearch, FaCalendarAlt, FaClock, FaUserCircle, FaTag, FaChevronRight, FaShareAlt, FaLink, FaBookmark, FaChartLine, FaEye } from "react-icons/fa";
 
 const navLinks = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -147,7 +147,7 @@ export default function BlogPage() {
           })}
         </nav>
         <button className="k2-book-btn" style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14, padding: "10px 22px", borderRadius: 24, display: "flex", alignItems: "center", gap: 8 }}>
-          Book Now <ArrowRight size={14} />
+          Book Now <FaArrowRight size={14} />
         </button>
         <button className="k2-hamburger" onClick={() => setMenuOpen(m => !m)} aria-label="Menu" style={{ display: "none", flexDirection: "column", gap: 5, background: "transparent", border: "none", padding: 8, cursor: "pointer" }}>
           <span style={{ display: "block", width: 22, height: 2, background: "#0D1321", borderRadius: 2, transition: "transform 0.3s", transform: menuOpen ? "rotate(45deg) translate(0, 7px)" : "none" }} />
@@ -163,7 +163,7 @@ export default function BlogPage() {
               <span key={l} style={{ fontSize: 15, fontWeight: 600, color: "#374151", padding: "10px 0", borderBottom: "1px solid #F3F4F6" }}>{l}</span>;
           })}
           <Link to="/contact" onClick={() => setMenuOpen(false)} style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14, padding: "12px 22px", borderRadius: 24, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 8 }}>
-            Book Now <ArrowRight size={14} />
+            Book Now <FaArrowRight size={14} />
           </Link>
         </div>
       </header>
@@ -211,7 +211,7 @@ export default function BlogPage() {
 
           {/* Search bar */}
           <div style={{ position: "relative", display: "inline-flex", width: 500, animation: heroInView ? "popIn 0.6s ease 0.34s both" : "none" }}>
-            <Search size={17} color="#9CA3AF" style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} />
+            <FaSearch size={17} color="#9CA3AF" style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} />
             <input
               type="text"
               placeholder="Search articles..."
@@ -228,7 +228,7 @@ export default function BlogPage() {
 
           {/* Stats as frosted pills */}
           <div style={{ display: "flex", justifyContent: "center", gap: 14, marginTop: 32, animation: heroInView ? "fadeUp 0.7s ease 0.44s both" : "none" }}>
-            {[{ icon: TrendingUp, label: "7 Articles", color: "#00bcd4" }, { icon: User, label: "3 Writers", color: "#A78BFA" }, { icon: Eye, label: "89k+ Reads", color: "#F87171" }].map(({ icon: Icon, label, color }) => (
+            {[{ icon: FaChartLine, label: "7 Articles", color: "#00bcd4" }, { icon: FaUserCircle, label: "3 Writers", color: "#A78BFA" }, { icon: FaEye, label: "89k+ Reads", color: "#F87171" }].map(({ icon: Icon, label, color }) => (
               <div key={label} style={{ display: "flex", alignItems: "center", gap: 7, background: "rgba(255,255,255,0.13)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.22)", borderRadius: 24, padding: "9px 18px", color: "#fff", fontSize: 13.5, fontWeight: 500 }}>
                 <Icon size={14} color={color} /> {label}
               </div>
@@ -253,19 +253,19 @@ export default function BlogPage() {
           </div>
           <div style={{ padding: "40px 44px 40px 40px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 14, color: "#9CA3AF", fontSize: 13, marginBottom: 16 }}>
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}><User size={13} />{featured.author}</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}><Calendar size={13} />{featured.date}</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}><Clock size={13} />{featured.readTime}</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}><Eye size={13} />{featured.views}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 5 }}><FaUserCircle size={13} />{featured.author}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 5 }}><FaCalendarAlt size={13} />{featured.date}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 5 }}><FaClock size={13} />{featured.readTime}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 5 }}><FaEye size={13} />{featured.views}</span>
             </div>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 700, color: "#0D1321", lineHeight: 1.3, marginBottom: 16, transition: "color 0.2s" }}>{featured.title}</h2>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: "#6B7280", marginBottom: 28 }}>{featured.excerpt}</p>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
               <Link to={`/blog/${featured.id}`} style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 14, padding: "12px 26px", borderRadius: 22, display: "inline-flex", alignItems: "center", gap: 8, boxShadow: "0 4px 16px rgba(10,191,188,0.3)", transition: "transform 0.2s, box-shadow 0.2s", textDecoration: "none" }} onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(10,191,188,0.4)"; }} onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "0 4px 16px rgba(10,191,188,0.3)"; }}>
-                Read Story <ArrowRight size={14} />
+                Read Story <FaArrowRight size={14} />
               </Link>
               <button onClick={(e) => toggleSave(featured.id, e)} className="save-btn" style={{ width: 40, height: 40, borderRadius: "50%", border: "1.5px solid #E5E7EB", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", color: savedPosts.has(featured.id) ? "#00bcd4" : "#9CA3AF" }}>
-                <Bookmark size={16} fill={savedPosts.has(featured.id) ? "#00bcd4" : "none"} />
+                <FaBookmark size={16} color={savedPosts.has(featured.id) ? "#00bcd4" : "#9CA3AF"} />
               </button>
             </div>
           </div>
@@ -301,7 +301,7 @@ export default function BlogPage() {
         <div ref={gridRef} style={{ flex: 1 }}>
           {filtered.length === 0 ? (
             <div style={{ textAlign: "center", padding: "80px 0", color: "#9CA3AF", animation: "fadeUp 0.4s ease both" }}>
-              <Search size={40} color="#D1D5DB" style={{ marginBottom: 16 }} />
+              <FaSearch size={40} color="#D1D5DB" style={{ marginBottom: 16 }} />
               <p style={{ fontSize: 18, fontWeight: 600, color: "#6B7280" }}>No articles found</p>
               <p style={{ fontSize: 14, marginTop: 8 }}>Try a different search or category</p>
             </div>
@@ -329,7 +329,7 @@ export default function BlogPage() {
                     <div style={{ position: "absolute", inset: 0, background: `rgba(10,191,188,${hoveredPost === post.id ? 0.12 : 0})`, transition: "background 0.4s" }} />
                     <span style={{ position: "absolute", top: 14, left: 14, background: `${post.tagColor}ee`, color: "#fff", fontSize: 11.5, fontWeight: 700, padding: "4px 12px", borderRadius: 10 }}>{post.tag}</span>
                     <button onClick={(e) => toggleSave(post.id, e)} className="save-btn" style={{ position: "absolute", top: 12, right: 12, width: 34, height: 34, borderRadius: "50%", background: "rgba(255,255,255,0.92)", border: "none", display: "flex", alignItems: "center", justifyContent: "center", color: savedPosts.has(post.id) ? "#00bcd4" : "#9CA3AF", opacity: hoveredPost === post.id ? 1 : 0, transition: "opacity 0.25s" }}>
-                      <Bookmark size={14} fill={savedPosts.has(post.id) ? "#00bcd4" : "none"} />
+                      <FaBookmark size={14} color={savedPosts.has(post.id) ? "#00bcd4" : "#9CA3AF"} />
                     </button>
                   </div>
 
@@ -338,12 +338,12 @@ export default function BlogPage() {
                     <p style={{ fontSize: 13.5, lineHeight: 1.72, color: "#6B7280", marginBottom: 18 }}>{post.excerpt}</p>
                     <div style={{ borderTop: "1px solid #F3F4F6", paddingTop: 14, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 14, color: "#9CA3AF", fontSize: 12 }}>
-                        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><User size={12} />{post.author}</span>
-                        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Clock size={12} />{post.readTime}</span>
-                        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Eye size={12} />{post.views}</span>
+                        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><FaUserCircle size={12} />{post.author}</span>
+                        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><FaClock size={12} />{post.readTime}</span>
+                        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><FaEye size={12} />{post.views}</span>
                       </div>
                       <Link to={`/blog/${post.id}`} className="read-btn" style={{ background: "transparent", color: "#00bcd4", fontWeight: 700, fontSize: 13, display: "flex", alignItems: "center", gap: 4, textDecoration: "none" }}>
-                        Read <ArrowRight size={13} />
+                        Read <FaArrowRight size={13} />
                       </Link>
                     </div>
                   </div>
@@ -357,7 +357,7 @@ export default function BlogPage() {
         <div ref={sidebarRef} className="k2-blog-sidebar" style={{ width: 280, flexShrink: 0, display: "flex", flexDirection: "column", gap: 20 }}>
           {/* Popular Tags */}
           <div style={{ background: "#F9FAFB", borderRadius: 18, padding: "24px 22px", border: "1px solid #E5E7EB", animation: sidebarInView ? "fadeRight 0.6s ease 0.1s both" : "none" }}>
-            <h4 style={{ fontSize: 15, fontWeight: 700, color: "#0D1321", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}><Tag size={15} color="#00bcd4" /> Popular Tags</h4>
+            <h4 style={{ fontSize: 15, fontWeight: 700, color: "#0D1321", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}><FaTag size={15} color="#00bcd4" /> Popular Tags</h4>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
               {popularTags.map(tag => (
                 <span key={tag} className="tag-pill" onClick={() => setSearch(tag)} style={{ background: "#fff", border: "1.5px solid #E5E7EB", color: "#374151", fontSize: 12.5, fontWeight: 500, padding: "5px 13px", borderRadius: 14, cursor: "pointer" }}>{tag}</span>
@@ -367,7 +367,7 @@ export default function BlogPage() {
 
           {/* Trending */}
           <div style={{ background: "#fff", borderRadius: 18, padding: "22px", border: "1px solid #E5E7EB", animation: sidebarInView ? "fadeRight 0.6s ease 0.2s both" : "none" }}>
-            <h4 style={{ fontSize: 15, fontWeight: 700, color: "#0D1321", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}><TrendingUp size={15} color="#F87171" /> Most Read</h4>
+            <h4 style={{ fontSize: 15, fontWeight: 700, color: "#0D1321", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}><FaChartLine size={15} color="#F87171" /> Most Read</h4>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {posts.slice(0, 3).map((p, i) => (
                 <div key={p.id} style={{ display: "flex", gap: 12, alignItems: "flex-start", cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={e => e.currentTarget.style.opacity = "0.75"} onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
@@ -387,7 +387,7 @@ export default function BlogPage() {
             <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, marginBottom: 10, position: "relative" }}>Plan your next journey</h4>
             <p style={{ fontSize: 13.5, lineHeight: 1.65, marginBottom: 20, opacity: 0.9, position: "relative" }}>Inspired by what you read? Let us turn it into a real trip.</p>
             <button style={{ background: "#fff", color: "#00bcd4", fontWeight: 700, fontSize: 13.5, padding: "11px 20px", borderRadius: 20, display: "flex", alignItems: "center", gap: 8, width: "100%", justifyContent: "center", position: "relative", transition: "transform 0.2s, box-shadow 0.2s", animation: "pulse 3s infinite" }} onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"} onMouseLeave={e => e.currentTarget.style.transform = ""}>
-              Talk to Our Team <ArrowRight size={13} />
+              Talk to Our Team <FaArrowRight size={13} />
             </button>
           </div>
         </div>
@@ -411,7 +411,7 @@ function Footer() {
           </div>
           <p style={{ color: "#9CA3AF", fontSize: 13.5, lineHeight: 1.7, marginBottom: 20 }}>We curate authentic, responsible, and unforgettable travel experiences across the world.</p>
           <div style={{ display: "flex", gap: 10 }}>
-            {[Share2, Link2].map((Icon, i) => <div key={i} style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid #374151", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF" }}><Icon size={14} /></div>)}
+            {[FaShareAlt, FaLink].map((Icon, i) => <div key={i} style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid #374151", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF" }}><Icon size={14} /></div>)}
           </div>
         </div>
         <div style={{ width: 180 }}>
@@ -419,15 +419,15 @@ function Footer() {
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {Object.entries(quickLinks).map(([l, to]) =>
               to
-                ? <Link key={l} to={to} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{l}</Link>
-                : <span key={l} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{l}</span>
+                ? <Link key={l} to={to} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{l}</Link>
+                : <span key={l} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{l}</span>
             )}
           </div>
         </div>
         <div style={{ width: 200 }}>
           <h5 style={{ color: "#fff", fontSize: 15, fontWeight: 700, marginBottom: 18 }}>Popular Destinations</h5>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {destinations.map(d => <span key={d} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><ChevronRight size={13} color="#00bcd4" />{d}</span>)}
+            {destinations.map(d => <span key={d} style={{ display: "flex", alignItems: "center", gap: 6, color: "#9CA3AF", fontSize: 13.5 }}><FaChevronRight size={13} color="#00bcd4" />{d}</span>)}
           </div>
         </div>
         <div style={{ flex: 1 }}>
@@ -435,7 +435,7 @@ function Footer() {
           <p style={{ color: "#9CA3AF", fontSize: 13.5, lineHeight: 1.7, marginBottom: 16 }}>Subscribe to get travel tips, updates & exclusive offers.</p>
           <div style={{ display: "flex", gap: 8 }}>
             <input type="email" placeholder="Your email address" style={{ flex: 1, background: "#161B27", border: "1px solid #374151", borderRadius: 8, padding: "11px 14px", color: "#fff", fontSize: 13 }} />
-            <button style={{ background: "#00bcd4", color: "#fff", borderRadius: 8, padding: "0 16px", fontWeight: 600, fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>Send <ArrowRight size={13} /></button>
+            <button style={{ background: "#00bcd4", color: "#fff", borderRadius: 8, padding: "0 16px", fontWeight: 600, fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>Send <FaArrowRight size={13} /></button>
           </div>
         </div>
       </div>
