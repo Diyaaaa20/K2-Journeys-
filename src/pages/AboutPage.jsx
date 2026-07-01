@@ -130,23 +130,14 @@ const TEAM = [
   },
 ];
 
-const AWARDS = [
-  { icon: FaTrophy, color: "#00bcd4", bg: "#E6F9F9", year: "2023", title: "Best Adventure Tour Operator", body: "Travel India Awards", detail: "Selected from 400+ nominees across India for exceptional route curation." },
-  { icon: FaStar, color: "#FBBF24", bg: "#FFFBEB", year: "2022–23", title: "Travellers' Choice", body: "TripAdvisor", detail: "Consecutive recognition based on verified traveller reviews." },
-  { icon: FaGlobe, color: "#A78BFA", bg: "#F5F3FF", year: "2021", title: "Responsible Tourism Badge", body: "Ministry of Tourism, India", detail: "Awarded for ethical community engagement and low-impact travel practices." },
-  { icon: FaClock, color: "#F87171", bg: "#FEF2F2", year: "2020", title: "Excellence in Customer Experience", body: "Holiday IQ Awards", detail: "Recognised for post-trip support and personalised service standards." },
-];
-
 export default function AboutPageV2() {
   const [slide, setSlide] = useState(0);
   const [sliding, setSliding] = useState(false);
   const [slideDir, setSlideDir] = useState(1);
   const [statsRef, statsInView] = useInView(0.3);
   const [valuesRef, valuesInView] = useInView(0.1);
-  const [awardRef, awardInView] = useInView(0.1);
-const [hoveredValue, setHoveredValue] = useState(null);
+  const [hoveredValue, setHoveredValue] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeAward, setActiveAward] = useState(0);
   const [heroMouse, setHeroMouse] = useState({ x: 0.5, y: 0.5 });
   const [teamTilt, setTeamTilt] = useState({ i: null, rx: 0, ry: 0 });
   const marqueeRef = useRef(null);
@@ -373,10 +364,10 @@ const [hoveredValue, setHoveredValue] = useState(null);
             {STORY_SLIDES.map((_, i) => (
               <button key={i} onClick={() => { setSlideDir(i > slide ? 1 : -1); setSlide(i); }} style={{ width: i === slide ? 28 : 10, height: 10, borderRadius: 5, background: i === slide ? "#00bcd4" : "#D1D5DB", border: "none", cursor: "pointer", transition: "width 0.3s, background 0.3s" }} />
             ))}
-            <button onClick={() => goSlide(-1)} style={{ marginLeft: 12, width: 34, height: 34, borderRadius: "50%", background: "#0D1321", color: "#fff", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+            <button onClick={() => goSlide(-1)} style={{ marginLeft: 12, width: 34, height: 34, borderRadius: "50%", background: "#00bcd4", color: "#fff", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.3s" }} onMouseEnter={e => e.currentTarget.style.boxShadow = "0 0 20px rgba(0, 188, 212, 0.5)"} onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
               <FaArrowRight size={14} color="#fff" style={{ transform: "rotate(180deg)" }} />
             </button>
-            <button onClick={() => goSlide(1)} style={{ width: 34, height: 34, borderRadius: "50%", background: "#0D1321", color: "#fff", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+            <button onClick={() => goSlide(1)} style={{ width: 34, height: 34, borderRadius: "50%", background: "#00bcd4", color: "#fff", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.3s" }} onMouseEnter={e => e.currentTarget.style.boxShadow = "0 0 20px rgba(0, 188, 212, 0.5)"} onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
               <FaArrowRight size={14} color="#fff" />
             </button>
           </div>
@@ -528,9 +519,9 @@ const [hoveredValue, setHoveredValue] = useState(null);
                     href={m.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.75)", fontSize: 13.5, fontWeight: 600, padding: "10px 20px", borderRadius: 24, textDecoration: "none", transition: "all 0.22s", animation: teamInView ? `teamFadeUp 0.5s ease ${base + 0.7}s both` : "none" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = m.roleColor; e.currentTarget.style.borderColor = m.roleColor; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)"; e.currentTarget.style.color = "rgba(255,255,255,0.75)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                    style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#00bcd4", border: "1px solid #00bcd4", color: "#fff", fontSize: 13.5, fontWeight: 600, padding: "10px 20px", borderRadius: 24, textDecoration: "none", transition: "all 0.22s", animation: teamInView ? `teamFadeUp 0.5s ease ${base + 0.7}s both` : "none" }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 10px 25px rgba(0, 188, 212, 0.4)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
                   >
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -541,98 +532,6 @@ const [hoveredValue, setHoveredValue] = useState(null);
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* ── AWARDS (timeline + animated carousel) ── */}
-      <section ref={awardRef} className="k2-awards-section" style={{ background: "#0D1321", padding: "80px 64px" }}>
-        <div style={{ textAlign: "center", marginBottom: 52 }}>
-          <p style={{ color: "#00bcd4", fontSize: 12.5, fontWeight: 700, letterSpacing: 3, marginBottom: 12 }}>RECOGNITION</p>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 700, color: "#fff" }}>Awards & Milestones</h2>
-        </div>
-
-        {/* Timeline */}
-        <div style={{ position: "relative", display: "flex", gap: 0 }}>
-          {/* Dark base track */}
-          <div style={{ position: "absolute", top: 27, left: "12.5%", right: "12.5%", height: 3, background: "#1F2937", borderRadius: 2 }} />
-
-          {/* Glowing progress fill */}
-          <div style={{
-            position: "absolute", top: 27, left: "12.5%",
-            width: `${(activeAward / (AWARDS.length - 1)) * 75}%`,
-            height: 3, borderRadius: 2,
-            background: `linear-gradient(90deg, ${AWARDS[0].color}, ${AWARDS[activeAward].color})`,
-            boxShadow: `0 0 8px ${AWARDS[activeAward].color}99, 0 0 20px ${AWARDS[activeAward].color}55`,
-            transition: "width 0.7s cubic-bezier(0.4,0,0.2,1), box-shadow 0.5s",
-            animation: "lineGlow 2.5s ease-in-out infinite",
-          }} />
-
-          {/* Traveling orb along the track */}
-          <div style={{
-            position: "absolute", top: 20,
-            left: `${12.5 + (activeAward / (AWARDS.length - 1)) * 75}%`,
-            width: 16, height: 16, borderRadius: "50%",
-            background: AWARDS[activeAward].color,
-            boxShadow: `0 0 14px 4px ${AWARDS[activeAward].color}99, 0 0 32px 10px ${AWARDS[activeAward].color}44`,
-            transform: "translateX(-50%)",
-            transition: "left 0.7s cubic-bezier(0.4,0,0.2,1), background 0.4s, box-shadow 0.4s",
-            zIndex: 4,
-          }} />
-
-          {AWARDS.map((a, i) => (
-            <div
-              key={a.title}
-              onClick={() => setActiveAward(i)}
-              style={{ flex: 1, textAlign: "center", cursor: "pointer", position: "relative", zIndex: 2 }}
-            >
-              {/* Outer glow ring for active */}
-              {i === activeAward && (
-                <div style={{
-                  position: "absolute", top: "50%", left: "50%",
-                  width: 72, height: 72, borderRadius: "50%",
-                  background: `radial-gradient(circle, ${a.color}22 0%, transparent 70%)`,
-                  transform: "translate(-50%, -68%)",
-                  animation: "glowPulse 2s ease-in-out infinite",
-                  pointerEvents: "none",
-                }} />
-              )}
-              <div style={{
-                width: 54, height: 54, borderRadius: "50%",
-                background: i <= activeAward ? a.bg : "#1A2035",
-                border: `2.5px solid ${i <= activeAward ? a.color : "#2D3748"}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                margin: "0 auto 18px",
-                boxShadow: i === activeAward
-                  ? `0 0 0 4px ${a.color}22, 0 0 18px ${a.color}99, 0 0 40px ${a.color}44`
-                  : i < activeAward
-                    ? `0 0 10px ${a.color}66, 0 0 22px ${a.color}33`
-                    : "none",
-                transition: "all 0.5s ease",
-                animation: i === activeAward && awardInView ? "glowPulse 2s ease-in-out infinite" : "none",
-              }}>
-                <a.icon size={22} color={i <= activeAward ? a.color : "#4A5568"} />
-              </div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: i <= activeAward ? a.color : "#4A5568", letterSpacing: 1, transition: "color 0.4s" }}>{a.year}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Active award detail */}
-        <div key={activeAward} className="k2-awards-detail" style={{ background: "#161B27", border: "1px solid #262B38", borderRadius: 20, padding: "36px 40px", marginTop: 36, display: "flex", gap: 28, alignItems: "center", animation: "fadeUp 0.4s ease both" }}>
-          <div style={{ background: AWARDS[activeAward].bg, borderRadius: "50%", width: 72, height: 72, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", animation: "float 3s ease-in-out infinite" }}>
-            {(() => { const Icon = AWARDS[activeAward].icon; return <Icon size={32} color={AWARDS[activeAward].color} />; })()}
-          </div>
-          <div>
-            <p style={{ color: AWARDS[activeAward].color, fontSize: 12.5, fontWeight: 700, letterSpacing: 2, marginBottom: 8 }}>{AWARDS[activeAward].year}</p>
-            <h3 style={{ color: "#fff", fontSize: 22, fontWeight: 700, marginBottom: 6 }}>{AWARDS[activeAward].title}</h3>
-            <p style={{ color: "#6B7280", fontSize: 14, marginBottom: 10 }}>{AWARDS[activeAward].body}</p>
-            <p style={{ color: "#9CA3AF", fontSize: 14, lineHeight: 1.65 }}>{AWARDS[activeAward].detail}</p>
-          </div>
-        </div>
-
-        {/* Dot indicators */}
-        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 24 }}>
-          {AWARDS.map((_, i) => <button key={i} onClick={() => setActiveAward(i)} style={{ width: i === activeAward ? 24 : 8, height: 8, borderRadius: 4, background: i === activeAward ? "#00bcd4" : "#374151", border: "none", cursor: "pointer", transition: "all 0.3s" }} />)}
         </div>
       </section>
 
