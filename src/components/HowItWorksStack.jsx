@@ -1,5 +1,6 @@
 import { FaPen, FaFileAlt, FaUsers, FaCheckCircle } from 'react-icons/fa';
 import ScrollStack, { ScrollStackItem } from './ScrollStack';
+import ColorBends from './ColorBends';
 import './HowItWorksStack.css';
 
 const steps = [
@@ -40,6 +41,23 @@ const steps = [
 const HowItWorksStack = () => {
   return (
     <section className="how-it-works-stack">
+      <ColorBends
+        colors={['#2dd4bf', '#eab308', '#a78bfa', '#fb7185']}
+        rotation={45}
+        speed={0.15}
+        scale={1.2}
+        frequency={2}
+        warpStrength={0.8}
+        mouseInfluence={0.4}
+        parallax={0.3}
+        noise={0.1}
+        iterations={2}
+        intensity={0.8}
+        bandWidth={4}
+        transparent={true}
+        className="hiws-background"
+      />
+
       <div className="hiws-header">
         <span className="hiws-eyebrow">HOW IT WORKS</span>
         <h2 className="hiws-title">From brief to brilliant event</h2>

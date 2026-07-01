@@ -3,11 +3,24 @@
   background: #0a0e1a;
   width: 100%;
   min-height: 100vh;
+  overflow: hidden;
+}
+
+.hiws-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.6;
 }
 
 .hiws-header {
   text-align: center;
   padding: 2rem 1.5rem 0.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hiws-eyebrow {
@@ -29,7 +42,9 @@
 }
 
 .how-it-works-stack .scroll-stack-scroller {
-  background: #0a0e1a;
+  background: transparent;
+  position: relative;
+  z-index: 1;
 }
 
 .how-it-works-stack .scroll-stack-inner {
