@@ -5,6 +5,7 @@ import { Users, Gift, Presentation, Building2, ArrowRight, Globe } from "lucide-
 
 import AnimatedFlightPath from "../components/AnimatedFlightPath";
 import Particles from "../components/Particles";
+import HowItWorksStack from "../components/HowItWorksStack";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -421,8 +422,8 @@ export default function MICEPage() {
 
         {/* Footer tagline */}
         <div style={{ maxWidth:1200, margin:"12px auto 0", textAlign:"center", display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
-          <Globe size={18} color="#c9a84c" strokeWidth={1.25} style={{ opacity:0.65 }} />
-          <p style={{ fontFamily:"'Inter', sans-serif", color:"rgba(201,168,76,0.5)", fontSize:"0.7rem", letterSpacing:"0.3em", textTransform:"uppercase", margin:0 }}>
+          <Globe size={18} color="#110d01" strokeWidth={1.25} style={{ opacity:0.65 }} />
+          <p style={{ fontFamily:"'Inter', sans-serif", color:"rgba(17, 13, 2, 0.5)", fontSize:"0.7rem", letterSpacing:"0.3em", textTransform:"uppercase", margin:0 }}>
             Global Reach.&nbsp;&nbsp;Local Expertise.&nbsp;&nbsp;Unmatched Experiences.
           </p>
         </div>
@@ -577,31 +578,7 @@ export default function MICEPage() {
       </section>
 
       {/* ── PROCESS ── */}
-      <section ref={processRef} style={{ background:"#0D1321", padding:"80px 64px" }}>
-        <div style={{ textAlign:"center", marginBottom:56 }}>
-          <p style={{ color:"#0ABFBC", fontSize:12.5, fontWeight:700, letterSpacing:3, marginBottom:14 }}>HOW IT WORKS</p>
-          <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:40, fontWeight:700, color:"#fff" }}>From brief to brilliant event</h2>
-        </div>
-        <div style={{ display:"flex", position:"relative", alignItems:"flex-start" }}>
-          {/* Connector lines */}
-          {PROCESS.slice(0, -1).map((_, i) => (
-            <div key={`line-${i}`} style={{ position:"absolute", top:27, left:`calc(${(i+1)/PROCESS.length*100}% - ${100/PROCESS.length/2}% + 28px)`, width:`calc(${100/PROCESS.length}% - 56px)`, height:3, background:"#1F2937", borderRadius:2, overflow:"hidden", zIndex:0 }}>
-              <div style={{ height:"100%", background:`linear-gradient(90deg, ${PROCESS[i].color}, ${PROCESS[i+1].color})`, width: i < activeStep ? "100%" : "0%", transition:"width 0.8s ease", borderRadius:2 }} />
-            </div>
-          ))}
-          {PROCESS.map((s, i) => (
-            <div key={s.num} onClick={() => setActiveStep(i)} style={{ flex:1, textAlign:"center", padding:"0 16px", position:"relative", zIndex:1, cursor:"pointer" }}>
-              <div style={{ width:56, height:56, borderRadius:"50%", background: i<=activeStep ? s.bg : "#1F2937", border:`2.5px solid ${i<=activeStep ? s.color : "#374151"}`, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 20px", transition:"all 0.4s ease", transform: i===activeStep ? "scale(1.15)" : "scale(1)", boxShadow: i===activeStep ? `0 0 0 6px ${s.color}22, 0 8px 24px ${s.color}40` : "none" }}>
-                <s.icon size={22} color={i<=activeStep ? s.color : "#4B5563"} />
-              </div>
-              <div style={{ fontSize:11, fontWeight:800, color: i<=activeStep ? s.color : "#4B5563", letterSpacing:2, marginBottom:8 }}>{s.num}</div>
-              <h4 style={{ fontSize:16, fontWeight:700, color: i<=activeStep ? "#fff" : "#6B7280", marginBottom:8, transition:"color 0.3s" }}>{s.title}</h4>
-              <p style={{ fontSize:13.5, color:"#6B7280", lineHeight:1.7, maxWidth:200, margin:"0 auto", opacity: i===activeStep ? 1 : 0.55, transition:"opacity 0.3s" }}>{s.desc}</p>
-              {i===activeStep && <div style={{ width:28, height:3, background:s.color, borderRadius:2, margin:"14px auto 0", animation:"progressFill 2s linear forwards" }} />}
-            </div>
-          ))}
-        </div>
-      </section>
+      <HowItWorksStack />
 
       {/* ── TESTIMONIALS ── */}
       <section style={{ padding:"40px 64px", background:"#F0FAFA" }}>
