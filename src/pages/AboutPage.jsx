@@ -155,14 +155,6 @@ export default function AboutPageV2() {
     return () => clearInterval(timer);
   }, [slide]);
 
-
-  // Auto-cycle awards
-  useEffect(() => {
-    if (!awardInView) return;
-    const t = setInterval(() => setActiveAward(a => (a + 1) % AWARDS.length), 3000);
-    return () => clearInterval(t);
-  }, [awardInView]);
-
   // Constant-speed auto-scroll for values carousel (mirrors original CSS marquee)
   useEffect(() => {
     const el = marqueeRef.current;
