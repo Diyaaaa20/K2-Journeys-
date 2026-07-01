@@ -29,6 +29,13 @@ const ScrollStack = ({
   const lastTransformsRef = useRef(new Map());
   const isUpdatingRef = useRef(false);
 
+  // Cached layout metrics — computed once (on mount / resize / image load),
+  // never read from the DOM inside the scroll handler. This is what kills
+  // the layout-thrashing jank: offsetTop/getBoundingClientRect reads are
+  // forced-synchronous reflows when they happen right after a style write.
+  const metricsRef = useRef({ cards: [] });
+  const rafScheduledRef = useRef(false);
+
   const calculateProgress = useCallback((scrollTop, start, end) => {
     if (scrollTop < start) return 0;
     if (scrollTop > end) return 1;
@@ -42,21 +49,8 @@ const ScrollStack = ({
     return parseFloat(value);
   }, []);
 
-  const getScrollData = useCallback(() => {
-    if (useWindowScroll) {
-      return {
-        scrollTop: window.scrollY,
-        containerHeight: window.innerHeight,
-        scrollContainer: document.documentElement
-      };
-    } else {
-      const scroller = scrollerRef.current;
-      return {
-        scrollTop: scroller.scrollTop,
-        containerHeight: scroller.clientHeight,
-        scrollContainer: scroller
-      };
-    }
+  const getScrollTop = useCallback(() => {
+    return useWindowScroll ? window.scrollY : scrollerRef.current?.scrollTop || 0;
   }, [useWindowScroll]);
 
   const getElementOffset = useCallback(
@@ -71,29 +65,65 @@ const ScrollStack = ({
     [useWindowScroll]
   );
 
-  const updateCardTransforms = useCallback(() => {
-    if (!cardsRef.current.length || isUpdatingRef.current) return;
+  // Re-measure every card's position and precompute its trigger points.
+  // Only this function ever touches offsetTop/getBoundingClientRect —
+  // the scroll handler reads exclusively from the cache it produces.
+  const measure = useCallback(() => {
+    const cards = cardsRef.current;
+    if (!cards.length) return;
 
-    isUpdatingRef.current = true;
+    const containerHeight = useWindowScroll
+      ? window.innerHeight
+      : scrollerRef.current?.clientHeight || 0;
 
-    const { scrollTop, containerHeight } = getScrollData();
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
 
     const endElement = useWindowScroll
       ? document.querySelector('.scroll-stack-end')
       : scrollerRef.current?.querySelector('.scroll-stack-end');
-
     const endElementTop = endElement ? getElementOffset(endElement) : 0;
 
-    cardsRef.current.forEach((card, i) => {
-      if (!card) return;
-
+    const cardMetrics = cards.map((card, i) => {
       const cardTop = getElementOffset(card);
-      const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
-      const triggerEnd = cardTop - scaleEndPositionPx;
       const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
-      const pinEnd = endElementTop - containerHeight / 2;
+      return {
+        triggerStart: pinStart,
+        triggerEnd: cardTop - scaleEndPositionPx,
+        pinStart,
+        pinEnd: endElementTop - containerHeight / 2
+      };
+    });
+
+    metricsRef.current = { cards: cardMetrics };
+  }, [
+    getElementOffset,
+    itemStackDistance,
+    parsePercentage,
+    scaleEndPosition,
+    stackPosition,
+    useWindowScroll
+  ]);
+
+  const updateCardTransforms = useCallback(() => {
+    if (!cardsRef.current.length || isUpdatingRef.current) return;
+    isUpdatingRef.current = true;
+
+    const scrollTop = getScrollTop();
+    const { cards: cardMetrics } = metricsRef.current;
+
+    // Single pass to find the deepest card past its trigger point —
+    // replaces the old O(n^2) inner loop (and its DOM reads) that ran
+    // once per card, per scroll event.
+    let topCardIndex = 0;
+    for (let j = 0; j < cardMetrics.length; j++) {
+      if (scrollTop >= cardMetrics[j].triggerStart) topCardIndex = j;
+    }
+
+    cardsRef.current.forEach((card, i) => {
+      if (!card || !cardMetrics[i]) return;
+
+      const { triggerStart, triggerEnd, pinStart, pinEnd } = cardMetrics[i];
 
       const scaleProgress = calculateProgress(scrollTop, triggerStart, triggerEnd);
       const targetScale = baseScale + i * itemScale;
@@ -101,29 +131,17 @@ const ScrollStack = ({
       const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
 
       let blur = 0;
-      if (blurAmount) {
-        let topCardIndex = 0;
-        for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = getElementOffset(cardsRef.current[j]);
-          const jTriggerStart = jCardTop - stackPositionPx - itemStackDistance * j;
-          if (scrollTop >= jTriggerStart) {
-            topCardIndex = j;
-          }
-        }
-
-        if (i < topCardIndex) {
-          const depthInStack = topCardIndex - i;
-          blur = Math.max(0, depthInStack * blurAmount);
-        }
+      if (blurAmount && i < topCardIndex) {
+        blur = Math.max(0, (topCardIndex - i) * blurAmount);
       }
 
       let translateY = 0;
       const isPinned = scrollTop >= pinStart && scrollTop <= pinEnd;
 
       if (isPinned) {
-        translateY = scrollTop - cardTop + stackPositionPx + itemStackDistance * i;
+        translateY = scrollTop - pinStart;
       } else if (scrollTop > pinEnd) {
-        translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
+        translateY = pinEnd - pinStart;
       }
 
       const newTransform = {
@@ -163,83 +181,64 @@ const ScrollStack = ({
     });
 
     isUpdatingRef.current = false;
-  }, [
-    itemScale,
-    itemStackDistance,
-    stackPosition,
-    scaleEndPosition,
-    baseScale,
-    rotationAmount,
-    blurAmount,
-    useWindowScroll,
-    onStackComplete,
-    calculateProgress,
-    parsePercentage,
-    getScrollData,
-    getElementOffset
-  ]);
+  }, [baseScale, blurAmount, calculateProgress, getScrollTop, itemScale, onStackComplete, rotationAmount]);
 
+  // Throttle to one update per animation frame no matter how often Lenis
+  // fires 'scroll' — keeps CPU usage flat during a fast fling instead of
+  // spiking, which is a common cause of visible stutter.
   const handleScroll = useCallback(() => {
-    updateCardTransforms();
+    if (rafScheduledRef.current) return;
+    rafScheduledRef.current = true;
+    requestAnimationFrame(() => {
+      rafScheduledRef.current = false;
+      updateCardTransforms();
+    });
   }, [updateCardTransforms]);
 
   const setupLenis = useCallback(() => {
-    if (useWindowScroll) {
-      const lenis = new Lenis({
-        duration: 1.2,
-        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        touchMultiplier: 2,
-        infinite: false,
-        wheelMultiplier: 1,
-        lerp: 0.1,
-        syncTouch: true,
-        syncTouchLerp: 0.075
-      });
+    if (!useWindowScroll && !scrollerRef.current) return;
 
-      lenis.on('scroll', handleScroll);
+    const lenisOptions = useWindowScroll
+      ? {
+          duration: 1.2,
+          easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          touchMultiplier: 2,
+          infinite: false,
+          wheelMultiplier: 1,
+          lerp: 0.1,
+          syncTouch: true,
+          syncTouchLerp: 0.075
+        }
+      : {
+          wrapper: scrollerRef.current,
+          content: scrollerRef.current.querySelector('.scroll-stack-inner'),
+          duration: 1.2,
+          easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          touchMultiplier: 2,
+          infinite: false,
+          gestureOrientationHandler: true,
+          normalizeWheel: true,
+          wheelMultiplier: 1,
+          touchInertiaMultiplier: 35,
+          lerp: 0.1,
+          syncTouch: true,
+          syncTouchLerp: 0.075,
+          touchInertia: 0.6
+        };
 
-      const raf = time => {
-        lenis.raf(time);
-        animationFrameRef.current = requestAnimationFrame(raf);
-      };
+    const lenis = new Lenis(lenisOptions);
+    lenis.on('scroll', handleScroll);
+
+    const raf = time => {
+      lenis.raf(time);
       animationFrameRef.current = requestAnimationFrame(raf);
+    };
+    animationFrameRef.current = requestAnimationFrame(raf);
 
-      lenisRef.current = lenis;
-      return lenis;
-    } else {
-      const scroller = scrollerRef.current;
-      if (!scroller) return;
-
-      const lenis = new Lenis({
-        wrapper: scroller,
-        content: scroller.querySelector('.scroll-stack-inner'),
-        duration: 1.2,
-        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        touchMultiplier: 2,
-        infinite: false,
-        gestureOrientationHandler: true,
-        normalizeWheel: true,
-        wheelMultiplier: 1,
-        touchInertiaMultiplier: 35,
-        lerp: 0.1,
-        syncTouch: true,
-        syncTouchLerp: 0.075,
-        touchInertia: 0.6
-      });
-
-      lenis.on('scroll', handleScroll);
-
-      const raf = time => {
-        lenis.raf(time);
-        animationFrameRef.current = requestAnimationFrame(raf);
-      };
-      animationFrameRef.current = requestAnimationFrame(raf);
-
-      lenisRef.current = lenis;
-      return lenis;
-    }
+    lenisRef.current = lenis;
+    return lenis;
   }, [handleScroll, useWindowScroll]);
 
   useLayoutEffect(() => {
@@ -266,13 +265,44 @@ const ScrollStack = ({
       card.style.webkitTransform = 'translateZ(0)';
       card.style.perspective = '1000px';
       card.style.webkitPerspective = '1000px';
+      // Isolate paint/layout per card so one card's repaint doesn't force
+      // the browser to re-check its siblings.
+      card.style.contain = 'layout paint';
     });
 
+    measure();
     setupLenis();
-
     updateCardTransforms();
 
+    // Re-measure on resize (throttled to one rAF) since card positions and
+    // container height change.
+    let resizeRaf = null;
+    const onResize = () => {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        measure();
+        updateCardTransforms();
+      });
+    };
+    window.addEventListener('resize', onResize);
+
+    // Re-measure once any lazy-loaded images inside the stack finish
+    // loading — image load changes card height (and therefore the
+    // offsetTop of every card after it) without firing a resize event.
+    const images = Array.from(scroller.querySelectorAll('img'));
+    const onImageLoad = () => {
+      measure();
+      updateCardTransforms();
+    };
+    images.forEach(img => {
+      if (img.complete) return;
+      img.addEventListener('load', onImageLoad, { once: true });
+    });
+
     return () => {
+      window.removeEventListener('resize', onResize);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      images.forEach(img => img.removeEventListener('load', onImageLoad));
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -297,13 +327,15 @@ const ScrollStack = ({
     useWindowScroll,
     onStackComplete,
     setupLenis,
-    updateCardTransforms
+    updateCardTransforms,
+    measure
   ]);
 
   return (
     <div className={`scroll-stack-scroller ${className}`.trim()} ref={scrollerRef}>
       <div className="scroll-stack-inner">
         {children}
+        {/* Spacer so the last pin can release cleanly */}
         <div className="scroll-stack-end" />
       </div>
     </div>
