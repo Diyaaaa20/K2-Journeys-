@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRight, FaGlobe, FaUsers, FaShieldAlt, FaPlaneDeparture, FaMapMarkedAlt, FaStar, FaTrophy, FaChevronRight, FaLink, FaShareAlt, FaClock, FaGem } from "react-icons/fa";
 import { MdPublic } from "react-icons/md";
-import AdvancedValueCard from "../components/AdvancedValueCard";
+import ValuesCarousel from "../components/ValuesCarousel";
+import MovingTransit from "../components/MovingTransit";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -136,38 +137,17 @@ export default function AboutPageV2() {
   const [slideDir, setSlideDir] = useState(1);
   const [statsRef, statsInView] = useInView(0.3);
   const [valuesRef, valuesInView] = useInView(0.1);
-  const [hoveredValue, setHoveredValue] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [heroMouse, setHeroMouse] = useState({ x: 0.5, y: 0.5 });
   const [teamTilt, setTeamTilt] = useState({ i: null, rx: 0, ry: 0 });
-  const marqueeRef = useRef(null);
   const [teamRef, teamInView] = useInView(0.15);
   const [hoveredPhoto, setHoveredPhoto] = useState(null);
-
-  function scrollCards(dir) {
-    if (!marqueeRef.current) return;
-    marqueeRef.current.scrollLeft += dir * (268 + 28);
-  }
 
   // Auto-slide story carousel
   useEffect(() => {
     const timer = setInterval(() => goSlide(1), 5000);
     return () => clearInterval(timer);
   }, [slide]);
-
-  // Constant-speed auto-scroll for values carousel (mirrors original CSS marquee)
-  useEffect(() => {
-    const el = marqueeRef.current;
-    if (!el) return;
-    let raf;
-    function tick() {
-      el.scrollLeft += 1;
-      if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0;
-      raf = requestAnimationFrame(tick);
-    }
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
 
   function goSlide(dir) {
     if (sliding) return;
@@ -385,7 +365,7 @@ export default function AboutPageV2() {
         </div>
       </section>
 
-      {/* ── VALUES (scrollable carousel with arrow buttons) ── */}
+      {/* ── VALUES (3D perspective carousel) ── */}
       <section ref={valuesRef} className="k2-values-section" style={{
         padding: "40px 0",
         backgroundImage: "linear-gradient(135deg, rgba(13,19,33,0.72) 0%, rgba(10,40,50,0.68) 50%, rgba(13,19,33,0.72) 100%), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=80')",
@@ -393,48 +373,11 @@ export default function AboutPageV2() {
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
       }}>
-        <div style={{ textAlign: "center", marginBottom: 28, padding: "0 64px" }}>
+        <div style={{ textAlign: "center", marginBottom: 0, padding: "0 64px" }}>
           <p style={{ color: "#00bcd4", fontSize: 12.5, fontWeight: 700, letterSpacing: 3, marginBottom: 12 }}>WHAT WE STAND FOR</p>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 700, color: "#fff" }}>Our values in action</h2>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, fontWeight: 700, color: "#fff", marginBottom: 1 }}>Our values in action</h2>
         </div>
-        <div style={{ position: "relative" }}>
-          <button
-            onClick={() => scrollCards(-1)}
-            style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(10px)", border: "1.5px solid rgba(255,255,255,0.22)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", cursor: "pointer", transition: "background 0.2s, border-color 0.2s" }}
-            onMouseEnter={e => { e.currentTarget.style.background = "#00bcd4"; e.currentTarget.style.borderColor = "#00bcd4"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; }}
-          >
-            <FaArrowRight size={18} style={{ transform: "rotate(180deg)" }} />
-          </button>
-          <button
-            onClick={() => scrollCards(1)}
-            style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(10px)", border: "1.5px solid rgba(255,255,255,0.22)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", cursor: "pointer", transition: "background 0.2s, border-color 0.2s" }}
-            onMouseEnter={e => { e.currentTarget.style.background = "#00bcd4"; e.currentTarget.style.borderColor = "#00bcd4"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; }}
-          >
-            <FaArrowRight size={18} />
-          </button>
-          <div ref={marqueeRef} className="k2-marquee" style={{ padding: "24px 64px 40px" }}>
-            <style>{`
-              @keyframes slideUp {
-                0% { opacity: 0; transform: translateY(30px) rotateX(10deg); }
-                100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
-              }
-            `}</style>
-            <div className="k2-marquee-track">
-              {[...VALUES, ...VALUES].map((v, i) => (
-                <AdvancedValueCard
-                  key={i}
-                  v={v}
-                  index={i % VALUES.length}
-                  isHovered={hoveredValue === i}
-                  onHover={setHoveredValue}
-                  onLeave={() => setHoveredValue(null)}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+        <ValuesCarousel values={VALUES} />
       </section>
 
       {/* ── TEAM ── */}
@@ -528,13 +471,22 @@ export default function AboutPageV2() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="k2-about-cta" style={{ padding: "80px 64px", textAlign: "center", background: "#F0FAFA" }}>
-        <p style={{ color: "#00bcd4", fontSize: 12.5, fontWeight: 700, letterSpacing: 3, marginBottom: 16 }}>READY TO EXPLORE?</p>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 40, fontWeight: 700, color: "#0D1321", marginBottom: 16 }}>Adventure is better together.</h2>
-        <p style={{ fontSize: 16, color: "#6B7280", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>Let us plan your next chapter. Real routes, real people, real memories.</p>
-        <button style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 15, padding: "15px 36px", borderRadius: 28, display: "inline-flex", alignItems: "center", gap: 10, boxShadow: "0 6px 24px rgba(10,191,188,0.4)", transition: "transform 0.2s,box-shadow 0.2s", animation: "pulse 2.5s infinite" }} onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"} onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
-          Plan Your Journey <FaArrowRight size={16} />
-        </button>
+      <section className="k2-about-cta" style={{ position: "relative", padding: "60px 64px", textAlign: "center", background: "linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", overflow: "hidden", minHeight: "380px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {/* Left Moving Transit */}
+        <MovingTransit direction="left" />
+
+        {/* Right Moving Transit */}
+        <MovingTransit direction="right" />
+
+        {/* Content */}
+        <div style={{ position: "relative", zIndex: 2 }}>
+          <p style={{ color: "#00bcd4", fontSize: 12.5, fontWeight: 700, letterSpacing: 3, marginBottom: 16 }}>READY TO EXPLORE?</p>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 40, fontWeight: 700, color: "#0D1321", marginBottom: 16 }}>Adventure is better together.</h2>
+          <p style={{ fontSize: 16, color: "#6B7280", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>Let us plan your next chapter. Real routes, real people, real memories.</p>
+          <button style={{ background: "#00bcd4", color: "#fff", fontWeight: 700, fontSize: 15, padding: "15px 36px", borderRadius: 28, display: "inline-flex", alignItems: "center", gap: 10, boxShadow: "0 6px 24px rgba(10,191,188,0.4)", transition: "transform 0.2s,box-shadow 0.2s", animation: "pulse 2.5s infinite", border: "none", cursor: "pointer" }} onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"} onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
+            Plan Your Journey <FaArrowRight size={16} />
+          </button>
+        </div>
       </section>
 
       <Footer />

@@ -6,6 +6,7 @@ import { Users, Gift, Presentation, Building2, ArrowRight, Globe } from "lucide-
 import AnimatedFlightPath from "../components/AnimatedFlightPath";
 import Particles from "../components/Particles";
 import HowItWorksStack from "../components/HowItWorksStack";
+import MagneticTiltCard from "../components/MagneticTiltCard";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -577,7 +578,7 @@ export default function MICEPage() {
       </section>
 
       {/* ── WHY US ── */}
-      <section ref={whyRef} style={{ position:"relative", background:"#0D1321", padding:"50px 64px", overflow:"hidden" }}>
+      <section ref={whyRef} style={{ position:"relative", background:"#0D1321", padding:"80px 64px", overflow:"hidden" }}>
         <div style={{ position:"absolute", inset:0, zIndex:0 }}>
           <Particles
             particleCount={250}
@@ -598,20 +599,15 @@ export default function MICEPage() {
             0%, 100% { opacity: 0.5; transform: scale(0.9) rotate(0deg); }
             50% { opacity: 1; transform: scale(1.15) rotate(20deg); }
           }
-          .wsa-card { transition: box-shadow 0.35s ease, border-color 0.35s ease; }
-          .wsa-card {
-            border-color: rgba(255,255,255,0.15);
-            box-shadow: 0 0 0 0px rgba(10,191,188,0);
-          }
+
           .wsa-card:hover {
-            box-shadow: 0 0 20px rgba(10,191,188,0.6), 0 0 40px rgba(10,191,188,0.3);
-            border-color: #0ABFBC;
+            border-color: rgba(10, 191, 188, 0.4) !important;
           }
           .wsa-icon-wrap { transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
-          .wsa-card:hover .wsa-icon-wrap { transform: scale(1.08); }
-          .wsa-card:hover .wsa-underline { width: 64px; }
-          .wsa-arrow { transition: transform 0.3s ease; }
-          .wsa-card:hover .wsa-arrow { transform: translateX(4px); }
+          .wsa-card:hover .wsa-icon-wrap { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 15px rgba(10, 191, 188, 0.3); }
+          .wsa-card:hover .wsa-underline { width: 100%; }
+          .wsa-arrow { transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease; }
+          .wsa-card:hover .wsa-arrow { transform: translateX(6px); background: #0ABFBC; color: #0D1321 !important; border-color: #0ABFBC !important; }
           .wsa-dots {
             background-image: radial-gradient(circle, #fff 1px, transparent 1px);
             background-size: 14px 14px;
@@ -623,59 +619,27 @@ export default function MICEPage() {
         <div className="wsa-dots" style={{ position:"absolute", bottom:24, left:24, width:70, height:70, pointerEvents:"none", zIndex:1 }} />
         <div className="wsa-dots" style={{ position:"absolute", top:60, right:40, width:60, height:90, pointerEvents:"none", zIndex:1 }} />
 
-        <div style={{ textAlign:"center", marginBottom:48, position:"relative", zIndex:1 }}>
+        <div style={{ textAlign:"center", marginBottom:64, position:"relative", zIndex:1 }}>
           <p style={{ color:"#0ABFBC", fontSize:13, fontWeight:700, letterSpacing:4, marginBottom:12 }}>WHY K2 JOURNEYS</p>
-          <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:40, fontWeight:700, color:"#fff", margin:0 }}>
+          <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:48, fontWeight:700, color:"#fff", margin:0 }}>
             What sets us <em style={{ color:"#0ABFBC", fontStyle:"italic" }}>apart</em>
           </h2>
-          <p style={{ color:"rgba(255,255,255,0.7)", fontSize:15, marginTop:14 }}>Thoughtful planning. Flawless execution. Unforgettable experiences.</p>
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:12, marginTop:20 }}>
-            <span style={{ width:40, height:1, background:"#D79A3B" }} />
-            <div style={{ color:"#D79A3B", animation:"wsaSparkle 2.6s ease-in-out infinite", fontSize:16 }}>✨</div>
-            <span style={{ width:40, height:1, background:"#D79A3B" }} />
+          <p style={{ color:"rgba(255,255,255,0.7)", fontSize:16, marginTop:14 }}>Thoughtful planning. Flawless execution. Unforgettable experiences.</p>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:12, marginTop:24 }}>
+            <span style={{ width:40, height:1, background:"linear-gradient(90deg, transparent, #D79A3B)" }} />
+            <div style={{ color:"#D79A3B", animation:"wsaSparkle 2.6s ease-in-out infinite", fontSize:18 }}>✨</div>
+            <span style={{ width:40, height:1, background:"linear-gradient(270deg, transparent, #D79A3B)" }} />
           </div>
         </div>
 
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20, maxWidth:1200, margin:"0 auto", position:"relative", zIndex:1 }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:24, maxWidth:1200, margin:"0 auto", position:"relative", zIndex:1, perspective:"2000px" }}>
           {WHY_US.map((w, i) => (
-            <div
+            <MagneticTiltCard
               key={w.title}
-              className="wsa-card"
-              style={{
-                background:"rgba(255,255,255,0.05)",
-                border:"1px solid rgba(255,255,255,0.15)",
-                borderRadius:16,
-                padding:"28px 20px 20px",
-                position:"relative",
-                overflow:"hidden",
-                opacity: visibleWhy.includes(i) ? 1 : 0,
-                transform: visibleWhy.includes(i) ? "translateY(0)" : "translateY(28px)",
-                transition:`opacity 0.6s ease ${i * 0.1}s, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${i * 0.1}s`,
-              }}
-              onMouseEnter={() => setHoveredWhy(i)}
-              onMouseLeave={() => setHoveredWhy(null)}
-            >
-              <w.icon size={70} strokeWidth={0.5} style={{ position:"absolute", bottom:-10, right:-8, color:"rgba(255,255,255,0.05)", opacity:0.15 }} aria-hidden="true" />
-
-              <div className="wsa-icon-wrap" style={{ width:60, height:60, borderRadius:"50%", background:w.bg, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:16 }}>
-                <w.icon size={24} color={w.color} strokeWidth={1.8} />
-              </div>
-
-              <div style={{ display:"flex", alignItems:"flex-start", gap:10, marginBottom:8 }}>
-                <span style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", minWidth:28, height:20, padding:"0 6px", borderRadius:999, border:`1px solid ${w.color}`, color:w.color, fontSize:10, fontWeight:700, letterSpacing:0.3, flexShrink:0, marginTop:2 }}>
-                  {w.title.split(" ")[0].slice(0, 2).toUpperCase()}
-                </span>
-                <h3 style={{ fontFamily:"'Playfair Display', serif", fontSize:17, fontWeight:700, color:"#fff", margin:0, lineHeight:1.3 }}>{w.title}</h3>
-              </div>
-
-              <span className="wsa-underline" style={{ display:"block", width:32, height:1.5, background:w.color, marginBottom:12, transition:"width 0.4s ease" }} />
-
-              <p style={{ fontFamily:"'Inter', sans-serif", fontSize:13, lineHeight:1.6, color:"rgba(255,255,255,0.65)", margin:"0 0 18px" }}>{w.desc}</p>
-
-              <button className="wsa-arrow" aria-label={`Learn more about ${w.title}`} style={{ width:28, height:28, borderRadius:"50%", border:`1.2px solid ${w.color}`, background:"transparent", color:w.color, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", padding:0 }}>
-                <FaChevronRight size={14} />
-              </button>
-            </div>
+              w={w}
+              index={i}
+              isVisible={visibleWhy.includes(i)}
+            />
           ))}
         </div>
       </section>

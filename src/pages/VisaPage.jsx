@@ -89,6 +89,8 @@ export default function VisaPageV2() {
   const [activeStep, setActiveStep] = useState(0);
   const [statsRef, statsInView] = useInView(0.3);
   const [processRef, processInView] = useInView(0.2);
+  const [powerRef, powerInView] = useInView(0.2);
+  const [hoveredFeature, setHoveredFeature] = useState(null);
 
 
   useEffect(() => {
@@ -180,6 +182,27 @@ export default function VisaPageV2() {
 
       {/* POWER SECTION */}
       <section style={{ background: "linear-gradient(135deg, #0D1321 0%, #1a2744 50%, #0D1321 100%)", padding: "64px", position: "relative", overflow: "hidden" }}>
+        <style>{`
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .feature-card {
+            transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+          }
+          .feature-card:hover {
+            background: rgba(10,191,188,0.15) !important;
+            border-color: rgba(0,188,212,0.5) !important;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,188,212,0.25);
+          }
+          .feature-icon {
+            transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+          }
+          .feature-card:hover .feature-icon {
+            transform: scale(1.25) rotate(-10deg);
+          }
+        `}</style>
         <div style={{ position: "absolute", top: -60, right: -60, width: 280, height: 280, borderRadius: "50%", background: "rgba(10,191,188,0.08)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: -40, left: -40, width: 200, height: 200, borderRadius: "50%", background: "rgba(10,191,188,0.06)", pointerEvents: "none" }} />
         <div style={{ position: "relative", display: "flex", gap: 40, alignItems: "center" }}>
@@ -190,8 +213,19 @@ export default function VisaPageV2() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, flex: 1 }}>
             {[{ icon: FaChartLine, color: "#00bcd4", title: "Zero Hidden Fees", desc: "We charge only what we quote." }, { icon: FaBolt, color: "#FBBF24", title: "48-Hour Turnaround", desc: "Express processing for urgent trips." }, { icon: FaShieldAlt, color: "#A78BFA", title: "Embassy Contacts", desc: "Direct lines to 40+ embassies." }, { icon: FaGlobeAsia, color: "#F87171", title: "Worldwide Coverage", desc: "Europe, Asia, Americas & beyond." }].map((f) => (
-              <div key={f.title} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, padding: "20px 18px", transition: "background 0.3s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(10,191,188,0.1)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}>
-                <f.icon size={22} color={f.color} style={{ marginBottom: 12 }} />
+              <div
+                key={f.title}
+                className="feature-card"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 14,
+                  padding: "20px 18px"
+                }}
+              >
+                <div className="feature-icon" style={{ marginBottom: 12 }}>
+                  <f.icon size={22} color={f.color} />
+                </div>
                 <p style={{ color: "#fff", fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{f.title}</p>
                 <p style={{ color: "#9CA3AF", fontSize: 12.5 }}>{f.desc}</p>
               </div>

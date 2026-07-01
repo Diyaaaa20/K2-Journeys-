@@ -1,0 +1,19 @@
+.moving-transit {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.moving-transit.left {
+  left: 0;
+}
+
+.moving-transit.right {
+  right: 0;
+}
+
+.transit-icon {
+  display: flex;
+  align-items: center;
+}
