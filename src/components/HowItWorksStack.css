@@ -33,16 +33,16 @@
 }
 
 .how-it-works-stack .scroll-stack-inner {
-  padding: 1rem 2rem 30rem;
+  padding: 1rem 2rem 10rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .how-it-works-stack .scroll-stack-card {
   height: auto;
-  min-height: 14rem;
+  min-height: 12rem;
   padding: 0;
-  margin: 12px auto;
+  margin: 10px auto;
   border-radius: 28px;
   background: #10141f;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -57,7 +57,7 @@
   grid-template-columns: 1fr 2fr;
   align-items: center;
   height: 100%;
-  min-height: 14rem;
+  min-height: 12rem;
   gap: 2rem;
   padding: 1.5rem;
 }
@@ -68,7 +68,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  min-height: 12rem;
+  min-height: 10rem;
 }
 
 .hiws-icon {
@@ -124,7 +124,7 @@
   }
 
   .how-it-works-stack .scroll-stack-inner {
-    padding: 1rem 1rem 25rem;
+    padding: 1rem 1rem 8rem;
   }
 }
 
@@ -138,18 +138,18 @@
   }
 
   .how-it-works-stack .scroll-stack-card {
-    min-height: 13rem;
-    margin: 10px auto;
+    min-height: 11rem;
+    margin: 8px auto;
   }
 
   .hiws-card {
-    min-height: 13rem;
+    min-height: 11rem;
     padding: 1rem;
     gap: 1rem;
   }
 
   .hiws-icon-section {
-    min-height: 6rem;
+    min-height: 8rem;
   }
 
   .hiws-icon {

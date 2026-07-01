@@ -46,12 +46,12 @@ const HowItWorksStack = () => {
       </div>
 
       <ScrollStack
-        itemDistance={60}
-        itemScale={0.025}
-        itemStackDistance={20}
-        stackPosition="25%"
-        scaleEndPosition="12%"
-        baseScale={0.9}
+        itemDistance={45}
+        itemScale={0.035}
+        itemStackDistance={15}
+        stackPosition="30%"
+        scaleEndPosition="15%"
+        baseScale={0.92}
         scaleDuration={0.5}
         blurAmount={0}
         useWindowScroll={true}
