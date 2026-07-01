@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRight, FaGlobe, FaUsers, FaShieldAlt, FaPlaneDeparture, FaMapMarkedAlt, FaStar, FaTrophy, FaChevronRight, FaLink, FaShareAlt, FaClock, FaGem } from "react-icons/fa";
 import { MdPublic } from "react-icons/md";
+import AdvancedValueCard from "../components/AdvancedValueCard";
 
 const NAV = ["Itinerary", "Visa", "Hotel & Air", "MICE", "Blogs", "About Us", "Contact"];
 const navRoutes = { "Visa": "/visa", "MICE": "/mice", "Blogs": "/blog", "About Us": "/about", "Contact": "/contact" };
@@ -431,44 +432,22 @@ const [hoveredValue, setHoveredValue] = useState(null);
             <FaArrowRight size={18} />
           </button>
           <div ref={marqueeRef} className="k2-marquee" style={{ padding: "24px 64px 40px" }}>
+            <style>{`
+              @keyframes slideUp {
+                0% { opacity: 0; transform: translateY(30px) rotateX(10deg); }
+                100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
+              }
+            `}</style>
             <div className="k2-marquee-track">
               {[...VALUES, ...VALUES].map((v, i) => (
-                <div
+                <AdvancedValueCard
                   key={i}
-                  onMouseEnter={() => setHoveredValue(i)}
-                  onMouseLeave={() => setHoveredValue(null)}
-                  style={{
-                    width: 268,
-                    flexShrink: 0,
-                    marginRight: 28,
-                    background: hoveredValue === i ? v.bg : "rgba(255,255,255,0.10)",
-                    backdropFilter: "blur(14px)",
-                    WebkitBackdropFilter: "blur(14px)",
-                    borderRadius: 22,
-                    padding: "30px 26px",
-                    border: `1.5px solid ${hoveredValue === i ? v.color + "44" : "rgba(255,255,255,0.18)"}`,
-                    boxShadow: hoveredValue === i ? `0 10px 28px ${v.color}22` : "0 8px 32px rgba(0,0,0,0.25)",
-                    transform: `scale(${hoveredValue === i ? 1.03 : 1})`,
-                    transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.34,1.4,0.64,1)",
-                    cursor: "default",
-                  }}
-                >
-                  <div style={{
-                    background: `linear-gradient(135deg, ${v.bg}, ${v.color}20)`,
-                    borderRadius: 16,
-                    width: 60, height: 60,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    marginBottom: 20,
-                    border: `1.5px solid ${v.color}30`,
-                    boxShadow: `0 4px 12px ${v.color}15`,
-                    transition: "transform 0.35s",
-                    transform: hoveredValue === i ? "rotate(-10deg) scale(1.12)" : "rotate(0) scale(1)",
-                  }}>
-                    <v.icon size={28} color={v.color} />
-                  </div>
-                  <h4 style={{ fontSize: 16, fontWeight: 700, color: hoveredValue === i ? "#0D1321" : "#fff", marginBottom: 10, transition: "color 0.3s" }}>{v.title}</h4>
-                  <p style={{ fontSize: 13.5, lineHeight: 1.75, color: hoveredValue === i ? "#374151" : "rgba(255,255,255,0.72)", transition: "color 0.3s" }}>{v.desc}</p>
-                </div>
+                  v={v}
+                  index={i % VALUES.length}
+                  isHovered={hoveredValue === i}
+                  onHover={setHoveredValue}
+                  onLeave={() => setHoveredValue(null)}
+                />
               ))}
             </div>
           </div>

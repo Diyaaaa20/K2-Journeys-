@@ -30,12 +30,20 @@ function useInView(threshold = 0.15) {
 
 
 const DESTINATIONS = [
-  { name: "Goa", tag: "Beach & Leisure", img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=500&q=80", capacity: "Up to 2,000 delegates", highlight: "Beach resorts, water sports, sunset galas" },
-  { name: "Ladakh", tag: "Adventure", img: "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=500&q=80", capacity: "Up to 500 delegates", highlight: "High-altitude treks, monastery visits, stargazing" },
-  { name: "Jaipur", tag: "Culture & Heritage", img: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=500&q=80", capacity: "Up to 3,000 delegates", highlight: "Palace venues, camel safaris, royal dinners" },
-  { name: "Kerala", tag: "Wellness", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=500&q=80", capacity: "Up to 1,000 delegates", highlight: "Houseboat cruises, Ayurveda, backwater events" },
-  { name: "Shimla", tag: "Mountain Retreat", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80", capacity: "Up to 800 delegates", highlight: "Colonial venues, nature walks, snow activities" },
-  { name: "Dubai", tag: "International", img: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=500&q=80", capacity: "Up to 10,000 delegates", highlight: "World-class convention centres, desert safaris" },
+  { name: "Goa", tag: "Beach & Leisure", type: "domestic", img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=500&q=80", capacity: "Up to 2,000 delegates", highlight: "Beach resorts, water sports, sunset galas" },
+  { name: "Ladakh", tag: "Adventure", type: "domestic", img: "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=500&q=80", capacity: "Up to 500 delegates", highlight: "High-altitude treks, monastery visits, stargazing" },
+  { name: "Jaipur", tag: "Culture & Heritage", type: "domestic", img: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=500&q=80", capacity: "Up to 3,000 delegates", highlight: "Palace venues, camel safaris, royal dinners" },
+  { name: "Kerala", tag: "Wellness", type: "domestic", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=500&q=80", capacity: "Up to 1,000 delegates", highlight: "Houseboat cruises, Ayurveda, backwater events" },
+  { name: "Shimla", tag: "Mountain Retreat", type: "domestic", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80", capacity: "Up to 800 delegates", highlight: "Colonial venues, nature walks, snow activities" },
+  { name: "Manali", tag: "Adventure", type: "domestic", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80", capacity: "Up to 600 delegates", highlight: "Mountain retreats, adventure sports, scenic venues" },
+  { name: "Udaipur", tag: "Luxury Retreat", type: "domestic", img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=500&q=80", capacity: "Up to 1,500 delegates", highlight: "Palace hotels, lakeside venues, royal experiences" },
+  { name: "Bangalore", tag: "Tech & Business", type: "domestic", img: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=500&q=80", capacity: "Up to 5,000 delegates", highlight: "Modern convention centers, tech hubs, luxury hotels" },
+  { name: "Dubai", tag: "Luxury International", type: "international", img: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=500&q=80", capacity: "Up to 10,000 delegates", highlight: "World-class convention centres, desert safaris, luxury venues" },
+  { name: "Singapore", tag: "Business Hub", type: "international", img: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=500&q=80", capacity: "Up to 8,000 delegates", highlight: "State-of-the-art venues, business district, cosmopolitan city" },
+  { name: "Bali", tag: "Tropical Paradise", type: "international", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=500&q=80", capacity: "Up to 3,000 delegates", highlight: "Beachfront resorts, cultural venues, tropical backdrop" },
+  { name: "Bangkok", tag: "Vibrant City", type: "international", img: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=500&q=80", capacity: "Up to 4,000 delegates", highlight: "Grand hotels, cultural experiences, street market glamour" },
+  { name: "Maldives", tag: "Exclusive Resort", type: "international", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=500&q=80", capacity: "Up to 1,000 delegates", highlight: "Overwater venues, island retreats, ultimate luxury" },
+  { name: "Sri Lanka", tag: "Scenic Retreat", type: "international", img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=500&q=80", capacity: "Up to 2,500 delegates", highlight: "Tea plantations, ancient temples, coastal venues" },
 ];
 
 const WHY_US = [
@@ -67,11 +75,11 @@ const PILLARS = [
     Icon: Users,
     description: "Productive meetings in inspiring locations, designed for focus and results.",
     img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=85",
-    cardBg: "linear-gradient(175deg, #071829 0%, #050e1a 100%)",
+    cardBg: "linear-gradient(175deg, #00bcd4 0%, #050e1a 100%)",
     borderColor: "rgba(100,160,220,0.4)",
     glowColor: "rgba(80,140,200,0.25)",
     iconRingColor: "rgba(100,160,220,0.3)",
-    overlayColor: "rgba(5,14,26,0.7)",
+    overlayColor: "rgba(79, 124, 182, 0.7)",
   },
   {
     id: "02",
@@ -79,7 +87,7 @@ const PILLARS = [
     Icon: Gift,
     description: "Reward, motivate and celebrate with unforgettable incentive experiences worldwide.",
     img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=85",
-    cardBg: "linear-gradient(175deg, #041e18 0%, #030f0d 100%)",
+    cardBg: "linear-gradient(175deg, #49dd49 0%, #030f0d 100%)",
     borderColor: "rgba(60,180,130,0.4)",
     glowColor: "rgba(40,160,110,0.22)",
     iconRingColor: "rgba(60,180,130,0.3)",
@@ -91,7 +99,7 @@ const PILLARS = [
     Icon: Presentation,
     description: "Seamless conference management that connects people and ideas.",
     img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=85",
-    cardBg: "linear-gradient(175deg, #130a28 0%, #0a0514 100%)",
+    cardBg: "linear-gradient(175deg, #e91e8c 0%, #0a0514 100%)",
     borderColor: "rgba(150,100,230,0.45)",
     glowColor: "rgba(130,80,210,0.25)",
     iconRingColor: "rgba(150,100,230,0.3)",
@@ -103,7 +111,7 @@ const PILLARS = [
     Icon: Building2,
     description: "End-to-end solutions for impactful exhibitions that showcase your brand to the world.",
     img: "https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&q=85",
-    cardBg: "linear-gradient(175deg, #1a1004 0%, #0d0802 100%)",
+    cardBg: "linear-gradient(175deg, #ffc107 0%, #0d0802 100%)",
     borderColor: "rgba(200,155,50,0.4)",
     glowColor: "rgba(180,135,40,0.22)",
     iconRingColor: "rgba(200,155,50,0.3)",
@@ -136,6 +144,9 @@ export default function MICEPage() {
   const [proposalForm, setProposalForm] = useState({ name: "", org: "", email: "", phone: "", eventType: "", groupSize: "", destination: "", eventDate: "", message: "" });
   const [proposalSent, setProposalSent] = useState(false);
   const [visibleWhy, setVisibleWhy] = useState([]);
+  const [destinationFilter, setDestinationFilter] = useState("all");
+  const [destSearchQuery, setDestSearchQuery] = useState("");
+  const [showAllDestinations, setShowAllDestinations] = useState(false);
 
   
   const [whyRef, whyInView] = useInView(0.1);
@@ -430,7 +441,7 @@ export default function MICEPage() {
       </section>
 
       {/* ── DESTINATIONS ── */}
-      <section style={{ background:"#F9FAFB", padding:"80px 64px" }}>
+      <section style={{ background:"#F9FAFB", padding:"80px 64px", position:"relative" }}>
         <div style={{ textAlign:"center", marginBottom:52 }}>
           <p style={{ color:"#0ABFBC", fontSize:12.5, fontWeight:700, letterSpacing:3, marginBottom:14 }}>HANDPICKED FOR CORPORATES</p>
           <h2 style={{ fontFamily:"'Playfair Display', serif", fontSize:40, fontWeight:700, color:"#0D1321", marginBottom:14 }}>Top MICE Destinations</h2>
@@ -438,38 +449,130 @@ export default function MICEPage() {
             From beach resorts in Goa to heritage palaces in Jaipur — we've got the perfect backdrop for your event.
           </p>
         </div>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:22 }}>
-          {DESTINATIONS.map((d, i) => (
-            <div
-              key={d.name}
-              onMouseEnter={() => setHoveredDest(i)}
-              onMouseLeave={() => setHoveredDest(null)}
-              style={{ position:"relative", height:260, borderRadius:20, overflow:"hidden", cursor:"pointer", boxShadow: hoveredDest===i ? "0 20px 50px rgba(0,0,0,0.2)" : "0 4px 18px rgba(0,0,0,0.08)", transform: hoveredDest===i ? "translateY(-8px)" : "translateY(0)", transition:"all 0.35s cubic-bezier(0.34,1.2,0.64,1)", animation:`fadeUp 0.5s ease ${i*0.08}s both` }}
-            >
-              <img src={d.img} alt={d.name} style={{ width:"100%", height:"100%", objectFit:"cover", transform: hoveredDest===i ? "scale(1.08)" : "scale(1)", transition:"transform 0.5s ease" }} />
-              <div style={{ position:"absolute", inset:0, background: hoveredDest===i ? "linear-gradient(transparent 20%, rgba(13,19,33,0.9) 100%)" : "linear-gradient(transparent 40%, rgba(13,19,33,0.75) 100%)", transition:"background 0.4s" }} />
-              {/* Tag */}
-              <div style={{ position:"absolute", top:16, left:16, background:"rgba(255,255,255,0.15)", backdropFilter:"blur(8px)", border:"1px solid rgba(255,255,255,0.25)", borderRadius:14, padding:"4px 12px" }}>
-                <span style={{ color:"#fff", fontSize:11.5, fontWeight:700 }}>{d.tag}</span>
-              </div>
-              {/* Default info */}
-              <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"20px" }}>
-                <h4 style={{ color:"#fff", fontSize:20, fontWeight:700, marginBottom: hoveredDest===i ? 10 : 0 }}>{d.name}</h4>
-                <div style={{ maxHeight: hoveredDest===i ? 80 : 0, overflow:"hidden", transition:"max-height 0.35s ease" }}>
-                  <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
-                    <FaUsers size={13} color="#0ABFBC" />
-                    <span style={{ color:"rgba(255,255,255,0.85)", fontSize:13 }}>{d.capacity}</span>
-                  </div>
-                  <p style={{ color:"rgba(255,255,255,0.7)", fontSize:12.5, lineHeight:1.5 }}>{d.highlight}</p>
+
+        {/* Search & Filter Bar */}
+        <div style={{ maxWidth:1200, margin:"0 auto 40px", display:"flex", gap:16, alignItems:"center", flexWrap:"wrap", justifyContent:"center" }}>
+          {/* Search Input */}
+          <div style={{ flex:"1 1 300px", minWidth:250, position:"relative" }}>
+            <input
+              type="text"
+              placeholder="Search destinations..."
+              value={destSearchQuery}
+              onChange={(e) => setDestSearchQuery(e.target.value)}
+              style={{
+                width:"100%",
+                padding:"12px 16px 12px 40px",
+                fontSize:14,
+                border:"1.5px solid #E5E7EB",
+                borderRadius:10,
+                outline:"none",
+                transition:"all 0.3s",
+                boxShadow: destSearchQuery ? "0 0 0 3px rgba(10,191,188,0.1)" : "none",
+                borderColor: destSearchQuery ? "#0ABFBC" : "#E5E7EB"
+              }}
+            />
+            <FaSearch style={{ position:"absolute", left:14, top:"50%", transform:"translateY(-50%)", color:"#9CA3AF" }} size={14} />
+          </div>
+
+          {/* Filter Buttons */}
+          <div style={{ display:"flex", gap:10 }}>
+            {["all", "domestic", "international"].map(filter => (
+              <button
+                key={filter}
+                onClick={() => setDestinationFilter(filter)}
+                style={{
+                  padding:"10px 20px",
+                  fontSize:13,
+                  fontWeight:700,
+                  border:"1.5px solid " + (destinationFilter === filter ? "#0ABFBC" : "#E5E7EB"),
+                  background: destinationFilter === filter ? "#0ABFBC" : "#fff",
+                  color: destinationFilter === filter ? "#fff" : "#6B7280",
+                  borderRadius:10,
+                  cursor:"pointer",
+                  transition:"all 0.3s",
+                  textTransform:"capitalize"
+                }}
+              >
+                {filter === "all" ? "All Destinations" : filter.charAt(0).toUpperCase() + filter.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Destinations Grid */}
+        <div style={{ maxWidth:1200, margin:"0 auto" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:22 }}>
+            {DESTINATIONS.filter(d => {
+              const matchesFilter = destinationFilter === "all" || d.type === destinationFilter;
+              const matchesSearch = d.name.toLowerCase().includes(destSearchQuery.toLowerCase()) ||
+                                   d.tag.toLowerCase().includes(destSearchQuery.toLowerCase()) ||
+                                   d.highlight.toLowerCase().includes(destSearchQuery.toLowerCase());
+              return matchesFilter && matchesSearch;
+            })
+            .slice(0, showAllDestinations ? undefined : 6)
+            .map((d, i) => (
+              <div
+                key={d.name}
+                onMouseEnter={() => setHoveredDest(i)}
+                onMouseLeave={() => setHoveredDest(null)}
+                style={{ position:"relative", height:260, borderRadius:20, overflow:"hidden", cursor:"pointer", boxShadow: hoveredDest===i ? "0 20px 50px rgba(0,0,0,0.2)" : "0 4px 18px rgba(0,0,0,0.08)", transform: hoveredDest===i ? "translateY(-8px)" : "translateY(0)", transition:"all 0.35s cubic-bezier(0.34,1.2,0.64,1)", animation:`fadeUp 0.5s ease ${i*0.08}s both` }}
+              >
+                <img src={d.img} alt={d.name} style={{ width:"100%", height:"100%", objectFit:"cover", transform: hoveredDest===i ? "scale(1.08)" : "scale(1)", transition:"transform 0.5s ease" }} />
+                <div style={{ position:"absolute", inset:0, background: hoveredDest===i ? "linear-gradient(transparent 20%, rgba(13,19,33,0.9) 100%)" : "linear-gradient(transparent 40%, rgba(13,19,33,0.75) 100%)", transition:"background 0.4s" }} />
+                {/* Tag */}
+                <div style={{ position:"absolute", top:16, left:16, background:"rgba(255,255,255,0.15)", backdropFilter:"blur(8px)", border:"1px solid rgba(255,255,255,0.25)", borderRadius:14, padding:"4px 12px" }}>
+                  <span style={{ color:"#fff", fontSize:11.5, fontWeight:700 }}>{d.tag}</span>
                 </div>
-                {hoveredDest===i && (
-                  <button style={{ marginTop:12, background:"#0ABFBC", color:"#fff", fontWeight:700, fontSize:12.5, padding:"8px 16px", borderRadius:16, display:"flex", alignItems:"center", gap:6 }}>
-                    Explore <FaArrowRight size={12} />
-                  </button>
-                )}
+                {/* Default info */}
+                <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"20px" }}>
+                  <h4 style={{ color:"#fff", fontSize:20, fontWeight:700, marginBottom: hoveredDest===i ? 10 : 0 }}>{d.name}</h4>
+                  <div style={{ maxHeight: hoveredDest===i ? 80 : 0, overflow:"hidden", transition:"max-height 0.35s ease" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
+                      <FaUsers size={13} color="#0ABFBC" />
+                      <span style={{ color:"rgba(255,255,255,0.85)", fontSize:13 }}>{d.capacity}</span>
+                    </div>
+                    <p style={{ color:"rgba(255,255,255,0.7)", fontSize:12.5, lineHeight:1.5 }}>{d.highlight}</p>
+                  </div>
+                  {hoveredDest===i && (
+                    <button style={{ marginTop:12, background:"#0ABFBC", color:"#fff", fontWeight:700, fontSize:12.5, padding:"8px 16px", borderRadius:16, display:"flex", alignItems:"center", gap:6 }}>
+                      Explore <FaArrowRight size={12} />
+                    </button>
+                  )}
+                </div>
               </div>
+            ))}
+          </div>
+
+          {/* View More Button */}
+          {!showAllDestinations && DESTINATIONS.filter(d => {
+            const matchesFilter = destinationFilter === "all" || d.type === destinationFilter;
+            const matchesSearch = d.name.toLowerCase().includes(destSearchQuery.toLowerCase()) ||
+                                 d.tag.toLowerCase().includes(destSearchQuery.toLowerCase()) ||
+                                 d.highlight.toLowerCase().includes(destSearchQuery.toLowerCase());
+            return matchesFilter && matchesSearch;
+          }).length > 6 && (
+            <div style={{ display:"flex", justifyContent:"flex-end", marginTop:40 }}>
+              <button
+                onClick={() => setShowAllDestinations(true)}
+                style={{
+                  padding:"12px 28px",
+                  fontSize:14,
+                  fontWeight:700,
+                  background:"#0ABFBC",
+                  color:"#fff",
+                  border:"none",
+                  borderRadius:10,
+                  cursor:"pointer",
+                  display:"flex",
+                  alignItems:"center",
+                  gap:8,
+                  transition:"all 0.3s"
+                }}
+              >
+                View More <FaArrowRight size={13} />
+              </button>
             </div>
-          ))}
+          )}
         </div>
       </section>
 
